@@ -1,3 +1,5 @@
+let todosProdutos = [];
+
 fetch("produtos.json")
 .then(res => res.json())
 .then(data => {
@@ -20,6 +22,20 @@ const grid = document.getElementById(cat.id);
 
 cat.produtos.forEach(prod => {
 
+todosProdutos.push(prod);
+
+const card = criarCard(prod);
+grid.appendChild(card);
+
+});
+
+});
+
+});
+
+// função que cria o card
+function criarCard(prod){
+
 const card = document.createElement("div");
 card.classList.add("card");
 
@@ -32,10 +48,36 @@ card.innerHTML = `
 </div>
 `;
 
-grid.appendChild(card);
+return card;
+}
 
+// BUSCA DE PRODUTOS
+const busca = document.getElementById("busca");
+
+busca.addEventListener("input", function(){
+
+const termo = this.value.toLowerCase();
+const container = document.getElementById("produtos");
+
+if(termo === ""){
+location.reload();
+return;
+}
+
+container.innerHTML = "<h2>Resultados da busca</h2>";
+
+const grid = document.createElement("div");
+grid.classList.add("grid");
+
+const resultados = todosProdutos.filter(prod =>
+prod.nome.toLowerCase().includes(termo) ||
+prod.descricao.toLowerCase().includes(termo)
+);
+
+resultados.forEach(prod => {
+grid.appendChild(criarCard(prod));
 });
 
-});
+container.appendChild(grid);
 
 });
