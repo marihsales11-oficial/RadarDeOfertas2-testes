@@ -1,0 +1,42 @@
+{
+  "categorias": [
+    {
+      "nome": "🔥 Mais vendidos",
+      "id": "maisvendidos",
+      "produtos": [
+        {
+          "nome": "Garrafa Térmica Academia",
+          "descricao": "Produto com milhares de vendas.",
+          "imagem": "https://picsum.photos/400?1",
+          "link": "https://link-afiliado.com/p1"
+        }
+      ]
+    },
+
+    {
+      "nome": "🏠 Casa",
+      "id": "casa",
+      "produtos": [
+        {
+          "nome": "Luminária LED",
+          "descricao": "Decoração moderna.",
+          "imagem": "https://picsum.photos/400?2",
+          "link": "https://link-afiliado.com/p2"
+        }
+      ]
+    },
+
+    {
+      "nome": "💻 Eletrônicos",
+      "id": "eletronicos",
+      "produtos": [
+        {
+          "nome": "Fone Bluetooth",
+          "descricao": "Alta qualidade sonora.",
+          "imagem": "https://picsum.photos/400?3",
+          "link": "https://link-afiliado.com/p3"
+        }
+      ]
+    }
+  ]
+}
