@@ -1,83 +1,88 @@
 let todosProdutos = [];
-
-fetch("produtos.json")
-.then(res => res.json())
-.then(data => {
+let categoriasOriginais = []; // Guardamos a estrutura original aqui
 
 const container = document.getElementById("produtos");
-
-data.categorias.forEach(cat => {
-
-const section = document.createElement("div");
-section.classList.add("categoria");
-
-section.innerHTML = `
-<h2>${cat.nome}</h2>
-<div class="grid" id="${cat.id}"></div>
-`;
-
-container.appendChild(section);
-
-const grid = document.getElementById(cat.id);
-
-cat.produtos.forEach(prod => {
-
-todosProdutos.push(prod);
-
-const card = criarCard(prod);
-grid.appendChild(card);
-
-});
-
-});
-
-});
-
-// função que cria o card
-function criarCard(prod){
-
-const card = document.createElement("div");
-card.classList.add("card");
-
-card.innerHTML = `
-<img src="${prod.imagem}">
-<div class="card-body">
-<h3>${prod.nome}</h3>
-<p>${prod.descricao}</p>
-<a class="btn" href="${prod.link}" target="_blank">Ver Oferta</a>
-</div>
-`;
-
-return card;
-}
-
-// BUSCA DE PRODUTOS
 const busca = document.getElementById("busca");
 
-busca.addEventListener("input", function(){
+// 1. Carregamento dos dados
+fetch("produtos.json")
+    .then(res => res.json())
+    .then(data => {
+        categoriasOriginais = data.categorias;
+        // Mapeia todos os produtos para o array global de busca
+        data.categorias.forEach(cat => {
+            cat.produtos.forEach(prod => todosProdutos.push(prod));
+        });
+        
+        renderizarHome(); // Mostra as categorias inicialmente
+    });
 
-const termo = this.value.toLowerCase();
-const container = document.getElementById("produtos");
+// 2. Função para renderizar o estado inicial (Categorias)
+function renderizarHome() {
+    container.innerHTML = ""; // Limpa o container
+    categoriasOriginais.forEach(cat => {
+        const section = document.createElement("div");
+        section.classList.add("categoria");
+        section.innerHTML = `
+            <h2>${cat.nome}</h2>
+            <div class="grid" id="grid-${cat.id}"></div>
+        `;
+        container.appendChild(section);
 
-if(termo === ""){
-location.reload();
-return;
+        const grid = document.getElementById(`grid-${cat.id}`);
+        cat.produtos.forEach(prod => {
+            grid.appendChild(criarCard(prod));
+        });
+    });
 }
 
-container.innerHTML = "<h2>Resultados da busca</h2>";
+// 3. Função auxiliar para criar o card (se mantem igual)
+function criarCard(prod) {
+    const card = document.createElement("div");
+    card.classList.add("card");
+    card.innerHTML = `
+        <img src="${prod.imagem}">
+        <div class="card-body">
+            <h3>${prod.nome}</h3>
+            <p>${prod.descricao}</p>
+            <a class="btn" href="${prod.link}" target="_blank">Ver Oferta</a>
+        </div>
+    `;
+    return card;
+}
 
-const grid = document.createElement("div");
-grid.classList.add("grid");
+// 4. Lógica de BUSCA
+busca.addEventListener("input", function() {
+    const termo = this.value.toLowerCase().trim();
 
-const resultados = todosProdutos.filter(prod =>
-prod.nome.toLowerCase().includes(termo) ||
-prod.descricao.toLowerCase().includes(termo)
-);
+    if (termo === "") {
+        renderizarHome(); // Volta ao normal sem dar reload na página
+        return;
+    }
 
-resultados.forEach(prod => {
-grid.appendChild(criarCard(prod));
+    const resultados = todosProdutos.filter(prod =>
+        prod.nome.toLowerCase().includes(termo) ||
+        prod.descricao.toLowerCase().includes(termo)
+    );
+
+    exibirResultados(resultados);
 });
 
-container.appendChild(grid);
+// 5. Função para mostrar apenas os resultados da busca
+function exibirResultados(produtos) {
+    container.innerHTML = "<h2>Resultados da busca</h2>";
+    
+    if (produtos.length === 0) {
+        container.innerHTML += "<p>Nenhum produto encontrado.</p>";
+        return;
+    }
 
-});
+    const grid = document.createElement("div");
+    grid.classList.add("grid");
+
+    produtos.forEach(prod => {
+        grid.appendChild(criarCard(prod));
+    });
+
+    container.appendChild(grid);
+}
