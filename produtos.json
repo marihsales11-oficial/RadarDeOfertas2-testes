@@ -5,36 +5,76 @@
       "id": "maisvendidos",
       "produtos": [
         {
-          "nome": "Garrafa Térmica Academia",
-          "descricao": "Produto com milhares de vendas.",
+          "nome": "Garrafa Térmica Academia Inox",
+          "descricao": "Mantém a bebida gelada ou quente por horas. Produto campeão de vendas.",
           "imagem": "https://picsum.photos/400?1",
           "link": "https://link-afiliado.com/p1"
+        },
+        {
+          "nome": "Fone Bluetooth Sem Fio",
+          "descricao": "Som potente e bateria de longa duração.",
+          "imagem": "https://picsum.photos/400?2",
+          "link": "https://link-afiliado.com/p2"
+        },
+        {
+          "nome": "Relógio Smartwatch Esportivo",
+          "descricao": "Monitora atividades físicas e saúde.",
+          "imagem": "https://picsum.photos/400?3",
+          "link": "https://link-afiliado.com/p3"
         }
       ]
     },
-
     {
-      "nome": "🏠 Casa",
+      "nome": "🏠 Casa e Decoração",
       "id": "casa",
       "produtos": [
         {
-          "nome": "Luminária LED",
-          "descricao": "Decoração moderna.",
-          "imagem": "https://picsum.photos/400?2",
-          "link": "https://link-afiliado.com/p2"
+          "nome": "Luminária LED Moderna",
+          "descricao": "Perfeita para decoração de ambientes.",
+          "imagem": "https://picsum.photos/400?4",
+          "link": "https://link-afiliado.com/p4"
+        },
+        {
+          "nome": "Organizador Multiuso",
+          "descricao": "Ideal para cozinha e escritório.",
+          "imagem": "https://picsum.photos/400?5",
+          "link": "https://link-afiliado.com/p5"
         }
       ]
     },
-
     {
       "nome": "💻 Eletrônicos",
       "id": "eletronicos",
       "produtos": [
         {
-          "nome": "Fone Bluetooth",
-          "descricao": "Alta qualidade sonora.",
-          "imagem": "https://picsum.photos/400?3",
-          "link": "https://link-afiliado.com/p3"
+          "nome": "Mouse Gamer RGB",
+          "descricao": "Alta precisão para jogos.",
+          "imagem": "https://picsum.photos/400?6",
+          "link": "https://link-afiliado.com/p6"
+        },
+        {
+          "nome": "Teclado Mecânico LED",
+          "descricao": "Teclas rápidas e duráveis.",
+          "imagem": "https://picsum.photos/400?7",
+          "link": "https://link-afiliado.com/p7"
+        }
+      ]
+    },
+    {
+      "nome": "🏃 Fitness",
+      "id": "fitness",
+      "produtos": [
+        {
+          "nome": "Corda de Pular Profissional",
+          "descricao": "Treino cardio eficiente.",
+          "imagem": "https://picsum.photos/400?8",
+          "link": "https://link-afiliado.com/p8"
+        },
+        {
+          "nome": "Kit Elásticos Academia",
+          "descricao": "Treino completo em casa.",
+          "imagem": "https://picsum.photos/400?9",
+          "link": "https://link-afiliado.com/p9"
         }
       ]
     }
