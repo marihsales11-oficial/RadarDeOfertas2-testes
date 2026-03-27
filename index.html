@@ -1,43 +1,58 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>Radar de Ofertas | Promoções Imperdíveis</title>
-
-<meta name="description" content="As melhores ofertas da internet. Produtos selecionados com desconto e compra segura.">
-
-<link rel="stylesheet" href="style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radar de Ofertas | O seu Monitor de Preços Profissional</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<header class="header">
-<div class="logo">Radar de Ofertas</div>
+    <header class="header">
+        <div class="logo"><i class="fas fa-search-dollar"></i> RADAR<span>DEOFERTAS</span></div>
+        <div class="search-box">
+            <input type="text" id="busca" placeholder="O que você quer comprar barato hoje?">
+            <i class="fas fa-search"></i>
+        </div>
+    </header>
 
-<input type="text" id="busca" placeholder="Buscar produtos, eletrônicos, ofertas...">
+    <nav class="nav-categories" id="menu-categorias"></nav>
 
-</header>
+    <section class="banner-urgencia">
+        <div class="countdown-container">
+            <h3><i class="fas fa-bolt"></i> OFERTAS QUE EXPIRAM EM: <span id="timer">00:00:00</span></h3>
+        </div>
+    </section>
 
-<section class="banner">
-<h1>Ofertas do Dia</h1>
-<p>Produtos com alta avaliação e milhares de vendas</p>
-</section>
+    <div class="main-layout container">
+        <aside class="sidebar">
+            <div class="filter-group">
+                <h4><i class="fas fa-sort-amount-down"></i> Ordenar por</h4>
+                <select id="sort-price">
+                    <option value="default">Relevância</option>
+                    <option value="low">Menor Preço</option>
+                    <option value="high">Maior Preço</option>
+                </select>
+            </div>
 
-<main class="container">
+            <div class="filter-group">
+                <h4><i class="fas fa-tags"></i> Categorias</h4>
+                <div id="filter-categories-list">
+                    </div>
+            </div>
+        </aside>
 
-<div id="produtos"></div>
+        <main class="content">
+            <div id="sessao-urgente"></div>
+            <div id="produtos-container"></div>
+        </main>
+    </div>
 
-</main>
+    <footer class="footer">
+        <p><strong>Radar de Ofertas</strong> &copy; 2026 - Melhores achados do Mercado Livre.</p>
+    </footer>
 
-<footer>
-© 2026 Radar de Ofertas
-</footer>
-
-<script src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>
 </html>
