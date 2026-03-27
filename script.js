@@ -1,51 +1,41 @@
 fetch("produtos.json")
-  .then(response => {
-    if (!response.ok) {
-      throw new Error("Erro ao carregar JSON");
-    }
-    return response.json();
-  })
-  .then(data => {
+.then(res => res.json())
+.then(data => {
 
-    const container = document.getElementById("produtos");
+const container = document.getElementById("produtos");
 
-    data.categorias.forEach(categoria => {
+data.categorias.forEach(cat => {
 
-      const bloco = document.createElement("div");
+const section = document.createElement("div");
+section.classList.add("categoria");
 
-      bloco.innerHTML = `
-        <h2>${categoria.nome}</h2>
-        <div class="grid" id="${categoria.id}"></div>
-      `;
+section.innerHTML = `
+<h2>${cat.nome}</h2>
+<div class="grid" id="${cat.id}"></div>
+`;
 
-      container.appendChild(bloco);
+container.appendChild(section);
 
-      const grid = document.getElementById(categoria.id);
+const grid = document.getElementById(cat.id);
 
-      categoria.produtos.forEach(produto => {
+cat.produtos.forEach(prod => {
 
-        grid.innerHTML += `
-        <div class="card">
-          <img src="${produto.imagem}">
-          <div class="card-body">
-            <h3>${produto.nome}</h3>
-            <p>${produto.descricao}</p>
+const card = document.createElement("div");
+card.classList.add("card");
 
-            <a class="btn" href="${produto.link}" target="_blank">
-              Ver oferta segura
-            </a>
+card.innerHTML = `
+<img src="${prod.imagem}">
+<div class="card-body">
+<h3>${prod.nome}</h3>
+<p>${prod.descricao}</p>
+<a class="btn" href="${prod.link}" target="_blank">Ver Oferta</a>
+</div>
+`;
 
-            <div class="seguro">
-              Compra protegida no marketplace oficial.
-            </div>
-          </div>
-        </div>
-        `;
-      });
+grid.appendChild(card);
 
-    });
+});
 
-  })
-  .catch(error => {
-    console.error("Erro:", error);
-  });
+});
+
+});
