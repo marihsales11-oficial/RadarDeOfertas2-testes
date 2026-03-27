@@ -2,28 +2,26 @@
   "categorias": [
     {
       "nome": "👔 Roupas",
-      "id": "roupas-semana",
+      "id": "roupas",
       "icone": "https://cdn-icons-png.flaticon.com/512/3159/3159620.png",
       "produtos": [
-        {"nome": "Camiseta Algodão Egípcio", "preco": "79.90", "imagem": "https://picsum.photos/400?id=201", "link": "#"},
-        {"nome": "Calça Jeans Slim Fit", "preco": "149.00", "imagem": "https://picsum.photos/400?id=202", "link": "#"},
-        {"nome": "Jaqueta Corta Vento", "preco": "119.00", "imagem": "https://picsum.photos/400?id=203", "link": "#"},
-        {"nome": "Tênis Casual Branco", "preco": "199.00", "imagem": "https://picsum.photos/400?id=204", "link": "#"},
-        {"nome": "Moletom Canguru", "preco": "129.00", "imagem": "https://picsum.photos/400?id=205", "link": "#"},
-        {"nome": "Bermuda Chino", "preco": "85.00", "imagem": "https://picsum.photos/400?id=206", "link": "#"}
+        {"nome": "Camiseta Algodão Egípcio", "preco": "79.90", "imagem": "https://picsum.photos/400?id=1", "link": "#"},
+        {"nome": "Calça Jeans Slim Fit", "preco": "149.00", "imagem": "https://picsum.photos/400?id=2", "link": "#"},
+        {"nome": "Jaqueta Corta Vento Sport", "preco": "119.00", "imagem": "https://picsum.photos/400?id=3", "link": "#"},
+        {"nome": "Tênis Casual Branco", "preco": "199.00", "imagem": "https://picsum.photos/400?id=4", "link": "#"},
+        {"nome": "Moletom Canguru Unissex", "preco": "129.00", "imagem": "https://picsum.photos/400?id=5", "link": "#"}
       ]
     },
     {
-      "nome": "🏠 Casa",
+      "nome": "🏠 Casa e Decoração",
       "id": "casa",
       "icone": "https://cdn-icons-png.flaticon.com/512/619/619153.png",
       "produtos": [
-        {"nome": "Jogo de Panelas 5pçs", "preco": "350.00", "imagem": "https://picsum.photos/400?id=10", "link": "#"},
-        {"nome": "Tapete Sala Soft", "preco": "120.00", "imagem": "https://picsum.photos/400?id=11", "link": "#"},
-        {"nome": "Abajur Moderno", "preco": "65.00", "imagem": "https://picsum.photos/400?id=12", "link": "#"},
-        {"nome": "Mesa de Centro", "preco": "210.00", "imagem": "https://picsum.photos/400?id=13", "link": "#"},
-        {"nome": "Quadro Decorativo", "preco": "45.00", "imagem": "https://picsum.photos/400?id=14", "link": "#"},
-        {"nome": "Almofada Velvet", "preco": "35.00", "imagem": "https://picsum.photos/400?id=15", "link": "#"}
+        {"nome": "Jogo de Panelas Antiaderente", "preco": "350.00", "imagem": "https://picsum.photos/400?id=6", "link": "#"},
+        {"nome": "Tapete Sala Soft 2x1.5m", "preco": "120.00", "imagem": "https://picsum.photos/400?id=7", "link": "#"},
+        {"nome": "Abajur Moderno Wood", "preco": "65.00", "imagem": "https://picsum.photos/400?id=8", "link": "#"},
+        {"nome": "Mesa de Centro Industrial", "preco": "210.00", "imagem": "https://picsum.photos/400?id=9", "link": "#"},
+        {"nome": "Quadro Decorativo Canvas", "preco": "45.00", "imagem": "https://picsum.photos/400?id=10", "link": "#"}
       ]
     },
     {
@@ -31,9 +29,9 @@
       "id": "eletronicos",
       "icone": "https://cdn-icons-png.flaticon.com/512/2777/2777142.png",
       "produtos": [
-        {"nome": "Smartwatch Serie 9", "preco": "299.00", "imagem": "https://picsum.photos/400?id=46", "link": "#"},
-        {"nome": "Fone Noise Cancelling", "preco": "180.00", "imagem": "https://picsum.photos/400?id=47", "link": "#"},
-        {"nome": "Caixa Som Bluetooth", "preco": "120.00", "imagem": "https://picsum.photos/400?id=48", "link": "#"}
+        {"nome": "Smartwatch Serie 9 Pro", "preco": "299.00", "imagem": "https://picsum.photos/400?id=11", "link": "#"},
+        {"nome": "Fone Noise Cancelling", "preco": "180.00", "imagem": "https://picsum.photos/400?id=12", "link": "#"},
+        {"nome": "Caixa Som Bluetooth 20W", "preco": "120.00", "imagem": "https://picsum.photos/400?id=13", "link": "#"}
       ]
     },
     {
@@ -41,14 +39,9 @@
       "id": "beleza",
       "icone": "https://cdn-icons-png.flaticon.com/512/194/194931.png",
       "produtos": [
-        {"nome": "Kit Maquiagem", "preco": "150.00", "imagem": "https://picsum.photos/400?id=22", "link": "#"},
-        {"nome": "Perfume Importado", "preco": "280.00", "imagem": "https://picsum.photos/400?id=23", "link": "#"}
+        {"nome": "Kit Maquiagem Profissional", "preco": "150.00", "imagem": "https://picsum.photos/400?id=14", "link": "#"},
+        {"nome": "Perfume Importado 100ml", "preco": "280.00", "imagem": "https://picsum.photos/400?id=15", "link": "#"}
       ]
-    },
-    { "nome": "🚗 Veículos", "id": "veiculos", "icone": "https://cdn-icons-png.flaticon.com/512/741/741407.png", "produtos": [{"nome": "Som Automotivo", "preco": "190.00", "imagem": "https://picsum.photos/400?id=31", "link": "#"}] },
-    { "nome": "🛠 Ferramentas", "id": "ferramentas", "icone": "https://cdn-icons-png.flaticon.com/512/2972/2972185.png", "produtos": [{"nome": "Parafusadeira", "preco": "280.00", "imagem": "https://picsum.photos/400?id=34", "link": "#"}] },
-    { "nome": "🧸 Brinquedos", "id": "brinquedos", "icone": "https://cdn-icons-png.flaticon.com/512/3082/3082060.png", "produtos": [{"nome": "Drone HD", "preco": "350.00", "imagem": "https://picsum.photos/400?id=66", "link": "#"}] },
-    { "nome": "🎮 Games", "id": "games", "icone": "https://cdn-icons-png.flaticon.com/512/686/686589.png", "produtos": [{"nome": "Controle PS5", "preco": "399.00", "imagem": "https://picsum.photos/400?id=78", "link": "#"}] },
-    { "nome": "📚 Livros", "id": "livros", "icone": "https://cdn-icons-png.flaticon.com/512/2232/2232688.png", "produtos": [{"nome": "Box Harry Potter", "preco": "150.00", "imagem": "https://picsum.photos/400?id=81", "link": "#"}] }
+    }
   ]
 }
