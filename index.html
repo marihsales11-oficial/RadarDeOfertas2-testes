@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radar de Ofertas</title>
+    <title>Radar de Ofertas | Promoções Reais</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header class="header">
-        <div class="logo"><i class="fas fa-radar"></i> RADAR<span>DEOFERTAS</span></div>
+        <div class="logo">
+            <div class="logo-icon"><i class="fas fa-satellite-dish"></i></div>
+            <div class="logo-text">RADAR<span>DEOFERTAS</span></div>
+        </div>
+        
         <div class="search-box">
-            <input type="text" id="busca" placeholder="O que você quer comprar hoje?">
+            <input type="text" id="busca" placeholder="O que você procura hoje?">
             <i class="fas fa-search"></i>
         </div>
     </header>
@@ -22,13 +26,14 @@
     <main class="container main-layout">
         <aside class="sidebar">
             <div class="filter-group">
-                <h4><i class="fas fa-list"></i> Categorias</h4>
+                <h4>Categorias</h4>
                 <div id="sidebar-cats"></div>
             </div>
         </aside>
 
         <section class="content">
-            <div id="lista-produtos" class="grid-produtos"></div>
+            <div id="lista-produtos" class="grid-produtos">
+                </div>
             
             <div class="footer-carousel-section">
                 <h3>Explore por Categorias</h3>
@@ -40,7 +45,7 @@
 
             <footer class="footer-note">
                 <div class="note-box">
-                    <p>O <strong>Radar de Ofertas</strong> é um monitor de achados. Ao clicar, você será direcionado ao site oficial para finalizar a compra com segurança.</p>
+                    <p>O <strong>Radar de Ofertas</strong> é um monitor de achados. Ao clicar, você será direcionado ao site oficial da loja para finalizar a compra com segurança através do nosso link de parceiro.</p>
                 </div>
             </footer>
         </section>
