@@ -8,14 +8,14 @@ const secaoExpirando = document.getElementById("secao-expirando");
 const menuTopo = document.getElementById("menu-topo");
 const sidebarMenu = document.getElementById("sidebar-cats");
 const footerCats = document.getElementById("footer-cats");
+const footerLinks = document.getElementById("footer-links");
 
-async function init() {
+async function carregarSite() {
     try {
         const res = await fetch('produtos.json');
         const data = await res.json();
         categoriasData = data.categorias;
 
-        // Processa produtos
         categoriasData.forEach(cat => {
             cat.produtos.forEach(p => {
                 p.catId = cat.id;
@@ -23,22 +23,23 @@ async function init() {
             });
         });
 
-        montarMenus();
+        desenharInterface();
         renderizar();
         iniciarTimer();
-    } catch (e) { console.error("Erro ao carregar:", e); }
+    } catch (e) { console.error("Erro:", e); }
 }
 
-function montarMenus() {
-    const addBotaoTodos = (container, classe) => {
-        const btn = document.createElement("div");
-        btn.className = classe; btn.innerHTML = "<strong>⭐ TODAS</strong>";
-        btn.onclick = () => { filtroAtivo = "todos"; renderizar(); };
-        container.appendChild(btn);
+function desenharInterface() {
+    // Botão "TUDAS"
+    const addAll = (parent, type) => {
+        const el = document.createElement("div");
+        el.className = type; el.innerHTML = "<strong>⭐ TODAS</strong>";
+        el.onclick = () => { filtroAtivo = "todos"; renderizar(); window.scrollTo(0,0); };
+        parent.appendChild(el);
     };
 
-    addBotaoTodos(menuTopo, "nav-link");
-    addBotaoTodos(sidebarMenu, "cat-item");
+    addAll(menuTopo, "nav-link");
+    addAll(sidebarMenu, "cat-item");
 
     categoriasData.forEach(cat => {
         if(cat.id === "expirando") return;
@@ -46,21 +47,27 @@ function montarMenus() {
         // Topo
         const t = document.createElement("a");
         t.className = "nav-link"; t.innerText = cat.nome;
-        t.onclick = () => { filtroAtivo = cat.id; renderizar(); };
+        t.onclick = () => { filtroAtivo = cat.id; renderizar(); window.scrollTo(0,0); };
         menuTopo.appendChild(t);
 
-        // Sidebar
+        // Lateral
         const s = document.createElement("div");
         s.className = "cat-item"; s.innerText = cat.nome;
-        s.onclick = () => { filtroAtivo = cat.id; renderizar(); };
+        s.onclick = () => { filtroAtivo = cat.id; renderizar(); window.scrollTo(0,0); };
         sidebarMenu.appendChild(s);
 
-        // Footer
-        const f = document.createElement("div");
-        f.className = "cat-card";
-        f.innerHTML = `<img src="${cat.icone}"><p>${cat.nome.split(',')[0]}</p>`;
-        f.onclick = () => { filtroAtivo = cat.id; renderizar(); window.scrollTo(0,0); };
-        footerCats.appendChild(f);
+        // Rodapé (Carousel)
+        const c = document.createElement("div");
+        c.className = "cat-card";
+        c.innerHTML = `<img src="${cat.icone}"><p>${cat.nome.split(',')[0]}</p>`;
+        c.onclick = () => { filtroAtivo = cat.id; renderizar(); window.scrollTo(0,0); };
+        footerCats.appendChild(c);
+
+        // Footer Links
+        const l = document.createElement("li");
+        l.innerText = cat.nome;
+        l.onclick = () => { filtroAtivo = cat.id; renderizar(); window.scrollTo(0,0); };
+        footerLinks.appendChild(l);
     });
 }
 
@@ -69,41 +76,34 @@ function renderizar() {
     gridExpirando.innerHTML = "";
     const sort = document.getElementById("sort-price").value;
 
-    // 1. Lógica Ofertas Expirando (Sempre visível se filtro for 'todos')
-    const catExp = categoriasData.find(c => c.id === "expirando");
-    if(filtroAtivo === "todos" && catExp) {
+    // Seção Expirando
+    if(filtroAtivo === "todos") {
         secaoExpirando.style.display = "block";
-        catExp.produtos.forEach(p => gridExpirando.appendChild(criarCard(p)));
+        categoriasData.find(c => c.id === "expirando").produtos.forEach(p => gridExpirando.appendChild(criarCard(p)));
     } else {
         secaoExpirando.style.display = "none";
     }
 
-    // 2. Lógica Grid Principal
     let lista = filtroAtivo === "todos" ? [...todosProdutos] : todosProdutos.filter(p => p.catId === filtroAtivo);
-    
+
     if(sort === "low") lista.sort((a,b) => parseFloat(a.preco) - parseFloat(b.preco));
     if(sort === "high") lista.sort((a,b) => parseFloat(b.preco) - parseFloat(a.preco));
 
-    document.getElementById("titulo-pagina").innerText = filtroAtivo === "todos" ? "Todos os Produtos" : `Categoria: ${filtroAtivo}`;
+    document.getElementById("titulo-pagina").innerText = filtroAtivo === "todos" ? "Todos os Produtos" : `Categoria: ${filtroAtivo.toUpperCase()}`;
     lista.forEach(p => gridPrincipal.appendChild(criarCard(p)));
 }
 
 function criarCard(p) {
     const d = document.createElement("div"); d.className = "card";
-    d.innerHTML = `
-        <img src="${p.imagem}" loading="lazy">
-        <h3>${p.nome}</h3>
-        <p class="preco">R$ ${p.preco}</p>
-        <a href="${p.link}" target="_blank" class="btn-comprar">VER OFERTA</a>
-    `;
+    d.innerHTML = `<img src="${p.imagem}" loading="lazy"><h3>${p.nome}</h3><p class="preco">R$ ${p.preco}</p><a href="${p.link}" target="_blank" class="btn-comprar">VER OFERTA</a>`;
     return d;
 }
 
 function iniciarTimer() {
     setInterval(() => {
-        const agora = new Date();
-        const fim = new Date(); fim.setHours(23, 59, 59);
-        const diff = fim - agora;
+        const now = new Date();
+        const end = new Date(); end.setHours(23, 59, 59);
+        const diff = end - now;
         const h = Math.floor(diff/3600000).toString().padStart(2,'0');
         const m = Math.floor((diff%3600000)/60000).toString().padStart(2,'0');
         const s = Math.floor((diff%60000)/1000).toString().padStart(2,'0');
@@ -114,11 +114,11 @@ function iniciarTimer() {
 function scrollCarousel(id) { document.getElementById(id).scrollBy({ left: 300, behavior: 'smooth' }); }
 
 document.getElementById("sort-price").onchange = renderizar;
-document.getElementById("busca").oninput = (e) => {
-    const t = e.target.value.toLowerCase();
-    const res = todosProdutos.filter(p => p.nome.toLowerCase().includes(t));
+document.getElementById("busca").addEventListener("input", (e) => {
+    const val = e.target.value.toLowerCase();
+    const res = todosProdutos.filter(p => p.nome.toLowerCase().includes(val));
     gridPrincipal.innerHTML = "";
     res.forEach(p => gridPrincipal.appendChild(criarCard(p)));
-};
+});
 
-init();
+carregarSite();
