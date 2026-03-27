@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radar de Ofertas | O Portal dos Achados</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Radar de Ofertas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,23 +12,15 @@
     <header class="header">
         <div class="logo"><i class="fas fa-radar"></i> RADAR<span>DEOFERTAS</span></div>
         <div class="search-box">
-            <input type="text" id="busca" placeholder="O que você quer comprar barato hoje?">
+            <input type="text" id="busca" placeholder="O que você quer comprar hoje?">
             <i class="fas fa-search"></i>
         </div>
     </header>
 
-    <nav class="nav-shopee" id="menu-categorias"></nav>
+    <nav class="nav-bar" id="menu-topo"></nav>
 
     <main class="container main-layout">
         <aside class="sidebar">
-            <div class="filter-group">
-                <h4><i class="fas fa-sort"></i> Ordenar</h4>
-                <select id="sort-price">
-                    <option value="default">Destaques</option>
-                    <option value="low">Menor Preço</option>
-                    <option value="high">Maior Preço</option>
-                </select>
-            </div>
             <div class="filter-group">
                 <h4><i class="fas fa-list"></i> Categorias</h4>
                 <div id="sidebar-cats"></div>
@@ -36,8 +28,21 @@
         </aside>
 
         <section class="content">
-            <div id="area-expirando"></div>
-            <div id="lista-produtos"></div>
+            <div id="lista-produtos" class="grid-produtos"></div>
+            
+            <div class="footer-carousel-section">
+                <h3>Explore por Categorias</h3>
+                <div class="carousel-wrapper">
+                    <div class="carousel-cats" id="footer-cats"></div>
+                    <div class="nav-arrow" onclick="scrollCarousel('footer-cats')"><i class="fas fa-chevron-right"></i></div>
+                </div>
+            </div>
+
+            <footer class="footer-note">
+                <div class="note-box">
+                    <p>O <strong>Radar de Ofertas</strong> é um monitor de achados. Ao clicar, você será direcionado ao site oficial para finalizar a compra com segurança.</p>
+                </div>
+            </footer>
         </section>
     </main>
 
