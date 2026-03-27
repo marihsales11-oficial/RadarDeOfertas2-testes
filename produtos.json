@@ -1,47 +1,35 @@
 {
   "categorias": [
     {
-      "nome": "👔 Roupas",
-      "id": "roupas",
-      "icone": "https://cdn-icons-png.flaticon.com/512/3159/3159620.png",
+      "nome": "⚡ Ofertas Expirando",
+      "id": "expirando",
+      "icone": "https://cdn-icons-png.flaticon.com/512/744/744922.png",
       "produtos": [
-        {"nome": "Camiseta Algodão Egípcio", "preco": "79.90", "imagem": "https://picsum.photos/400?id=1", "link": "#"},
-        {"nome": "Calça Jeans Slim Fit", "preco": "149.00", "imagem": "https://picsum.photos/400?id=2", "link": "#"},
-        {"nome": "Jaqueta Corta Vento Sport", "preco": "119.00", "imagem": "https://picsum.photos/400?id=3", "link": "#"},
-        {"nome": "Tênis Casual Branco", "preco": "199.00", "imagem": "https://picsum.photos/400?id=4", "link": "#"},
-        {"nome": "Moletom Canguru Unissex", "preco": "129.00", "imagem": "https://picsum.photos/400?id=5", "link": "#"}
+        {"nome": "Smart TV 50' 4K Ultra HD Wi-Fi", "preco": "2199.00", "imagem": "https://picsum.photos/400?id=101", "link": "#"},
+        {"nome": "Air Fryer Digital 5L Inox", "preco": "429.90", "imagem": "https://picsum.photos/400?id=102", "link": "#"}
       ]
     },
-    {
-      "nome": "🏠 Casa e Decoração",
-      "id": "casa",
-      "icone": "https://cdn-icons-png.flaticon.com/512/619/619153.png",
-      "produtos": [
-        {"nome": "Jogo de Panelas Antiaderente", "preco": "350.00", "imagem": "https://picsum.photos/400?id=6", "link": "#"},
-        {"nome": "Tapete Sala Soft 2x1.5m", "preco": "120.00", "imagem": "https://picsum.photos/400?id=7", "link": "#"},
-        {"nome": "Abajur Moderno Wood", "preco": "65.00", "imagem": "https://picsum.photos/400?id=8", "link": "#"},
-        {"nome": "Mesa de Centro Industrial", "preco": "210.00", "imagem": "https://picsum.photos/400?id=9", "link": "#"},
-        {"nome": "Quadro Decorativo Canvas", "preco": "45.00", "imagem": "https://picsum.photos/400?id=10", "link": "#"}
-      ]
-    },
-    {
-      "nome": "💻 Eletrônicos",
-      "id": "eletronicos",
-      "icone": "https://cdn-icons-png.flaticon.com/512/2777/2777142.png",
-      "produtos": [
-        {"nome": "Smartwatch Serie 9 Pro", "preco": "299.00", "imagem": "https://picsum.photos/400?id=11", "link": "#"},
-        {"nome": "Fone Noise Cancelling", "preco": "180.00", "imagem": "https://picsum.photos/400?id=12", "link": "#"},
-        {"nome": "Caixa Som Bluetooth 20W", "preco": "120.00", "imagem": "https://picsum.photos/400?id=13", "link": "#"}
-      ]
-    },
-    {
-      "nome": "💄 Beleza",
-      "id": "beleza",
-      "icone": "https://cdn-icons-png.flaticon.com/512/194/194931.png",
-      "produtos": [
-        {"nome": "Kit Maquiagem Profissional", "preco": "150.00", "imagem": "https://picsum.photos/400?id=14", "link": "#"},
-        {"nome": "Perfume Importado 100ml", "preco": "280.00", "imagem": "https://picsum.photos/400?id=15", "link": "#"}
-      ]
-    }
+    { "nome": "Casa, Móveis e Decoração", "id": "casa", "icone": "https://cdn-icons-png.flaticon.com/512/619/619153.png", "produtos": [{"nome": "Jogo de Panelas 5pçs", "preco": "350.00", "imagem": "https://picsum.photos/400?id=1", "link": "#"}] },
+    { "nome": "Esportes e Fitness", "id": "esportes", "icone": "https://cdn-icons-png.flaticon.com/512/3012/3012411.png", "produtos": [{"nome": "Kit Halteres 10kg", "preco": "120.00", "imagem": "https://picsum.photos/400?id=2", "link": "#"}] },
+    { "nome": "Eletrodomésticos", "id": "eletro", "icone": "https://cdn-icons-png.flaticon.com/512/2850/2850931.png", "produtos": [{"nome": "Batedeira Planetária", "preco": "450.00", "imagem": "https://picsum.photos/400?id=3", "link": "#"}] },
+    { "nome": "Calçados, Roupas e Bolsas", "id": "moda", "icone": "https://cdn-icons-png.flaticon.com/512/3159/3159620.png", "produtos": [{"nome": "Tênis Esportivo Nitro", "preco": "199.00", "imagem": "https://picsum.photos/400?id=4", "link": "#"}] },
+    { "nome": "Beleza e Cuidado Pessoal", "id": "beleza", "icone": "https://cdn-icons-png.flaticon.com/512/194/194931.png", "produtos": [{"nome": "Secador Profissional", "preco": "220.00", "imagem": "https://picsum.photos/400?id=5", "link": "#"}] },
+    { "nome": "Informática", "id": "informatica", "icone": "https://cdn-icons-png.flaticon.com/512/2777/2777142.png", "produtos": [{"nome": "Mouse Gamer RGB", "preco": "85.00", "imagem": "https://picsum.photos/400?id=6", "link": "#"}] },
+    { "nome": "Saúde", "id": "saude", "icone": "https://cdn-icons-png.flaticon.com/512/2966/2966327.png", "produtos": [{"nome": "Medidor de Pressão", "preco": "115.00", "imagem": "https://picsum.photos/400?id=7", "link": "#"}] },
+    { "nome": "Acessórios para Veículos", "id": "veiculos", "icone": "https://cdn-icons-png.flaticon.com/512/741/741407.png", "produtos": [{"nome": "Câmera de Ré Full HD", "preco": "89.00", "imagem": "https://picsum.photos/400?id=8", "link": "#"}] },
+    { "nome": "Ferramentas", "id": "ferramentas", "icone": "https://cdn-icons-png.flaticon.com/512/2972/2972185.png", "produtos": [{"nome": "Parafusadeira Bateria", "preco": "280.00", "imagem": "https://picsum.photos/400?id=9", "link": "#"}] },
+    { "nome": "Construção", "id": "construcao", "icone": "https://cdn-icons-png.flaticon.com/512/4333/4333639.png", "produtos": [{"nome": "Torneira Gourmet", "preco": "185.00", "imagem": "https://picsum.photos/400?id=10", "link": "#"}] },
+    { "nome": "Indústria e Comércio", "id": "industria", "icone": "https://cdn-icons-png.flaticon.com/512/2897/2897850.png", "produtos": [{"nome": "Balança Digital 40kg", "preco": "140.00", "imagem": "https://picsum.photos/400?id=11", "link": "#"}] },
+    { "nome": "Celulares e Telefones", "id": "celulares", "icone": "https://cdn-icons-png.flaticon.com/512/2586/2586488.png", "produtos": [{"nome": "iPhone 13 128GB", "preco": "3600.00", "imagem": "https://picsum.photos/400?id=12", "link": "#"}] },
+    { "nome": "Eletrônicos, Áudio e Vídeo", "id": "eletronicos_av", "icone": "https://cdn-icons-png.flaticon.com/512/3221/3221845.png", "produtos": [{"nome": "Caixa JBL Flip 6", "preco": "550.00", "imagem": "https://picsum.photos/400?id=13", "link": "#"}] },
+    { "nome": "Pet Shop", "id": "pet", "icone": "https://cdn-icons-png.flaticon.com/512/616/616408.png", "produtos": [{"nome": "Ração Premium 15kg", "preco": "175.00", "imagem": "https://picsum.photos/400?id=14", "link": "#"}] },
+    { "nome": "Bebês", "id": "bebes", "icone": "https://cdn-icons-png.flaticon.com/512/1043/1043231.png", "produtos": [{"nome": "Carrinho de Bebê", "preco": "680.00", "imagem": "https://picsum.photos/400?id=15", "link": "#"}] },
+    { "nome": "Brinquedos e Hobbies", "id": "brinquedos", "icone": "https://cdn-icons-png.flaticon.com/512/3082/3082060.png", "produtos": [{"nome": "Lego Star Wars", "preco": "299.00", "imagem": "https://picsum.photos/400?id=16", "link": "#"}] },
+    { "nome": "Joias e Relógios", "id": "joias", "icone": "https://cdn-icons-png.flaticon.com/512/2210/2210606.png", "produtos": [{"nome": "Relógio Casio Classic", "preco": "165.00", "imagem": "https://picsum.photos/400?id=17", "link": "#"}] },
+    { "nome": "Instrumentos Musicais", "id": "musica", "icone": "https://cdn-icons-png.flaticon.com/512/3221/3221845.png", "produtos": [{"nome": "Violão Giannini Acústico", "preco": "420.00", "imagem": "https://picsum.photos/400?id=18", "link": "#"}] },
+    { "nome": "Arte, Papelaria e Armarinho", "id": "arte", "icone": "https://cdn-icons-png.flaticon.com/512/2232/2232688.png", "produtos": [{"nome": "Kit Canetas Brush", "preco": "85.00", "imagem": "https://picsum.photos/400?id=19", "link": "#"}] },
+    { "nome": "Games", "id": "games", "icone": "https://cdn-icons-png.flaticon.com/512/686/686589.png", "produtos": [{"nome": "Controle DualSense PS5", "preco": "399.00", "imagem": "https://picsum.photos/400?id=20", "link": "#"}] },
+    { "nome": "Livros, Revista e Comics", "id": "livros", "icone": "https://cdn-icons-png.flaticon.com/512/3389/3389081.png", "produtos": [{"nome": "Box Coleção Especial", "preco": "130.00", "imagem": "https://picsum.photos/400?id=21", "link": "#"}] },
+    { "nome": "Câmeras e Acessórios", "id": "cameras", "icone": "https://cdn-icons-png.flaticon.com/512/685/685655.png", "produtos": [{"nome": "Tripé Profissional 1.8m", "preco": "145.00", "imagem": "https://picsum.photos/400?id=22", "link": "#"}] }
   ]
 }
