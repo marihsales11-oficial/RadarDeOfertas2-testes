@@ -7,44 +7,60 @@ const areaExpirando = document.getElementById("area-expirando");
 const sidebarMenu = document.getElementById("sidebar-cats");
 const menuTopo = document.getElementById("menu-categorias");
 
+// 1. Carregar dados do JSON
 fetch("produtos.json")
-    .then(res => res.json())
+    .then(res => {
+        if (!res.ok) throw new Error("Erro ao carregar JSON");
+        return res.json();
+    })
     .then(data => {
         categoriasData = data.categorias;
         
-        // Embaralha categoria de interesse
+        // Interesse aleatório
         const rec = categoriasData.find(c => c.id === 'recomendados');
         if(rec) rec.produtos.sort(() => Math.random() - 0.5);
 
         setupInterface();
         renderizar();
         iniciarTimer();
+    })
+    .catch(err => {
+        gridPrincipal.innerHTML = "<p style='padding:20px;'>Erro ao carregar ofertas. Verifique o arquivo produtos.json.</p>";
+        console.error(err);
     });
 
+// 2. Montar menus
 function setupInterface() {
+    sidebarMenu.innerHTML = "";
+    menuTopo.innerHTML = "";
+    
     categoriasData.forEach(cat => {
+        // Sidebar
         const itemSide = document.createElement("div");
         itemSide.className = "cat-item"; itemSide.innerText = cat.nome;
         itemSide.onclick = () => { filtroAtivo = cat.id; renderizar(); };
         sidebarMenu.appendChild(itemSide);
 
+        // Menu Topo
         const linkTop = document.createElement("a");
         linkTop.className = "nav-link"; linkTop.innerText = cat.nome;
         linkTop.href = `#${cat.id}`;
+        linkTop.onclick = (e) => { e.preventDefault(); filtroAtivo = cat.id; renderizar(); };
         menuTopo.appendChild(linkTop);
 
         cat.produtos.forEach(p => { p.catId = cat.id; todosProdutos.push(p); });
     });
 }
 
+// 3. Renderizar Grids e Carrosséis
 function renderizar() {
     gridPrincipal.innerHTML = "";
     areaExpirando.innerHTML = "";
 
     let lista = filtroAtivo === "todos" ? [...todosProdutos] : todosProdutos.filter(p => p.catId === filtroAtivo);
     const sort = document.getElementById("sort-price").value;
-    if(sort === "low") lista.sort((a,b) => a.preco - b.preco);
-    if(sort === "high") lista.sort((a,b) => b.preco - a.preco);
+    if(sort === "low") lista.sort((a,b) => parseFloat(a.preco) - parseFloat(b.preco));
+    if(sort === "high") lista.sort((a,b) => parseFloat(b.preco) - parseFloat(a.preco));
 
     if(filtroAtivo === "todos" && sort === "default") {
         categoriasData.forEach(cat => {
@@ -68,7 +84,7 @@ function renderizar() {
                 const sec = document.createElement("section");
                 sec.id = cat.id;
                 sec.innerHTML = `
-                    <h2 style="margin: 20px 0; border-left: 5px solid #2d3277; padding-left: 10px;">${cat.nome}</h2>
+                    <h2 style="margin: 30px 0 15px 0; border-left: 5px solid #2d3277; padding-left: 10px; font-size: 1.4rem;">${cat.nome}</h2>
                     <div class="carousel-container">
                         <div class="grid" id="grid-${cat.id}"></div>
                         <div class="nav-arrow" onclick="scrollGrid('grid-${cat.id}')"><i class="fas fa-chevron-right"></i></div>
@@ -81,7 +97,7 @@ function renderizar() {
         });
     } else {
         const sec = document.createElement("section");
-        sec.innerHTML = `<h2 style="margin: 20px 0;">Resultados</h2><div class="grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));"></div>`;
+        sec.innerHTML = `<h2 style="margin: 20px 0;">Exibindo ${filtroAtivo}</h2><div class="grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));"></div>`;
         const grid = sec.querySelector(".grid");
         lista.forEach(p => grid.appendChild(criarCard(p)));
         gridPrincipal.appendChild(sec);
@@ -90,12 +106,17 @@ function renderizar() {
 
 function scrollGrid(id) {
     const grid = document.getElementById(id);
-    grid.scrollBy({ left: 300, behavior: 'smooth' });
+    grid.scrollBy({ left: 400, behavior: 'smooth' });
 }
 
 function criarCard(p) {
     const div = document.createElement("div"); div.className = "card";
-    div.innerHTML = `<img src="${p.imagem}"><h3>${p.nome}</h3><p class="preco">R$ ${p.preco}</p><a href="${p.link}" target="_blank" class="btn-comprar">VER OFERTA</a>`;
+    div.innerHTML = `
+        <img src="${p.imagem}" loading="lazy">
+        <h3>${p.nome}</h3>
+        <p class="preco">R$ ${p.preco}</p>
+        <a href="${p.link}" target="_blank" class="btn-comprar">VER OFERTA</a>
+    `;
     return div;
 }
 
@@ -112,10 +133,14 @@ function iniciarTimer() {
 }
 
 document.getElementById("sort-price").onchange = renderizar;
-document.getElementById("busca").oninput = (e) => {
+document.getElementById("busca").addEventListener("input", (e) => {
     const t = e.target.value.toLowerCase();
     if(!t) { renderizar(); return; }
     const res = todosProdutos.filter(p => p.nome.toLowerCase().includes(t));
     areaExpirando.innerHTML = ""; gridPrincipal.innerHTML = "";
-    gridPrincipal.appendChild(criarSecao(`Busca: ${t}`, res));
-};
+    const sec = document.createElement("section");
+    sec.innerHTML = `<h2 style="margin: 20px 0;">Busca por: ${t}</h2><div class="grid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));"></div>`;
+    const grid = sec.querySelector(".grid");
+    res.forEach(p => grid.appendChild(criarCard(p)));
+    gridPrincipal.appendChild(sec);
+});
