@@ -1,25 +1,41 @@
 {
   "categorias": [
     {
+      "nome": "⚡ Ofertas Expirando",
+      "id": "expirando",
+      "produtos": [
+        {
+          "nome": "Smart TV 50 Polegadas 4K - Promoção",
+          "descricao": "Melhor imagem para sua sala. Oferta por tempo limitado.",
+          "imagem": "https://picsum.photos/400?id=10",
+          "preco": "2199,00",
+          "link": "https://link-afiliado.com/tv4k"
+        }
+      ]
+    },
+    {
       "nome": "🔥 Mais vendidos",
       "id": "maisvendidos",
       "produtos": [
         {
           "nome": "Garrafa Térmica Academia Inox",
-          "descricao": "Mantém a bebida gelada ou quente por horas. Produto campeão de vendas.",
+          "descricao": "Mantém a bebida gelada ou quente por horas.",
           "imagem": "https://picsum.photos/400?1",
+          "preco": "59,90",
           "link": "https://link-afiliado.com/p1"
         },
         {
           "nome": "Fone Bluetooth Sem Fio",
           "descricao": "Som potente e bateria de longa duração.",
           "imagem": "https://picsum.photos/400?2",
+          "preco": "129,00",
           "link": "https://link-afiliado.com/p2"
         },
         {
           "nome": "Relógio Smartwatch Esportivo",
           "descricao": "Monitora atividades físicas e saúde.",
           "imagem": "https://picsum.photos/400?3",
+          "preco": "199,00",
           "link": "https://link-afiliado.com/p3"
         }
       ]
@@ -32,12 +48,14 @@
           "nome": "Luminária LED Moderna",
           "descricao": "Perfeita para decoração de ambientes.",
           "imagem": "https://picsum.photos/400?4",
+          "preco": "89,00",
           "link": "https://link-afiliado.com/p4"
         },
         {
           "nome": "Organizador Multiuso",
           "descricao": "Ideal para cozinha e escritório.",
           "imagem": "https://picsum.photos/400?5",
+          "preco": "45,00",
           "link": "https://link-afiliado.com/p5"
         }
       ]
@@ -50,12 +68,14 @@
           "nome": "Mouse Gamer RGB",
           "descricao": "Alta precisão para jogos.",
           "imagem": "https://picsum.photos/400?6",
+          "preco": "79,90",
           "link": "https://link-afiliado.com/p6"
         },
         {
           "nome": "Teclado Mecânico LED",
           "descricao": "Teclas rápidas e duráveis.",
           "imagem": "https://picsum.photos/400?7",
+          "preco": "159,00",
           "link": "https://link-afiliado.com/p7"
         }
       ]
@@ -68,12 +88,14 @@
           "nome": "Corda de Pular Profissional",
           "descricao": "Treino cardio eficiente.",
           "imagem": "https://picsum.photos/400?8",
+          "preco": "29,90",
           "link": "https://link-afiliado.com/p8"
         },
         {
           "nome": "Kit Elásticos Academia",
           "descricao": "Treino completo em casa.",
           "imagem": "https://picsum.photos/400?9",
+          "preco": "67,00",
           "link": "https://link-afiliado.com/p9"
         }
       ]
