@@ -3,55 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radar de Ofertas | O seu Monitor de Preços Profissional</title>
+    <title>Radar de Ofertas | O Portal dos Achados</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header class="header">
-        <div class="logo"><i class="fas fa-search-dollar"></i> RADAR<span>DEOFERTAS</span></div>
+        <div class="logo"><i class="fas fa-radar"></i> RADAR<span>DEOFERTAS</span></div>
         <div class="search-box">
-            <input type="text" id="busca" placeholder="O que você quer comprar barato hoje?">
+            <input type="text" id="busca" placeholder="O que você quer comprar hoje?">
             <i class="fas fa-search"></i>
         </div>
     </header>
 
-    <nav class="nav-categories" id="menu-categorias"></nav>
+    <nav class="nav-shopee" id="menu-categorias"></nav>
 
-    <section class="banner-urgencia">
-        <div class="countdown-container">
-            <h3><i class="fas fa-bolt"></i> OFERTAS QUE EXPIRAM EM: <span id="timer">00:00:00</span></h3>
-        </div>
-    </section>
-
-    <div class="main-layout container">
+    <main class="container main-layout">
         <aside class="sidebar">
             <div class="filter-group">
-                <h4><i class="fas fa-sort-amount-down"></i> Ordenar por</h4>
+                <h4><i class="fas fa-sort"></i> Ordenar</h4>
                 <select id="sort-price">
-                    <option value="default">Relevância</option>
+                    <option value="default">Destaques</option>
                     <option value="low">Menor Preço</option>
                     <option value="high">Maior Preço</option>
                 </select>
             </div>
-
             <div class="filter-group">
-                <h4><i class="fas fa-tags"></i> Categorias</h4>
-                <div id="filter-categories-list">
-                    </div>
+                <h4><i class="fas fa-list"></i> Categorias</h4>
+                <div id="sidebar-cats"></div>
             </div>
         </aside>
 
-        <main class="content">
-            <div id="sessao-urgente"></div>
-            <div id="produtos-container"></div>
-        </main>
-    </div>
-
-    <footer class="footer">
-        <p><center><strong>Radar de Ofertas</strong> &copy; 2026 - Melhores achados do Mercado Livre.</center></p>
-    </footer>
+        <section class="content">
+            <div id="area-expirando"></div>
+            <div id="lista-produtos"></div>
+            
+            <footer class="footer-note">
+                <div class="note-box">
+                    <h3><i class="fas fa-shield-alt"></i> Compra Segura e Transparente</h3>
+                    <p>O <strong>Radar de Ofertas</strong> atua como um monitor de achados. Ao clicar em "Ver Oferta", você será redirecionado para o <strong>site oficial do marketplace parceiro</strong> para concluir sua compra com total segurança.</p>
+                    <p>Não processamos pagamentos nem enviamos produtos. A responsabilidade pela venda, entrega e suporte pós-venda é inteiramente da plataforma de destino e seus respectivos vendedores.</p>
+                </div>
+            </footer>
+        </section>
+    </main>
 
     <script src="script.js"></script>
 </body>
