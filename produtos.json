@@ -4,101 +4,151 @@
       "nome": "⚡ Ofertas Expirando",
       "id": "expirando",
       "produtos": [
-        {
-          "nome": "Smart TV 50 Polegadas 4K - Promoção",
-          "descricao": "Melhor imagem para sua sala. Oferta por tempo limitado.",
-          "imagem": "https://picsum.photos/400?id=10",
-          "preco": "2199,00",
-          "link": "https://link-afiliado.com/tv4k"
-        }
+        {"nome": "Smart TV 50' 4K Ultra HD", "preco": "2199.00", "imagem": "https://picsum.photos/400?id=101", "link": "#"},
+        {"nome": "Air Fryer Digital 5L", "preco": "429.90", "imagem": "https://picsum.photos/400?id=102", "link": "#"},
+        {"nome": "Smartphone 5G 256GB", "preco": "1899.00", "imagem": "https://picsum.photos/400?id=103", "link": "#"},
+        {"nome": "Monitor 24' IPS 75Hz", "preco": "699.00", "imagem": "https://picsum.photos/400?id=104", "link": "#"}
       ]
     },
     {
-      "nome": "🔥 Mais vendidos",
-      "id": "maisvendidos",
+      "nome": "👔 Mais vendidos da semana em roupas",
+      "id": "roupas-semana",
       "produtos": [
-        {
-          "nome": "Garrafa Térmica Academia Inox",
-          "descricao": "Mantém a bebida gelada ou quente por horas.",
-          "imagem": "https://picsum.photos/400?1",
-          "preco": "59,90",
-          "link": "https://link-afiliado.com/p1"
-        },
-        {
-          "nome": "Fone Bluetooth Sem Fio",
-          "descricao": "Som potente e bateria de longa duração.",
-          "imagem": "https://picsum.photos/400?2",
-          "preco": "129,00",
-          "link": "https://link-afiliado.com/p2"
-        },
-        {
-          "nome": "Relógio Smartwatch Esportivo",
-          "descricao": "Monitora atividades físicas e saúde.",
-          "imagem": "https://picsum.photos/400?3",
-          "preco": "199,00",
-          "link": "https://link-afiliado.com/p3"
-        }
+        {"nome": "Camiseta Algodão Egípcio", "preco": "79.90", "imagem": "https://picsum.photos/400?id=201", "link": "#"},
+        {"nome": "Calça Jeans Slim Fit", "preco": "149.00", "imagem": "https://picsum.photos/400?id=202", "link": "#"},
+        {"nome": "Jaqueta Corta Vento Sport", "preco": "119.00", "imagem": "https://picsum.photos/400?id=203", "link": "#"},
+        {"nome": "Tênis Casual Branco Premium", "preco": "199.00", "imagem": "https://picsum.photos/400?id=204", "link": "#"},
+        {"nome": "Moletom Canguru Unissex", "preco": "129.00", "imagem": "https://picsum.photos/400?id=205", "link": "#"},
+        {"nome": "Bermuda Chino Sarja", "preco": "85.00", "imagem": "https://picsum.photos/400?id=206", "link": "#"}
       ]
     },
     {
-      "nome": "🏠 Casa e Decoração",
-      "id": "casa",
+      "nome": "🔥 Ofertas do Dia",
+      "id": "ofertasdia",
       "produtos": [
-        {
-          "nome": "Luminária LED Moderna",
-          "descricao": "Perfeita para decoração de ambientes.",
-          "imagem": "https://picsum.photos/400?4",
-          "preco": "89,00",
-          "link": "https://link-afiliado.com/p4"
-        },
-        {
-          "nome": "Organizador Multiuso",
-          "descricao": "Ideal para cozinha e escritório.",
-          "imagem": "https://picsum.photos/400?5",
-          "preco": "45,00",
-          "link": "https://link-afiliado.com/p5"
-        }
+        {"nome": "Fone Bluetooth Bass Pro", "preco": "159.00", "imagem": "https://picsum.photos/400?id=1", "link": "#"},
+        {"nome": "Cafeteira Automática 220V", "preco": "489.00", "imagem": "https://picsum.photos/400?id=2", "link": "#"},
+        {"nome": "Mochila Antifurto USB", "preco": "120.00", "imagem": "https://picsum.photos/400?id=3", "link": "#"}
       ]
     },
     {
-      "nome": "💻 Eletrônicos",
-      "id": "eletronicos",
+      "nome": "✨ Você também pode estar interessado(a)",
+      "id": "recomendados",
       "produtos": [
-        {
-          "nome": "Mouse Gamer RGB",
-          "descricao": "Alta precisão para jogos.",
-          "imagem": "https://picsum.photos/400?6",
-          "preco": "79,90",
-          "link": "https://link-afiliado.com/p6"
-        },
-        {
-          "nome": "Teclado Mecânico LED",
-          "descricao": "Teclas rápidas e duráveis.",
-          "imagem": "https://picsum.photos/400?7",
-          "preco": "159,00",
-          "link": "https://link-afiliado.com/p7"
-        }
+        {"nome": "Kit Ferramentas Profissional", "preco": "250.00", "imagem": "https://picsum.photos/400?id=50", "link": "#"},
+        {"nome": "Monitor Gamer Curvo 27'", "preco": "1250.00", "imagem": "https://picsum.photos/400?id=51", "link": "#"},
+        {"nome": "Cadeira Ergonômica Mesh", "preco": "550.00", "imagem": "https://picsum.photos/400?id=52", "link": "#"}
       ]
     },
-    {
-      "nome": "🏃 Fitness",
-      "id": "fitness",
-      "produtos": [
-        {
-          "nome": "Corda de Pular Profissional",
-          "descricao": "Treino cardio eficiente.",
-          "imagem": "https://picsum.photos/400?8",
-          "preco": "29,90",
-          "link": "https://link-afiliado.com/p8"
-        },
-        {
-          "nome": "Kit Elásticos Academia",
-          "descricao": "Treino completo em casa.",
-          "imagem": "https://picsum.photos/400?9",
-          "preco": "67,00",
-          "link": "https://link-afiliado.com/p9"
-        }
-      ]
-    }
+    { "nome": "Casa, Móveis e Decoração", "id": "casa", "produtos": [
+        {"nome": "Jogo de Panelas Antiaderente", "preco": "350.00", "imagem": "https://picsum.photos/400?id=10", "link": "#"},
+        {"nome": "Cortina Blackout 3m", "preco": "120.00", "imagem": "https://picsum.photos/400?id=11", "link": "#"},
+        {"nome": "Quadro Decorativo Abstrato", "preco": "65.00", "imagem": "https://picsum.photos/400?id=12", "link": "#"}
+    ]},
+    { "nome": "Esportes e Fitness", "id": "esportes", "produtos": [
+        {"nome": "Tapete Yoga TPE", "preco": "89.00", "imagem": "https://picsum.photos/400?id=13", "link": "#"},
+        {"nome": "Smartband Monitor Cardíaco", "preco": "199.00", "imagem": "https://picsum.photos/400?id=14", "link": "#"},
+        {"nome": "Bola de Futebol Profissional", "preco": "145.00", "imagem": "https://picsum.photos/400?id=15", "link": "#"}
+    ]},
+    { "nome": "Eletrodomésticos", "id": "eletro", "produtos": [
+        {"nome": "Liquidificador Turbo 1200W", "preco": "210.00", "imagem": "https://picsum.photos/400?id=16", "link": "#"},
+        {"nome": "Batedeira Planetária", "preco": "399.00", "imagem": "https://picsum.photos/400?id=17", "link": "#"},
+        {"nome": "Ferro de Passar a Vapor", "preco": "115.00", "imagem": "https://picsum.photos/400?id=18", "link": "#"}
+    ]},
+    { "nome": "Calçados, Roupas e Bolsas", "id": "moda", "produtos": [
+        {"nome": "Tênis Esportivo Casual", "preco": "175.00", "imagem": "https://picsum.photos/400?id=19", "link": "#"},
+        {"nome": "Relógio Digital Sport", "preco": "95.00", "imagem": "https://picsum.photos/400?id=20", "link": "#"},
+        {"nome": "Bolsa de Ombro Elegante", "preco": "140.00", "imagem": "https://picsum.photos/400?id=21", "link": "#"}
+    ]},
+    { "nome": "Beleza e Cuidado Pessoal", "id": "beleza", "produtos": [
+        {"nome": "Kit Maquiagem Completo", "preco": "185.00", "imagem": "https://picsum.photos/400?id=22", "link": "#"},
+        {"nome": "Máquina de Cortar Cabelo", "preco": "125.00", "imagem": "https://picsum.photos/400?id=23", "link": "#"},
+        {"nome": "Escova Secadora 3 em 1", "preco": "165.00", "imagem": "https://picsum.photos/400?id=24", "link": "#"}
+    ]},
+    { "nome": "Informática", "id": "informatica", "produtos": [
+        {"nome": "SSD 480GB SATA III", "preco": "220.00", "imagem": "https://picsum.photos/400?id=25", "link": "#"},
+        {"nome": "Headset Gamer com Mic", "preco": "145.00", "imagem": "https://picsum.photos/400?id=26", "link": "#"},
+        {"nome": "Roteador Dual Band Giga", "preco": "285.00", "imagem": "https://picsum.photos/400?id=27", "link": "#"}
+    ]},
+    { "nome": "Saúde", "id": "saude", "produtos": [
+        {"nome": "Oxímetro de Dedo Digital", "preco": "75.00", "imagem": "https://picsum.photos/400?id=28", "link": "#"},
+        {"nome": "Massageador de Pescoço", "preco": "130.00", "imagem": "https://picsum.photos/400?id=29", "link": "#"},
+        {"nome": "Suporte Corretor Postural", "preco": "45.00", "imagem": "https://picsum.photos/400?id=30", "link": "#"}
+    ]},
+    { "nome": "Acessórios para Veículos", "id": "veiculos", "produtos": [
+        {"nome": "Aspirador de Pó Carro", "preco": "95.00", "imagem": "https://picsum.photos/400?id=31", "link": "#"},
+        {"nome": "Suporte Celular Magnético", "preco": "35.00", "imagem": "https://picsum.photos/400?id=32", "link": "#"},
+        {"nome": "Kit Palhetas Limpador", "preco": "60.00", "imagem": "https://picsum.photos/400?id=33", "link": "#"}
+    ]},
+    { "nome": "Ferramentas", "id": "ferramentas", "produtos": [
+        {"nome": "Martelete Perfurador", "preco": "450.00", "imagem": "https://picsum.photos/400?id=34", "link": "#"},
+        {"nome": "Esmerilhadeira Angular", "preco": "280.00", "imagem": "https://picsum.photos/400?id=35", "link": "#"},
+        {"nome": "Trena Laser 40m", "preco": "115.00", "imagem": "https://picsum.photos/400?id=36", "link": "#"}
+    ]},
+    { "nome": "Construção", "id": "construcao", "produtos": [
+        {"nome": "Interfone com Câmera", "preco": "550.00", "imagem": "https://picsum.photos/400?id=37", "link": "#"},
+        {"nome": "Lustre Pendente Moderno", "preco": "190.00", "imagem": "https://picsum.photos/400?id=38", "link": "#"},
+        {"nome": "Sensor de Presença LED", "preco": "45.00", "imagem": "https://picsum.photos/400?id=39", "link": "#"}
+    ]},
+    { "nome": "Indústria e Comércio", "id": "industria", "produtos": [
+        {"nome": "Impressora Térmica Etiquetas", "preco": "320.00", "imagem": "https://picsum.photos/400?id=40", "link": "#"},
+        {"nome": "Scanner de Código de Barras", "preco": "145.00", "imagem": "https://picsum.photos/400?id=41", "link": "#"},
+        {"nome": "Grampeador Pneumático", "preco": "290.00", "imagem": "https://picsum.photos/400?id=42", "link": "#"}
+    ]},
+    { "nome": "Celulares e Telefones", "id": "celulares", "produtos": [
+        {"nome": "Carregador Rápido 33W", "preco": "65.00", "imagem": "https://picsum.photos/400?id=43", "link": "#"},
+        {"nome": "Capa Silicone Anti-impacto", "preco": "25.00", "imagem": "https://picsum.photos/400?id=44", "link": "#"},
+        {"nome": "Suporte Mesa Celular", "preco": "30.00", "imagem": "https://picsum.photos/400?id=45", "link": "#"}
+    ]},
+    { "nome": "Eletrônicos, Áudio e Vídeo", "id": "eletronicos", "produtos": [
+        {"nome": "Adaptador Bluetooth P2", "preco": "45.00", "imagem": "https://picsum.photos/400?id=46", "link": "#"},
+        {"nome": "Antena Digital HDTV", "preco": "55.00", "imagem": "https://picsum.photos/400?id=47", "link": "#"},
+        {"nome": "Mini Projetor Led", "preco": "380.00", "imagem": "https://picsum.photos/400?id=48", "link": "#"}
+    ]},
+    { "nome": "Pet Shop", "id": "pet", "produtos": [
+        {"nome": "Arranhador para Gatos", "preco": "120.00", "imagem": "https://picsum.photos/400?id=60", "link": "#"},
+        {"nome": "Coleira Peitoral Ajustável", "preco": "45.00", "imagem": "https://picsum.photos/400?id=61", "link": "#"},
+        {"nome": "Bebedouro Automático Cães", "preco": "85.00", "imagem": "https://picsum.photos/400?id=62", "link": "#"}
+    ]},
+    { "nome": "Bebês", "id": "bebes", "produtos": [
+        {"nome": "Andador Infantil Musical", "preco": "210.00", "imagem": "https://picsum.photos/400?id=63", "link": "#"},
+        {"nome": "Tapete Atividades Bebê", "preco": "145.00", "imagem": "https://picsum.photos/400?id=64", "link": "#"},
+        {"nome": "Bolsa Maternidade Térmica", "preco": "130.00", "imagem": "https://picsum.photos/400?id=65", "link": "#"}
+    ]},
+    { "nome": "Brinquedos e Hobbies", "id": "brinquedos", "produtos": [
+        {"nome": "Carrinho Controle Remoto", "preco": "115.00", "imagem": "https://picsum.photos/400?id=66", "link": "#"},
+        {"nome": "Boneca Articulada Grande", "preco": "95.00", "imagem": "https://picsum.photos/400?id=67", "link": "#"},
+        {"nome": "Jogo de Tabuleiro Clássico", "preco": "85.00", "imagem": "https://picsum.photos/400?id=68", "link": "#"}
+    ]},
+    { "nome": "Joias e Relógios", "id": "joias", "produtos": [
+        {"nome": "Colar Feminino Banhado Ouro", "preco": "110.00", "imagem": "https://picsum.photos/400?id=69", "link": "#"},
+        {"nome": "Par de Alianças Compromisso", "preco": "145.00", "imagem": "https://picsum.photos/400?id=70", "link": "#"},
+        {"nome": "Relógio Unissex Pulseira Nylon", "preco": "75.00", "imagem": "https://picsum.photos/400?id=71", "link": "#"}
+    ]},
+    { "nome": "Instrumentos Musicais", "id": "musica", "produtos": [
+        {"nome": "Capa Violão Almofadada", "preco": "65.00", "imagem": "https://picsum.photos/400?id=72", "link": "#"},
+        {"nome": "Encordoamento Violão Aço", "preco": "45.00", "imagem": "https://picsum.photos/400?id=73", "link": "#"},
+        {"nome": "Palhetas Kit 12 unidades", "preco": "30.00", "imagem": "https://picsum.photos/400?id=74", "link": "#"}
+    ]},
+    { "nome": "Arte, Papelaria e Armarinho", "id": "arte", "produtos": [
+        {"nome": "Estojo 100 Pens Escolar", "preco": "85.00", "imagem": "https://picsum.photos/400?id=75", "link": "#"},
+        {"nome": "Papel Fotográfico A4", "preco": "45.00", "imagem": "https://picsum.photos/400?id=76", "link": "#"},
+        {"nome": "Lápis de Cor 60 Cores", "preco": "135.00", "imagem": "https://picsum.photos/400?id=77", "link": "#"}
+    ]},
+    { "nome": "Games", "id": "games", "produtos": [
+        {"nome": "Mousepad Gamer Extra G", "preco": "55.00", "imagem": "https://picsum.photos/400?id=78", "link": "#"},
+        {"nome": "Carregador Controle PS5", "preco": "120.00", "imagem": "https://picsum.photos/400?id=79", "link": "#"},
+        {"nome": "Headset Entrada P3", "preco": "95.00", "imagem": "https://picsum.photos/400?id=80", "link": "#"}
+    ]},
+    { "nome": "Livros, Revista e Comics", "id": "livros", "produtos": [
+        {"nome": "Luminária de Leitura Clip", "preco": "35.00", "imagem": "https://picsum.photos/400?id=81", "link": "#"},
+        {"nome": "Marca Páginas Magnético", "preco": "20.00", "imagem": "https://picsum.photos/400?id=82", "link": "#"},
+        {"nome": "Estante de Livros Modular", "preco": "180.00", "imagem": "https://picsum.photos/400?id=83", "link": "#"}
+    ]},
+    { "nome": "Câmeras e Acessórios", "id": "cameras", "produtos": [
+        {"nome": "Tripé Flexível Celular", "preco": "45.00", "imagem": "https://picsum.photos/400?id=84", "link": "#"},
+        {"nome": "Bolsa Transporte Câmera", "preco": "110.00", "imagem": "https://picsum.photos/400?id=85", "link": "#"},
+        {"nome": "Lente 50mm f/1.8", "preco": "850.00", "imagem": "https://picsum.photos/400?id=86", "link": "#"}
+    ]}
   ]
 }
