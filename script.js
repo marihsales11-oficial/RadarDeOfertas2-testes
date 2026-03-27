@@ -7,46 +7,63 @@ const sidebarMenu = document.getElementById("sidebar-cats");
 const menuTopo = document.getElementById("menu-topo");
 const footerCats = document.getElementById("footer-cats");
 
-fetch("produtos.json")
-    .then(res => res.json())
-    .then(data => {
+// Carregamento de dados com tratamento de erro
+async function carregarDados() {
+    try {
+        const response = await fetch('produtos.json');
+        if (!response.ok) throw new Error("Erro ao carregar JSON");
+        const data = await response.json();
+        
         categoriasData = data.categorias;
+        
+        // Achata todos os produtos em uma lista única
         categoriasData.forEach(cat => {
-            cat.produtos.forEach(p => { p.catId = cat.id; todosProdutos.push(p); });
+            cat.produtos.forEach(p => {
+                p.catId = cat.id;
+                todosProdutos.push(p);
+            });
         });
+
         setupInterface();
         renderizar();
-    });
+    } catch (error) {
+        console.error("Erro crítico:", error);
+        gridProdutos.innerHTML = "<p style='grid-column: 1/-1; text-align:center; padding:50px;'>Ops! Não foi possível carregar os produtos. Verifique se o arquivo 'produtos.json' está na mesma pasta.</p>";
+    }
+}
 
 function setupInterface() {
-    // Botão Todas as Categorias no Topo e Sidebar
-    const btnTodos = document.createElement("a");
-    btnTodos.className = "nav-link"; btnTodos.innerText = "⭐ Todas as Categorias";
-    btnTodos.onclick = () => { filtroAtivo = "todos"; renderizar(); };
-    menuTopo.appendChild(btnTodos);
+    // Botão "Todas as Categorias"
+    const criarBtnTodos = (container, classe) => {
+        const btn = document.createElement("div");
+        btn.className = classe;
+        btn.innerHTML = "<strong>⭐ TODAS</strong>";
+        btn.onclick = () => { filtroAtivo = "todos"; renderizar(); window.scrollTo(0,0); };
+        container.appendChild(btn);
+    };
 
-    const sideTodos = document.createElement("div");
-    sideTodos.className = "cat-item"; sideTodos.innerHTML = "<strong>⭐ Todas as Categorias</strong>";
-    sideTodos.onclick = () => { filtroAtivo = "todos"; renderizar(); };
-    sidebarMenu.appendChild(sideTodos);
+    criarBtnTodos(menuTopo, "nav-link");
+    criarBtnTodos(sidebarMenu, "cat-item");
 
     categoriasData.forEach(cat => {
         // Menu Topo
         const link = document.createElement("a");
-        link.className = "nav-link"; link.innerText = cat.nome;
-        link.onclick = () => { filtroAtivo = cat.id; renderizar(); };
+        link.className = "nav-link";
+        link.innerText = cat.nome;
+        link.onclick = () => { filtroAtivo = cat.id; renderizar(); window.scrollTo(0,0); };
         menuTopo.appendChild(link);
 
         // Sidebar
         const sideItem = document.createElement("div");
-        sideItem.className = "cat-item"; sideItem.innerText = cat.nome;
-        sideItem.onclick = () => { filtroAtivo = cat.id; renderizar(); };
+        sideItem.className = "cat-item";
+        sideItem.innerText = cat.nome;
+        sideItem.onclick = () => { filtroAtivo = cat.id; renderizar(); window.scrollTo(0,0); };
         sidebarMenu.appendChild(sideItem);
 
-        // Carrossel Rodapé (Ícones)
+        // Carrossel Rodapé
         const catCard = document.createElement("div");
         catCard.className = "cat-card";
-        catCard.innerHTML = `<img src="${cat.icone}"><p>${cat.nome}</p>`;
+        catCard.innerHTML = `<img src="${cat.icone}"><p>${cat.nome.split(' ')[1] || cat.nome}</p>`;
         catCard.onclick = () => { filtroAtivo = cat.id; renderizar(); window.scrollTo(0,0); };
         footerCats.appendChild(catCard);
     });
@@ -54,33 +71,40 @@ function setupInterface() {
 
 function renderizar() {
     gridProdutos.innerHTML = "";
-    let lista = filtroAtivo === "todos" ? todosProdutos : todosProdutos.filter(p => p.catId === filtroAtivo);
-    
-    lista.forEach(p => {
-        const div = document.createElement("div");
-        div.className = "card";
-        div.innerHTML = `
-            <img src="${p.imagem}" loading="lazy">
+    const listaFiltrada = filtroAtivo === "todos" 
+        ? todosProdutos 
+        : todosProdutos.filter(p => p.catId === filtroAtivo);
+
+    listaFiltrada.forEach(p => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+            <img src="${p.imagem}" alt="${p.nome}" loading="lazy">
             <h3>${p.nome}</h3>
             <p class="preco">R$ ${p.preco}</p>
             <a href="${p.link}" target="_blank" class="btn-comprar">VER OFERTA</a>
         `;
-        gridProdutos.appendChild(div);
+        gridProdutos.appendChild(card);
     });
 }
 
 function scrollCarousel(id) {
-    document.getElementById(id).scrollBy({ left: 200, behavior: 'smooth' });
+    document.getElementById(id).scrollBy({ left: 300, behavior: 'smooth' });
 }
 
-document.getElementById("busca").oninput = (e) => {
-    const t = e.target.value.toLowerCase();
-    const res = todosProdutos.filter(p => p.nome.toLowerCase().includes(t));
+// Busca em Tempo Real
+document.getElementById("busca").addEventListener("input", (e) => {
+    const termo = e.target.value.toLowerCase();
+    const resultados = todosProdutos.filter(p => p.nome.toLowerCase().includes(termo));
+    
     gridProdutos.innerHTML = "";
-    res.forEach(p => {
-        const div = document.createElement("div");
-        div.className = "card";
-        div.innerHTML = `<img src="${p.imagem}"><h3>${p.nome}</h3><p class="preco">R$ ${p.preco}</p><a href="${p.link}" class="btn-comprar">VER OFERTA</a>`;
-        gridProdutos.appendChild(div);
+    resultados.forEach(p => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `<img src="${p.imagem}"><h3>${p.nome}</h3><p class="preco">R$ ${p.preco}</p><a href="${p.link}" class="btn-comprar">VER OFERTA</a>`;
+        gridProdutos.appendChild(card);
     });
-};
+});
+
+// Inicializa
+carregarDados();
