@@ -2,109 +2,123 @@ let todosProdutos = [];
 let categoriasData = [];
 let filtroAtivo = "todos";
 
-const gridProdutos = document.getElementById("lista-produtos");
-const sidebarMenu = document.getElementById("sidebar-cats");
+const gridPrincipal = document.getElementById("lista-produtos");
+const gridExpirando = document.getElementById("grid-expirando");
+const secaoExpirando = document.getElementById("secao-expirando");
 const menuTopo = document.getElementById("menu-topo");
+const sidebarMenu = document.getElementById("sidebar-cats");
 const footerCats = document.getElementById("footer-cats");
 
-// Carregamento de dados com tratamento de erro
-async function carregarDados() {
+async function init() {
     try {
-        const response = await fetch('produtos.json');
-        if (!response.ok) throw new Error("Erro ao carregar JSON");
-        const data = await response.json();
-        
+        const res = await fetch('produtos.json');
+        const data = await res.json();
         categoriasData = data.categorias;
-        
-        // Achata todos os produtos em uma lista única
+
+        // Processa produtos
         categoriasData.forEach(cat => {
             cat.produtos.forEach(p => {
                 p.catId = cat.id;
-                todosProdutos.push(p);
+                if(cat.id !== "expirando") todosProdutos.push(p);
             });
         });
 
-        setupInterface();
+        montarMenus();
         renderizar();
-    } catch (error) {
-        console.error("Erro crítico:", error);
-        gridProdutos.innerHTML = "<p style='grid-column: 1/-1; text-align:center; padding:50px;'>Ops! Não foi possível carregar os produtos. Verifique se o arquivo 'produtos.json' está na mesma pasta.</p>";
-    }
+        iniciarTimer();
+    } catch (e) { console.error("Erro ao carregar:", e); }
 }
 
-function setupInterface() {
-    // Botão "Todas as Categorias"
-    const criarBtnTodos = (container, classe) => {
+function montarMenus() {
+    const addBotaoTodos = (container, classe) => {
         const btn = document.createElement("div");
-        btn.className = classe;
-        btn.innerHTML = "<strong>⭐ TODAS</strong>";
-        btn.onclick = () => { filtroAtivo = "todos"; renderizar(); window.scrollTo(0,0); };
+        btn.className = classe; btn.innerHTML = "<strong>⭐ TODAS</strong>";
+        btn.onclick = () => { filtroAtivo = "todos"; renderizar(); };
         container.appendChild(btn);
     };
 
-    criarBtnTodos(menuTopo, "nav-link");
-    criarBtnTodos(sidebarMenu, "cat-item");
+    addBotaoTodos(menuTopo, "nav-link");
+    addBotaoTodos(sidebarMenu, "cat-item");
 
     categoriasData.forEach(cat => {
-        // Menu Topo
-        const link = document.createElement("a");
-        link.className = "nav-link";
-        link.innerText = cat.nome;
-        link.onclick = () => { filtroAtivo = cat.id; renderizar(); window.scrollTo(0,0); };
-        menuTopo.appendChild(link);
+        if(cat.id === "expirando") return;
+
+        // Topo
+        const t = document.createElement("a");
+        t.className = "nav-link"; t.innerText = cat.nome;
+        t.onclick = () => { filtroAtivo = cat.id; renderizar(); };
+        menuTopo.appendChild(t);
 
         // Sidebar
-        const sideItem = document.createElement("div");
-        sideItem.className = "cat-item";
-        sideItem.innerText = cat.nome;
-        sideItem.onclick = () => { filtroAtivo = cat.id; renderizar(); window.scrollTo(0,0); };
-        sidebarMenu.appendChild(sideItem);
+        const s = document.createElement("div");
+        s.className = "cat-item"; s.innerText = cat.nome;
+        s.onclick = () => { filtroAtivo = cat.id; renderizar(); };
+        sidebarMenu.appendChild(s);
 
-        // Carrossel Rodapé
-        const catCard = document.createElement("div");
-        catCard.className = "cat-card";
-        catCard.innerHTML = `<img src="${cat.icone}"><p>${cat.nome.split(' ')[1] || cat.nome}</p>`;
-        catCard.onclick = () => { filtroAtivo = cat.id; renderizar(); window.scrollTo(0,0); };
-        footerCats.appendChild(catCard);
+        // Footer
+        const f = document.createElement("div");
+        f.className = "cat-card";
+        f.innerHTML = `<img src="${cat.icone}"><p>${cat.nome.split(',')[0]}</p>`;
+        f.onclick = () => { filtroAtivo = cat.id; renderizar(); window.scrollTo(0,0); };
+        footerCats.appendChild(f);
     });
 }
 
 function renderizar() {
-    gridProdutos.innerHTML = "";
-    const listaFiltrada = filtroAtivo === "todos" 
-        ? todosProdutos 
-        : todosProdutos.filter(p => p.catId === filtroAtivo);
+    gridPrincipal.innerHTML = "";
+    gridExpirando.innerHTML = "";
+    const sort = document.getElementById("sort-price").value;
 
-    listaFiltrada.forEach(p => {
-        const card = document.createElement("div");
-        card.className = "card";
-        card.innerHTML = `
-            <img src="${p.imagem}" alt="${p.nome}" loading="lazy">
-            <h3>${p.nome}</h3>
-            <p class="preco">R$ ${p.preco}</p>
-            <a href="${p.link}" target="_blank" class="btn-comprar">VER OFERTA</a>
-        `;
-        gridProdutos.appendChild(card);
-    });
-}
+    // 1. Lógica Ofertas Expirando (Sempre visível se filtro for 'todos')
+    const catExp = categoriasData.find(c => c.id === "expirando");
+    if(filtroAtivo === "todos" && catExp) {
+        secaoExpirando.style.display = "block";
+        catExp.produtos.forEach(p => gridExpirando.appendChild(criarCard(p)));
+    } else {
+        secaoExpirando.style.display = "none";
+    }
 
-function scrollCarousel(id) {
-    document.getElementById(id).scrollBy({ left: 300, behavior: 'smooth' });
-}
-
-// Busca em Tempo Real
-document.getElementById("busca").addEventListener("input", (e) => {
-    const termo = e.target.value.toLowerCase();
-    const resultados = todosProdutos.filter(p => p.nome.toLowerCase().includes(termo));
+    // 2. Lógica Grid Principal
+    let lista = filtroAtivo === "todos" ? [...todosProdutos] : todosProdutos.filter(p => p.catId === filtroAtivo);
     
-    gridProdutos.innerHTML = "";
-    resultados.forEach(p => {
-        const card = document.createElement("div");
-        card.className = "card";
-        card.innerHTML = `<img src="${p.imagem}"><h3>${p.nome}</h3><p class="preco">R$ ${p.preco}</p><a href="${p.link}" class="btn-comprar">VER OFERTA</a>`;
-        gridProdutos.appendChild(card);
-    });
-});
+    if(sort === "low") lista.sort((a,b) => parseFloat(a.preco) - parseFloat(b.preco));
+    if(sort === "high") lista.sort((a,b) => parseFloat(b.preco) - parseFloat(a.preco));
 
-// Inicializa
-carregarDados();
+    document.getElementById("titulo-pagina").innerText = filtroAtivo === "todos" ? "Todos os Produtos" : `Categoria: ${filtroAtivo}`;
+    lista.forEach(p => gridPrincipal.appendChild(criarCard(p)));
+}
+
+function criarCard(p) {
+    const d = document.createElement("div"); d.className = "card";
+    d.innerHTML = `
+        <img src="${p.imagem}" loading="lazy">
+        <h3>${p.nome}</h3>
+        <p class="preco">R$ ${p.preco}</p>
+        <a href="${p.link}" target="_blank" class="btn-comprar">VER OFERTA</a>
+    `;
+    return d;
+}
+
+function iniciarTimer() {
+    setInterval(() => {
+        const agora = new Date();
+        const fim = new Date(); fim.setHours(23, 59, 59);
+        const diff = fim - agora;
+        const h = Math.floor(diff/3600000).toString().padStart(2,'0');
+        const m = Math.floor((diff%3600000)/60000).toString().padStart(2,'0');
+        const s = Math.floor((diff%60000)/1000).toString().padStart(2,'0');
+        document.getElementById("timer").innerText = `${h}:${m}:${s}`;
+    }, 1000);
+}
+
+function scrollCarousel(id) { document.getElementById(id).scrollBy({ left: 300, behavior: 'smooth' }); }
+
+document.getElementById("sort-price").onchange = renderizar;
+document.getElementById("busca").oninput = (e) => {
+    const t = e.target.value.toLowerCase();
+    const res = todosProdutos.filter(p => p.nome.toLowerCase().includes(t));
+    gridPrincipal.innerHTML = "";
+    res.forEach(p => gridPrincipal.appendChild(criarCard(p)));
+};
+
+init();
