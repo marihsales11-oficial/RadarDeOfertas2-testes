@@ -1,68 +1,115 @@
 let categoriasData = [];
+let todosProdutos = [];
 let filtroAtivo = "todos";
-let expandido = false;
 
 async function carregarSite() {
     try {
         const res = await fetch('produtos.json');
         const data = await res.json();
         categoriasData = data.categorias;
+        
+        // Achata todos os produtos para busca rápida
+        categoriasData.forEach(cat => {
+            cat.produtos.forEach(p => {
+                p.catId = cat.id;
+                p.catNome = cat.nome;
+                todosProdutos.push(p);
+            });
+        });
+
         desenharInterface();
         renderizar();
         iniciarTimer();
-    } catch (e) { console.error("Erro ao carregar dados", e); }
+    } catch (e) { console.error(e); }
 }
 
 function desenharInterface() {
-    const filtrar = (id) => {
-        filtroAtivo = id;
-        renderizar();
-        window.scrollTo(0, 0);
-    };
+    const megaMenu = document.getElementById("mega-menu");
+    const mobileFilter = document.getElementById("mobile-category-filter");
+    const sidebar = document.getElementById("sidebar-cats");
 
-    // Preencher Menus
-    categoriasData.forEach((cat, index) => {
+    categoriasData.forEach(cat => {
         if(cat.id === "expirando") return;
 
-        // Mobile Filter & Nav Topo
+        // Mega Menu Desktop
+        const link = document.createElement("a");
+        link.innerText = cat.nome;
+        link.onclick = () => ativarFiltro(cat.id);
+        megaMenu.appendChild(link);
+
+        // Mobile Filter
         const mobLink = document.createElement("a");
         mobLink.className = "mob-filter-item";
         mobLink.innerText = cat.nome;
-        mobLink.onclick = () => filtrar(cat.id);
-        document.getElementById("mobile-category-filter").appendChild(mobLink);
-
-        const navLink = document.createElement("a");
-        navLink.className = "nav-link";
-        navLink.innerText = cat.nome;
-        navLink.onclick = () => filtrar(cat.id);
-        document.getElementById("menu-topo").appendChild(navLink);
+        mobLink.onclick = () => ativarFiltro(cat.id);
+        mobileFilter.appendChild(mobLink);
 
         // Sidebar
-        const sideLink = document.createElement("div");
-        sideLink.className = "cat-item";
-        sideLink.innerText = cat.nome;
-        sideLink.onclick = () => filtrar(cat.id);
-        document.getElementById("sidebar-cats").appendChild(sideLink);
-
-        // Grade Footer (ML) - Exibe 6 no desktop / 3 no mobile inicialmente
-        const c = document.createElement("a");
-        c.href = "javascript:void(0)";
-        c.className = `cat-card-ml ${index > 6 ? 'hidden' : ''}`;
-        c.innerHTML = `<img src="${cat.icone}"><span>${cat.nome}</span>`;
-        c.onclick = () => filtrar(cat.id);
-        document.getElementById("footer-cats").appendChild(c);
+        const sideItem = document.createElement("div");
+        sideItem.className = "cat-item";
+        sideItem.innerText = cat.nome;
+        sideItem.onclick = () => ativarFiltro(cat.id);
+        sidebar.appendChild(sideItem);
     });
 }
 
-function toggleCategorias() {
-    expandido = !expandido;
-    const cards = document.querySelectorAll('.cat-card-ml');
-    cards.forEach((card, index) => {
-        if (index > 6) card.classList.toggle('hidden', !expandido);
-    });
-    document.getElementById('btn-mostrar-mais').innerHTML = expandido ? 
-        'Mostrar menos categorias <i class="fas fa-chevron-up"></i>' : 
-        'Mostrar mais categorias <i class="fas fa-chevron-down"></i>';
+// BUSCA INTELIGENTE COM HIGHLIGHT
+const inputBusca = document.getElementById("busca");
+const suggestionsBox = document.getElementById("search-suggestions");
+
+inputBusca.addEventListener("input", (e) => {
+    const termo = e.target.value.toLowerCase();
+    suggestionsBox.innerHTML = "";
+
+    if (termo.length > 0) {
+        const matches = todosProdutos.filter(p => p.nome.toLowerCase().includes(termo)).slice(0, 8);
+        
+        if (matches.length > 0) {
+            suggestionsBox.style.display = "block";
+            matches.forEach(p => {
+                const div = document.createElement("div");
+                div.className = "suggestion-item";
+                
+                // Sublinha a letra correspondente
+                const regex = new RegExp(`(${termo})`, "gi");
+                const textoHighlight = p.nome.replace(regex, `<span class="highlight">$1</span>`);
+                
+                div.innerHTML = `<i class="fas fa-search" style="margin-right:10px; color:#ccc;"></i> ${textoHighlight}`;
+                
+                // Se clicar ou se for o nome exato, vai direto ao produto
+                div.onclick = () => {
+                    inputBusca.value = p.nome;
+                    irParaProduto(p);
+                };
+                suggestionsBox.appendChild(div);
+            });
+        } else {
+            suggestionsBox.style.display = "none";
+        }
+    } else {
+        suggestionsBox.style.display = "none";
+    }
+});
+
+function irParaProduto(produto) {
+    suggestionsBox.style.display = "none";
+    // Filtra a categoria do produto e faz scroll até ele
+    ativarFiltro(produto.catId);
+    setTimeout(() => {
+        const cards = document.querySelectorAll('.card h3');
+        cards.forEach(h3 => {
+            if(h3.innerText === produto.nome) {
+                h3.parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                h3.parentElement.style.boxShadow = "0 0 20px var(--accent)";
+            }
+        });
+    }, 300);
+}
+
+function ativarFiltro(id) {
+    filtroAtivo = id;
+    renderizar();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function renderizar() {
@@ -86,30 +133,23 @@ function renderizar() {
 
         const section = document.createElement("section");
         section.className = "category-section";
-        section.innerHTML = `
-            <a href="javascript:void(0)" class="category-title-link" onclick="ativarFiltro('${cat.id}')">
-                <h2 class="category-title">${cat.nome}</h2>
-            </a>
-            <div class="grid-layout"></div>
-        `;
-        
+        section.innerHTML = `<h2 class="category-title">${cat.nome}</h2><div class="grid-layout"></div>`;
         const grid = section.querySelector(".grid-layout");
         cat.produtos.forEach(p => grid.appendChild(criarCard(p)));
         container.appendChild(section);
     });
 }
 
-window.ativarFiltro = (id) => {
-    filtroAtivo = id;
-    renderizar();
-    window.scrollTo(0,0);
-};
-
 function criarCard(p) {
     const d = document.createElement("div"); d.className = "card";
-    d.innerHTML = `<img src="${p.imagem}" loading="lazy"><h3>${p.nome}</h3><p class="preco">R$ ${p.preco}</p><a href="${p.link}" class="btn-comprar">VER OFERTA</a>`;
+    d.innerHTML = `<img src="${p.imagem}"><h3>${p.nome}</h3><p class="preco">R$ ${p.preco}</p><a href="${p.link}" target="_blank" class="btn-comprar">VER OFERTA</a>`;
     return d;
 }
+
+// Fecha sugestões ao clicar fora
+document.addEventListener("click", (e) => {
+    if (!e.target.closest(".search-row")) suggestionsBox.style.display = "none";
+});
 
 function iniciarTimer() {
     setInterval(() => {
@@ -123,5 +163,4 @@ function iniciarTimer() {
     }, 1000);
 }
 
-document.getElementById("sort-price").onchange = renderizar;
 carregarSite();
