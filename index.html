@@ -2,8 +2,8 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Radar de Ofertas | Oficial</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radar de Ofertas | Site Oficial</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -11,13 +11,13 @@
 
     <header class="header">
         <div class="header-container">
-            <div class="logo" onclick="window.location.reload()">
+            <div class="logo">
                 <div class="logo-circle"><i class="fas fa-satellite-dish"></i></div>
                 <div class="logo-text">RADAR<span>DEOFERTAS</span></div>
             </div>
             <div class="search-box">
-                <input type="text" id="busca" placeholder="O que você busca hoje?">
-                <button id="btn-busca"><i class="fas fa-search"></i></button>
+                <input type="text" id="busca" placeholder="O que você está procurando?">
+                <i class="fas fa-search"></i>
             </div>
         </div>
     </header>
@@ -27,7 +27,7 @@
     <div class="main-wrapper">
         <aside class="sidebar">
             <div class="sidebar-box">
-                <h4>FILTRAR PREÇO</h4>
+                <h4>ORDENAR PREÇO</h4>
                 <select id="sort-price">
                     <option value="default">Relevância</option>
                     <option value="low">Menor Preço</option>
@@ -43,21 +43,20 @@
         <main class="content">
             <section id="secao-expirando" class="expirando-block">
                 <div class="expirando-header">
-                    <h2><i class="fas fa-clock"></i> OFERTAS EXPIRANDO</h2>
+                    <h2><i class="fas fa-bolt"></i> OFERTAS EXPIRANDO</h2>
                     <div id="timer" class="timer">00:00:00</div>
                 </div>
                 <div class="grid-layout" id="grid-expirando"></div>
             </section>
 
-            <h2 class="section-title" id="titulo-pagina">Principais Ofertas</h2>
+            <h2 class="section-title" id="titulo-pagina">Todos os Produtos</h2>
             <div id="lista-produtos" class="grid-layout"></div>
 
             <div class="category-carousel">
                 <h3>Explore Categorias</h3>
                 <div class="carousel-nav-wrapper">
-                    <button class="arrow-btn prev" onclick="scrollCarousel('footer-cats', -1)"><i class="fas fa-chevron-left"></i></button>
                     <div class="carousel-inner" id="footer-cats"></div>
-                    <button class="arrow-btn next" onclick="scrollCarousel('footer-cats', 1)"><i class="fas fa-chevron-right"></i></button>
+                    <button class="arrow-btn" onclick="scrollCarousel('footer-cats')"><i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
         </main>
@@ -66,24 +65,25 @@
     <footer class="main-footer">
         <div class="footer-grid">
             <div class="footer-col">
-                <h4>SOBRE O RADAR</h4>
-                <p>Tecnologia avançada para encontrar o menor preço nas maiores lojas do varejo.</p>
+                <h4>SOBRE NÓS</h4>
+                <p>O Radar de Ofertas é um portal independente que monitora preços e promoções nas maiores lojas do Brasil para você economizar tempo e dinheiro.</p>
             </div>
             <div class="footer-col">
-                <h4>LINKS ÚTEIS</h4>
+                <h4>CATEGORIAS</h4>
                 <ul id="footer-links"></ul>
             </div>
             <div class="footer-col">
                 <h4>SEGURANÇA</h4>
                 <div class="selos">
-                    <i class="fab fa-cc-visa fa-2x"></i>
-                    <i class="fab fa-cc-mastercard fa-2x"></i>
-                    <i class="fas fa-lock fa-2x"></i>
+                    <i class="fab fa-google-pay fa-2x"></i>
+                    <i class="fab fa-apple-pay fa-2x"></i>
+                    <i class="fas fa-shield-alt fa-2x"></i>
                 </div>
+                <p style="margin-top:15px">Site 100% Protegido</p>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2026 Radar de Ofertas - Compra Garantida e Segura</p>
+            <p>© 2026 Radar de Ofertas - Todos os direitos reservados. CNPJ: 00.000.000/0001-00</p>
         </div>
     </footer>
 
