@@ -3,46 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radar de Ofertas | Estilo ML</title>
+    <title>Radar de Ofertas | Estilo Mercado Livre</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header class="header">
-        <div class="header-container">
-            <div class="logo-row">
+        <div class="header-content-top">
+            <div class="header-container-ml">
                 <div class="logo">
                     <div class="logo-circle"><i class="fas fa-satellite-dish"></i></div>
                     <div class="logo-text">RADAR<span>DEOFERTAS</span></div>
                 </div>
+            </div>
+        </div>
+        <div class="header-content-search">
+            <div class="header-container-ml">
                 <div class="search-box">
                     <input type="text" id="busca" placeholder="Buscar produtos, marcas e muito mais...">
                     <button><i class="fas fa-search"></i></button>
                 </div>
             </div>
-            
-            <nav class="nav-ml">
-                <div class="category-dropdown">
-                    <button class="dropbtn">Categorias <i class="fas fa-chevron-down"></i></button>
-                    <div class="dropdown-content" id="menu-categorias-dt">
-                        </div>
-                </div>
-                <div class="nav-links-desktop">
-                    <a href="#">Ofertas do Dia</a>
-                    <a href="#">Histórico</a>
-                    <a href="#">Vender</a>
-                    <a href="#">Contato</a>
-                </div>
-            </nav>
+        </div>
+        <div class="header-content-nav">
+            <div class="header-container-ml">
+                <nav class="nav-ml">
+                    <div class="category-dropdown">
+                        <button class="dropbtn">Categorias <i class="fas fa-chevron-down"></i></button>
+                        <div class="dropdown-content" id="menu-categorias-dt">
+                            </div>
+                    </div>
+                </nav>
+            </div>
         </div>
     </header>
 
     <div class="mobile-category-bar" id="mobile-category-filter"></div>
 
-    <main class="main-container">
+    <main>
         <section id="secao-expirando" class="flash-deals-hero">
-            <div class="flash-container">
+            <div class="header-container-ml">
                 <div class="flash-header">
                     <div class="flash-title">
                         <i class="fas fa-bolt"></i>
@@ -58,21 +59,26 @@
             </div>
         </section>
 
-        <div class="content-layout">
+        <div class="main-container-ml">
             <div id="container-categorias">
                 </div>
+            
+            <div id="grid-produtos-infinito" class="flash-grid">
+                </div>
+            
+            <div id="loading" class="loading-spinner" style="display:none;">
+                <i class="fas fa-circle-notch fa-spin"></i> Carregando mais ofertas...
+            </div>
         </div>
     </main>
 
-    <footer class="main-footer">
-        <div class="footer-container">
+    <footer class="main-footer-ml">
+        <div class="main-container-ml">
             <section class="footer-categories-box">
-                <div class="footer-header-ml">
-                    <h3>Mais categorias</h3>
-                </div>
-                <div class="categories-grid-ml" id="footer-cats"></div>
-                <div class="show-more-container">
-                    <button id="btn-mostrar-mais" onclick="toggleCategorias()">
+                <div class="categories-grid-ml" id="footer-cats-grid">
+                    </div>
+                <div class="show-more-container-footer">
+                    <button id="btn-mostrar-mais-footer" onclick="toggleFooterCategorias()">
                         Mostrar mais <i class="fas fa-chevron-down"></i>
                     </button>
                 </div>
