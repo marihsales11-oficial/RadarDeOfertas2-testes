@@ -1,103 +1,123 @@
-let todosProdutos = [];
 let categoriasData = [];
 let filtroAtivo = "todos";
-
-const gridPrincipal = document.getElementById("lista-produtos");
-const gridExpirando = document.getElementById("grid-expirando");
-const secaoExpirando = document.getElementById("secao-expirando");
-const menuTopo = document.getElementById("menu-topo");
-const sidebarMenu = document.getElementById("sidebar-cats");
-const footerCats = document.getElementById("footer-cats");
 
 async function carregarSite() {
     try {
         const res = await fetch('produtos.json');
         const data = await res.json();
         categoriasData = data.categorias;
-
-        categoriasData.forEach(cat => {
-            cat.produtos.forEach(p => {
-                p.catId = cat.id;
-                if(cat.id !== "expirando") todosProdutos.push(p);
-            });
-        });
-
         desenharInterface();
         renderizar();
         iniciarTimer();
-    } catch (e) { console.error("Erro ao carregar dados:", e); }
+    } catch (e) { console.error("Erro:", e); }
 }
 
 function desenharInterface() {
-    const addAll = (parent, type) => {
-        const el = document.createElement("div");
-        el.className = type; el.innerHTML = "<strong>⭐ TODAS</strong>";
-        el.onclick = () => { filtroAtivo = "todos"; renderizar(); window.scrollTo(0,0); };
-        parent.appendChild(el);
+    const menuTopo = document.getElementById("menu-topo");
+    const sidebarMenu = document.getElementById("sidebar-cats");
+    const footerCats = document.getElementById("footer-cats");
+
+    // Botão Todas
+    const addNav = (name, id) => {
+        const t = document.createElement("a");
+        t.className = "nav-link"; t.innerText = name;
+        t.onclick = () => filtrar(id);
+        menuTopo.appendChild(t);
+
+        const s = document.createElement("div");
+        s.className = "cat-item"; s.innerText = name;
+        s.onclick = () => filtrar(id);
+        sidebarMenu.appendChild(s);
     };
 
-    addAll(menuTopo, "nav-link");
-    addAll(sidebarMenu, "cat-item");
+    addNav("⭐ TODAS", "todos");
 
     categoriasData.forEach(cat => {
         if(cat.id === "expirando") return;
-
-        // Nav Topo
-        const t = document.createElement("a");
-        t.className = "nav-link"; t.innerText = cat.nome;
-        t.onclick = () => { filtroAtivo = cat.id; renderizar(); window.scrollTo(0,0); };
-        menuTopo.appendChild(t);
-
-        // Sidebar
-        const s = document.createElement("div");
-        s.className = "cat-item"; s.innerText = cat.nome;
-        s.onclick = () => { filtroAtivo = cat.id; renderizar(); window.scrollTo(0,0); };
-        sidebarMenu.appendChild(s);
+        addNav(cat.nome, cat.id);
 
         // Footer Carousel
         const c = document.createElement("div");
         c.className = "cat-card";
-        c.innerHTML = `
-            <div class="cat-card-img-box"><img src="${cat.icone}"></div>
-            <div class="cat-card-text-box"><p>${cat.nome}</p></div>
-        `;
-        c.onclick = () => { filtroAtivo = cat.id; renderizar(); window.scrollTo(0,0); };
+        c.innerHTML = `<div class="cat-card-img-box"><img src="${cat.icone}"></div>
+                       <div class="cat-card-text-box"><p>${cat.nome}</p></div>`;
+        c.onclick = () => filtrar(cat.id);
         footerCats.appendChild(c);
     });
 }
 
+function filtrar(id) {
+    filtroAtivo = id;
+    renderizar();
+    window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
 function renderizar() {
-    gridPrincipal.innerHTML = "";
-    gridExpirando.innerHTML = "";
-    const sort = document.getElementById("sort-price").value;
+    const secoesCont = document.getElementById("secoes-por-categoria");
+    const gridEsp = document.getElementById("grid-especifico");
+    const gridExp = document.getElementById("grid-expirando");
+    const secExp = document.getElementById("secao-expirando");
 
-    if(filtroAtivo === "todos") {
-        secaoExpirando.style.display = "block";
+    secoesCont.innerHTML = "";
+    gridEsp.innerHTML = "";
+    gridExp.innerHTML = "";
+
+    if (filtroAtivo === "todos") {
+        gridEsp.style.display = "none";
+        secoesCont.style.display = "block";
+        secExp.style.display = "block";
+
+        // Expirando
         const exp = categoriasData.find(c => c.id === "expirando");
-        if(exp) exp.produtos.forEach(p => gridExpirando.appendChild(criarCard(p)));
+        exp.produtos.forEach(p => gridExp.appendChild(criarCard(p)));
+
+        // Uma fileira por categoria (Estilo Mercado Livre)
+        categoriasData.forEach(cat => {
+            if (cat.id === "expirando" || cat.produtos.length === 0) return;
+            
+            const row = document.createElement("section");
+            row.className = "category-row";
+            const rowId = `row-${cat.id}`;
+            row.innerHTML = `
+                <div class="row-header">
+                    <h3>Mais vendidos em ${cat.nome}</h3>
+                    <a onclick="filtrar('${cat.id}')">Ver todos</a>
+                </div>
+                <div class="carousel-container">
+                    <button class="arrow-btn left" onclick="scrollCarousel('${rowId}', -1)"><i class="fas fa-chevron-left"></i></button>
+                    <div class="row-inner" id="${rowId}"></div>
+                    <button class="arrow-btn right" onclick="scrollCarousel('${rowId}', 1)"><i class="fas fa-chevron-right"></i></button>
+                </div>`;
+            secoesCont.appendChild(row);
+            const inner = document.getElementById(rowId);
+            cat.produtos.forEach(p => inner.appendChild(criarCard(p)));
+        });
     } else {
-        secaoExpirando.style.display = "none";
+        secoesCont.style.display = "none";
+        secExp.style.display = "none";
+        gridEsp.style.display = "grid";
+        const cat = categoriasData.find(c => c.id === filtroAtivo);
+        cat.produtos.forEach(p => gridEsp.appendChild(criarCard(p)));
     }
-
-    let lista = (filtroAtivo === "todos") ? [...todosProdutos] : todosProdutos.filter(p => p.catId === filtroAtivo);
-
-    if(sort === "low") lista.sort((a,b) => parseFloat(a.preco) - parseFloat(b.preco));
-    if(sort === "high") lista.sort((a,b) => parseFloat(b.preco) - parseFloat(a.preco));
-
-    document.getElementById("titulo-pagina").innerText = filtroAtivo === "todos" ? "Todos os Produtos" : `Categoria: ${filtroAtivo}`;
-    lista.forEach(p => gridPrincipal.appendChild(criarCard(p)));
 }
 
 function criarCard(p) {
     const d = document.createElement("div"); d.className = "card";
-    d.innerHTML = `<img src="${p.imagem}" loading="lazy"><h3>${p.nome}</h3><p class="preco">R$ ${p.preco}</p><a href="${p.link}" target="_blank" class="btn-comprar">VER OFERTA</a>`;
+    d.innerHTML = `
+        <div class="tag-radar">OFERTA</div>
+        <img src="${p.imagem}" loading="lazy">
+        <div class="card-info">
+            <h3>${p.nome}</h3>
+            <p class="preco">R$ ${p.preco}</p>
+            <p class="envio-fake">Chegará grátis amanhã</p>
+            <a href="${p.link}" target="_blank" class="btn-comprar">VER OFERTA</a>
+        </div>`;
     return d;
 }
 
 function scrollCarousel(id, dir) {
     const el = document.getElementById(id);
-    const scrollAmount = 300;
-    el.scrollBy({ left: dir * scrollAmount, behavior: 'smooth' });
+    el.scrollBy({ left: dir * 400, behavior: 'smooth' });
 }
 
 function iniciarTimer() {
@@ -108,17 +128,8 @@ function iniciarTimer() {
         const h = Math.floor(diff/3600000).toString().padStart(2,'0');
         const m = Math.floor((diff%3600000)/60000).toString().padStart(2,'0');
         const s = Math.floor((diff%60000)/1000).toString().padStart(2,'0');
-        const t = document.getElementById("timer");
-        if(t) t.innerText = `${h}:${m}:${s}`;
+        document.getElementById("timer").innerText = `${h}:${m}:${s}`;
     }, 1000);
 }
-
-document.getElementById("sort-price").onchange = renderizar;
-document.getElementById("busca").addEventListener("input", (e) => {
-    const val = e.target.value.toLowerCase();
-    const res = todosProdutos.filter(p => p.nome.toLowerCase().includes(val));
-    gridPrincipal.innerHTML = "";
-    res.forEach(p => gridPrincipal.appendChild(criarCard(p)));
-});
 
 carregarSite();
