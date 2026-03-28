@@ -16,7 +16,7 @@
                 <div class="logo-text">RADAR<span>DEOFERTAS</span></div>
             </div>
             <div class="search-box">
-                <input type="text" id="busca" placeholder="O que você está procurando?">
+                <input type="text" id="busca" placeholder="O que você busca hoje?">
                 <button id="btn-busca"><i class="fas fa-search"></i></button>
             </div>
         </div>
@@ -27,7 +27,7 @@
     <div class="main-wrapper">
         <aside class="sidebar">
             <div class="sidebar-box">
-                <h4>ORDENAR PREÇO</h4>
+                <h4>FILTRAR PREÇO</h4>
                 <select id="sort-price">
                     <option value="default">Relevância</option>
                     <option value="low">Menor Preço</option>
@@ -43,21 +43,21 @@
         <main class="content">
             <section id="secao-expirando" class="expirando-block">
                 <div class="expirando-header">
-                    <h2><i class="fas fa-bolt"></i> OFERTAS EXPIRANDO</h2>
+                    <h2><i class="fas fa-clock"></i> OFERTAS EXPIRANDO</h2>
                     <div id="timer" class="timer">00:00:00</div>
                 </div>
                 <div class="grid-layout" id="grid-expirando"></div>
             </section>
 
-            <h2 class="section-title" id="titulo-pagina">Destaques do Dia</h2>
+            <h2 class="section-title" id="titulo-pagina">Principais Ofertas</h2>
             <div id="lista-produtos" class="grid-layout"></div>
 
             <div class="category-carousel">
                 <h3>Explore Categorias</h3>
                 <div class="carousel-nav-wrapper">
-                    <button class="arrow-btn left" onclick="scrollCarousel('footer-cats', -1)"><i class="fas fa-chevron-left"></i></button>
+                    <button class="arrow-btn prev" onclick="scrollCarousel('footer-cats', -1)"><i class="fas fa-chevron-left"></i></button>
                     <div class="carousel-inner" id="footer-cats"></div>
-                    <button class="arrow-btn right" onclick="scrollCarousel('footer-cats', 1)"><i class="fas fa-chevron-right"></i></button>
+                    <button class="arrow-btn next" onclick="scrollCarousel('footer-cats', 1)"><i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
         </main>
@@ -66,11 +66,11 @@
     <footer class="main-footer">
         <div class="footer-grid">
             <div class="footer-col">
-                <h4>INSTITUCIONAL</h4>
-                <p>O Radar de Ofertas monitora os maiores marketplaces para garantir que você sempre pague o menor valor com segurança.</p>
+                <h4>SOBRE O RADAR</h4>
+                <p>Tecnologia avançada para encontrar o menor preço nas maiores lojas do varejo.</p>
             </div>
             <div class="footer-col">
-                <h4>CATEGORIAS</h4>
+                <h4>LINKS ÚTEIS</h4>
                 <ul id="footer-links"></ul>
             </div>
             <div class="footer-col">
@@ -78,13 +78,12 @@
                 <div class="selos">
                     <i class="fab fa-cc-visa fa-2x"></i>
                     <i class="fab fa-cc-mastercard fa-2x"></i>
-                    <i class="fas fa-shield-alt fa-2x"></i>
+                    <i class="fas fa-lock fa-2x"></i>
                 </div>
-                <p style="margin-top:10px; font-size:11px;">Ambiente Criptografado</p>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2026 Radar de Ofertas - Encontre. Compare. Economize.</p>
+            <p>© 2026 Radar de Ofertas - Compra Garantida e Segura</p>
         </div>
     </footer>
 
