@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radar de Ofertas | Promoções e Descontos Oficiais</title>
-    <meta name="description" content="Encontre as melhores ofertas em eletrônicos, casa, moda e mais. O Radar de Ofertas direciona você para compras garantidamente seguras nos sites oficiais.">
-    <meta name="keywords" content="ofertas, descontos, radar de ofertas, comprar online, promoção, frete grátis, mercado livre oficial">
+    <title>Radar de Ofertas | Site Oficial</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -13,10 +11,10 @@
 
     <header class="header">
         <div class="header-container">
-            <a href="#" class="logo" onclick="location.reload()">
+            <div class="logo">
                 <div class="logo-circle"><i class="fas fa-satellite-dish"></i></div>
                 <div class="logo-text">RADAR<span>DEOFERTAS</span></div>
-            </a>
+            </div>
             <div class="search-box">
                 <input type="text" id="busca" placeholder="O que você está procurando?">
                 <i class="fas fa-search"></i>
@@ -29,11 +27,11 @@
     <div class="main-wrapper">
         <aside class="sidebar">
             <div class="sidebar-box">
-                <h4>ORDENAR POR PREÇO</h4>
+                <h4>ORDENAR PREÇO</h4>
                 <select id="sort-price">
-                    <option value="default">Mais relevantes</option>
-                    <option value="low">Menor preço</option>
-                    <option value="high">Maior preço</option>
+                    <option value="default">Relevância</option>
+                    <option value="low">Menor Preço</option>
+                    <option value="high">Maior Preço</option>
                 </select>
             </div>
             <div class="sidebar-box">
@@ -51,30 +49,49 @@
                 <div class="grid-layout" id="grid-expirando"></div>
             </section>
 
-            <h2 class="section-title" id="titulo-pagina">Destaques da Semana</h2>
-            <div id="lista-produtos">
-                </div>
+            <h2 class="section-title" id="titulo-pagina">Todos os Produtos</h2>
+            <div id="lista-produtos" class="grid-layout"></div>
         </main>
     </div>
 
     <footer class="main-footer">
         <div class="footer-container">
+            <section class="footer-categories">
+                <div class="footer-header">
+                    <h3>Categorias</h3>
+                    <a href="#" onclick="location.reload()">Mostrar todas as categorias</a>
+                </div>
+                <div class="carousel-container">
+                    <button class="arrow-btn left" onclick="scrollCarousel('footer-cats', -1)"><i class="fas fa-chevron-left"></i></button>
+                    <div class="carousel-inner" id="footer-cats"></div>
+                    <button class="arrow-btn right" onclick="scrollCarousel('footer-cats', 1)"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </section>
+
             <section class="footer-info">
                 <div class="info-item">
-                    <i class="fas fa-shield-alt fa-2x"></i>
-                    <h4>Compra Garantida</h4>
-                    <p>Você será direcionado ao site oficial do Marketplace. Compras 100% seguras.</p>
+                    <i class="far fa-credit-card fa-3x"></i>
+                    <h4>Escolha como pagar</h4>
+                    <p>Pague com cartão, boleto ou Pix. Parcele em até 12x com facilidade.</p>
                 </div>
                 <div class="info-item">
-                    <i class="fas fa-truck fa-2x"></i>
-                    <h4>Frete Rápido</h4>
-                    <p>Aproveite os melhores prazos de entrega do Brasil.</p>
+                    <i class="fas fa-box fa-3x"></i>
+                    <h4>Frete grátis e rápido</h4>
+                    <p>Aproveite benefícios de entrega em milhares de produtos.</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-user-shield fa-3x"></i>
+                    <h4>Segurança, do início ao fim</h4>
+                    <p>Proteção total em todas as suas compras e devolução fácil.</p>
                 </div>
             </section>
 
             <div class="footer-bottom">
-                <p>Copyright © 2026 Radar de Ofertas. Todos os direitos reservados.</p>
-                <p>O Radar de Ofertas atua como um buscador de descontos, redirecionando o usuário para finalização de compra em ambientes oficiais e seguros.</p>
+                <div class="bottom-links">
+                    <a href="#">Trabalhe conosco</a> | <a href="#">Termos e condições</a> | <a href="#">Privacidade</a> | <a href="#">Contato</a>
+                </div>
+                <p>Copyright © 1999-2026 Radar de Ofertas LTDA.</p>
+                <p>CNPJ n.º 03.007.331/0001-41 / Av. das Nações Unidas, nº 3.003, Osasco/SP</p>
             </div>
         </div>
     </footer>
