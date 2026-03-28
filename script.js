@@ -1,5 +1,4 @@
 let categoriasData = [];
-let filtroAtivo = "todos";
 let expandido = false;
 
 async function carregarSite() {
@@ -7,108 +6,103 @@ async function carregarSite() {
         const res = await fetch('produtos.json');
         const data = await res.json();
         categoriasData = data.categorias;
-        desenharInterface();
-        renderizar();
+        
+        preencherMenus();
+        renderizarProdutos();
         iniciarTimer();
     } catch (e) { console.error("Erro ao carregar dados", e); }
 }
 
-function desenharInterface() {
-    const filtrar = (id) => {
-        filtroAtivo = id;
-        renderizar();
-        window.scrollTo(0, 0);
-    };
+function preencherMenus() {
+    const dropdownDt = document.getElementById("menu-categorias-dt");
+    const mobileBar = document.getElementById("mobile-category-filter");
+    const footerCats = document.getElementById("footer-cats");
 
-    // Preencher Menus
     categoriasData.forEach((cat, index) => {
         if(cat.id === "expirando") return;
 
-        // Mobile Filter & Nav Topo
-        const mobLink = document.createElement("a");
-        mobLink.className = "mob-filter-item";
-        mobLink.innerText = cat.nome;
-        mobLink.onclick = () => filtrar(cat.id);
-        document.getElementById("mobile-category-filter").appendChild(mobLink);
+        // Desktop Dropdown
+        const dLink = document.createElement("a");
+        dLink.href = `#${cat.id}`;
+        dLink.innerText = cat.nome;
+        dLink.onclick = (e) => filtrar(e, cat.id);
+        dropdownDt.appendChild(dLink);
 
-        const navLink = document.createElement("a");
-        navLink.className = "nav-link";
-        navLink.innerText = cat.nome;
-        navLink.onclick = () => filtrar(cat.id);
-        document.getElementById("menu-topo").appendChild(navLink);
+        // Mobile Bar
+        const mLink = document.createElement("a");
+        mLink.className = "mob-item";
+        mLink.innerText = cat.nome;
+        mLink.onclick = (e) => filtrar(e, cat.id);
+        mobileBar.appendChild(mLink);
 
-        // Sidebar
-        const sideLink = document.createElement("div");
-        sideLink.className = "cat-item";
-        sideLink.innerText = cat.nome;
-        sideLink.onclick = () => filtrar(cat.id);
-        document.getElementById("sidebar-cats").appendChild(sideLink);
-
-        // Grade Footer (ML) - Exibe 6 no desktop / 3 no mobile inicialmente
-        const c = document.createElement("a");
-        c.href = "javascript:void(0)";
-        c.className = `cat-card-ml ${index > 6 ? 'hidden' : ''}`;
-        c.innerHTML = `<img src="${cat.icone}"><span>${cat.nome}</span>`;
-        c.onclick = () => filtrar(cat.id);
-        document.getElementById("footer-cats").appendChild(c);
+        // Footer Grid
+        const fCard = document.createElement("a");
+        fCard.className = `cat-card-ml ${index > 8 ? 'hidden' : ''}`;
+        fCard.innerHTML = `<i class="fas fa-tag"></i><span>${cat.nome}</span>`;
+        fCard.onclick = (e) => filtrar(e, cat.id);
+        footerCats.appendChild(fCard);
     });
 }
 
-function toggleCategorias() {
-    expandido = !expandido;
-    const cards = document.querySelectorAll('.cat-card-ml');
-    cards.forEach((card, index) => {
-        if (index > 6) card.classList.toggle('hidden', !expandido);
-    });
-    document.getElementById('btn-mostrar-mais').innerHTML = expandido ? 
-        'Mostrar menos categorias <i class="fas fa-chevron-up"></i>' : 
-        'Mostrar mais categorias <i class="fas fa-chevron-down"></i>';
-}
-
-function renderizar() {
+function renderizarProdutos() {
     const container = document.getElementById("container-categorias");
     const gridExp = document.getElementById("grid-expirando");
-    const secaoExp = document.getElementById("secao-expirando");
+    
+    // Limpar
     container.innerHTML = "";
     gridExp.innerHTML = "";
 
-    if (filtroAtivo === "todos") {
-        secaoExp.style.display = "block";
-        const exp = categoriasData.find(c => c.id === "expirando");
-        exp.produtos.forEach(p => gridExp.appendChild(criarCard(p)));
-    } else {
-        secaoExp.style.display = "none";
-    }
+    // 1. Renderizar Destaques (Expirando)
+    const exp = categoriasData.find(c => c.id === "expirando");
+    exp.produtos.forEach(p => gridExp.appendChild(criarCard(p, true)));
 
+    // 2. Renderizar Outras Seções
     categoriasData.forEach(cat => {
         if (cat.id === "expirando") return;
-        if (filtroAtivo !== "todos" && filtroAtivo !== cat.id) return;
-
+        
         const section = document.createElement("section");
         section.className = "category-section";
+        section.id = cat.id;
         section.innerHTML = `
-            <a href="javascript:void(0)" class="category-title-link" onclick="ativarFiltro('${cat.id}')">
-                <h2 class="category-title">${cat.nome}</h2>
-            </a>
-            <div class="grid-layout"></div>
+            <h2 class="category-title" style="margin: 40px 0 20px; font-size: 24px; color: #666; font-weight: 300;">
+                ${cat.nome}
+            </h2>
+            <div class="flash-grid" style="background:none;"></div>
         `;
         
-        const grid = section.querySelector(".grid-layout");
-        cat.produtos.forEach(p => grid.appendChild(criarCard(p)));
+        const grid = section.querySelector(".flash-grid");
+        cat.produtos.forEach(p => grid.appendChild(criarCard(p, false)));
         container.appendChild(section);
     });
 }
 
-window.ativarFiltro = (id) => {
-    filtroAtivo = id;
-    renderizar();
-    window.scrollTo(0,0);
-};
+function filtrar(e, id) {
+    e.preventDefault();
+    const element = document.getElementById(id);
+    if(element) {
+        const offset = 140; 
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = element.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition - offset;
 
-function criarCard(p) {
-    const d = document.createElement("div"); d.className = "card";
-    d.innerHTML = `<img src="${p.imagem}" loading="lazy"><h3>${p.nome}</h3><p class="preco">R$ ${p.preco}</p><a href="${p.link}" class="btn-comprar">VER OFERTA</a>`;
-    return d;
+        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    }
+}
+
+function criarCard(p, isFlash) {
+    const a = document.createElement("a");
+    a.href = p.link;
+    a.className = "card";
+    a.innerHTML = `
+        <img src="${p.imagem}" alt="${p.nome}">
+        <div class="card-info">
+            <h3>${p.nome}</h3>
+            <div class="preco">R$ ${p.preco}</div>
+            ${isFlash ? '<span style="color: #00a650; font-size: 12px; font-weight: bold;">OFERTA DO DIA</span>' : ''}
+        </div>
+    `;
+    return a;
 }
 
 function iniciarTimer() {
@@ -123,5 +117,4 @@ function iniciarTimer() {
     }, 1000);
 }
 
-document.getElementById("sort-price").onchange = renderizar;
 carregarSite();
