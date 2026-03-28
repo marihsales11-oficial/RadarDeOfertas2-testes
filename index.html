@@ -1,4 +1,15 @@
-<header class="header">
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radar de Ofertas | Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
         <div class="header-container">
             <div class="logo-row">
                 <div class="logo">
@@ -20,6 +31,21 @@
     <nav class="nav-bar" id="menu-topo"></nav>
 
     <div class="main-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-box">
+                <h4>ORDENAR</h4>
+                <select id="sort-price">
+                    <option value="default">Relevância</option>
+                    <option value="low">Menor Preço</option>
+                    <option value="high">Maior Preço</option>
+                </select>
+            </div>
+            <div class="sidebar-box">
+                <h4>CATEGORIAS</h4>
+                <div id="sidebar-cats"></div>
+            </div>
+        </aside>
+
         <main class="content">
             <section id="secao-expirando" class="expirando-block">
                 <div class="expirando-header">
@@ -39,9 +65,7 @@
                 <div class="footer-header-ml">
                     <h3>Categorias</h3>
                 </div>
-                
                 <div class="categories-grid-ml" id="footer-cats"></div>
-                
                 <div class="show-more-container">
                     <a href="javascript:void(0)" id="btn-mostrar-mais" onclick="toggleCategorias()">
                         Mostrar mais categorias <i class="fas fa-chevron-down"></i>
@@ -49,5 +73,31 @@
                 </div>
             </section>
 
+            <section class="footer-info">
+                <div class="info-item">
+                    <i class="far fa-credit-card fa-3x"></i>
+                    <h4>Pague como quiser</h4>
+                    <p>Cartão, boleto ou Pix. Parcele em até 12x.</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-box fa-3x"></i>
+                    <h4>Envio garantido</h4>
+                    <p>Receba seus produtos com segurança e rapidez.</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-user-shield fa-3x"></i>
+                    <h4>Compra Protegida</h4>
+                    <p>Sua segurança é nossa prioridade absoluta.</p>
+                </div>
+            </section>
+
+            <div class="footer-bottom">
+                <p>Copyright © 2026 Radar de Ofertas LTDA.</p>
+                <p>CNPJ: 03.007.331/0001-41 | Rio de Janeiro, Brasil</p>
             </div>
+        </div>
     </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
