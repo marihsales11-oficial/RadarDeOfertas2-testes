@@ -12,31 +12,50 @@ async function carregarSite() {
     } catch (e) { console.error("Erro:", e); }
 }
 
+function toggleMobileMenu() {
+    const menu = document.getElementById("mobile-dropdown");
+    menu.classList.toggle("active");
+}
+
 function desenharInterface() {
     const menuTopo = document.getElementById("menu-topo");
     const sidebarMenu = document.getElementById("sidebar-cats");
     const footerCats = document.getElementById("footer-cats");
+    const mobileDropdown = document.getElementById("mobile-dropdown");
 
-    // Botão Todas
-    const addNav = (name, id) => {
-        const t = document.createElement("a");
-        t.className = "nav-link"; t.innerText = name;
-        t.onclick = () => filtrar(id);
-        menuTopo.appendChild(t);
-
-        const s = document.createElement("div");
-        s.className = "cat-item"; s.innerText = name;
-        s.onclick = () => filtrar(id);
-        sidebarMenu.appendChild(s);
+    const criarLink = (cat) => {
+        const link = document.createElement("a");
+        link.innerText = cat.nome;
+        link.onclick = () => {
+            filtrar(cat.id);
+            document.getElementById("mobile-dropdown").classList.remove("active");
+        };
+        return link;
     };
 
-    addNav("⭐ TODAS", "todos");
+    // Link "Todas" para Mobile e Desktop
+    const todasCat = { nome: "⭐ TODAS AS CATEGORIAS", id: "todos" };
+    mobileDropdown.appendChild(criarLink(todasCat));
 
     categoriasData.forEach(cat => {
         if(cat.id === "expirando") return;
-        addNav(cat.nome, cat.id);
 
-        // Footer Carousel
+        // Desktop Topo
+        const t = document.createElement("a");
+        t.className = "nav-link"; t.innerText = cat.nome;
+        t.onclick = () => filtrar(cat.id);
+        menuTopo.appendChild(t);
+
+        // Sidebar
+        const s = document.createElement("div");
+        s.className = "cat-item"; s.innerText = cat.nome;
+        s.onclick = () => filtrar(cat.id);
+        sidebarMenu.appendChild(s);
+
+        // Mobile Dropdown
+        mobileDropdown.appendChild(criarLink(cat));
+
+        // Footer
         const c = document.createElement("div");
         c.className = "cat-card";
         c.innerHTML = `<div class="cat-card-img-box"><img src="${cat.icone}"></div>
@@ -67,11 +86,9 @@ function renderizar() {
         secoesCont.style.display = "block";
         secExp.style.display = "block";
 
-        // Expirando
         const exp = categoriasData.find(c => c.id === "expirando");
         exp.produtos.forEach(p => gridExp.appendChild(criarCard(p)));
 
-        // Uma fileira por categoria (Estilo Mercado Livre)
         categoriasData.forEach(cat => {
             if (cat.id === "expirando" || cat.produtos.length === 0) return;
             
@@ -80,14 +97,10 @@ function renderizar() {
             const rowId = `row-${cat.id}`;
             row.innerHTML = `
                 <div class="row-header">
-                    <h3>Mais vendidos em ${cat.nome}</h3>
-                    <a onclick="filtrar('${cat.id}')">Ver todos</a>
+                    <h3>${cat.nome}</h3>
+                    <a onclick="filtrar('${cat.id}')">Ver mais</a>
                 </div>
-                <div class="carousel-container">
-                    <button class="arrow-btn left" onclick="scrollCarousel('${rowId}', -1)"><i class="fas fa-chevron-left"></i></button>
-                    <div class="row-inner" id="${rowId}"></div>
-                    <button class="arrow-btn right" onclick="scrollCarousel('${rowId}', 1)"><i class="fas fa-chevron-right"></i></button>
-                </div>`;
+                <div class="row-inner responsive-row" id="${rowId}"></div>`;
             secoesCont.appendChild(row);
             const inner = document.getElementById(rowId);
             cat.produtos.forEach(p => inner.appendChild(criarCard(p)));
@@ -117,7 +130,7 @@ function criarCard(p) {
 
 function scrollCarousel(id, dir) {
     const el = document.getElementById(id);
-    el.scrollBy({ left: dir * 400, behavior: 'smooth' });
+    el.scrollBy({ left: dir * 300, behavior: 'smooth' });
 }
 
 function iniciarTimer() {
@@ -128,7 +141,8 @@ function iniciarTimer() {
         const h = Math.floor(diff/3600000).toString().padStart(2,'0');
         const m = Math.floor((diff%3600000)/60000).toString().padStart(2,'0');
         const s = Math.floor((diff%60000)/1000).toString().padStart(2,'0');
-        document.getElementById("timer").innerText = `${h}:${m}:${s}`;
+        const timer = document.getElementById("timer");
+        if(timer) timer.innerText = `${h}:${m}:${s}`;
     }, 1000);
 }
 
