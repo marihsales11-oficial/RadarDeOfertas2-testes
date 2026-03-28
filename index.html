@@ -3,43 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radar de Ofertas | Estilo Mercado Livre</title>
+    <title>Radar de Ofertas | Marketplace</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header class="header">
-        <div class="header-content-top">
-            <div class="header-container-ml">
+        <div class="header-container-ml">
+            <div class="logo-row">
                 <div class="logo">
                     <div class="logo-circle"><i class="fas fa-satellite-dish"></i></div>
                     <div class="logo-text">RADAR<span>DEOFERTAS</span></div>
                 </div>
             </div>
-        </div>
-        <div class="header-content-search">
-            <div class="header-container-ml">
+            <div class="search-row">
                 <div class="search-box">
-                    <input type="text" id="busca" placeholder="Buscar produtos, marcas e muito mais...">
+                    <input type="text" id="input-busca" placeholder="Buscar produtos, marcas e muito mais...">
                     <button><i class="fas fa-search"></i></button>
                 </div>
             </div>
-        </div>
-        <div class="header-content-nav">
-            <div class="header-container-ml">
-                <nav class="nav-ml">
-                    <div class="category-dropdown">
-                        <button class="dropbtn">Categorias <i class="fas fa-chevron-down"></i></button>
-                        <div class="dropdown-content" id="menu-categorias-dt">
-                            </div>
-                    </div>
-                </nav>
-            </div>
+            <nav class="nav-row">
+                <div class="category-dropdown">
+                    <button class="dropbtn">Categorias <i class="fas fa-chevron-down"></i></button>
+                    <div class="dropdown-content" id="menu-categorias-dt"></div>
+                </div>
+            </nav>
         </div>
     </header>
-
-    <div class="mobile-category-bar" id="mobile-category-filter"></div>
 
     <main>
         <section id="secao-expirando" class="flash-deals-hero">
@@ -54,35 +45,54 @@
                         <div id="timer" class="digital-clock">00:00:00</div>
                     </div>
                 </div>
-                <div class="flash-grid" id="grid-expirando">
-                    </div>
+                <div class="flash-grid" id="grid-expirando"></div>
             </div>
         </section>
 
-        <div class="main-container-ml">
-            <div id="container-categorias">
+        <div class="header-container-ml">
+            <section class="home-categories">
+                <h2 class="section-title">Categorias populares</h2>
+                <div class="categories-icon-grid" id="grid-icones-home"></div>
+                <div class="show-more-center">
+                    <button id="btn-expandir-home" onclick="toggleHomeCategorias()">Mostrar mais categorias <i class="fas fa-chevron-down"></i></button>
                 </div>
+            </section>
+
+            <div id="feed-infinito"></div>
             
-            <div id="grid-produtos-infinito" class="flash-grid">
-                </div>
-            
-            <div id="loading" class="loading-spinner" style="display:none;">
-                <i class="fas fa-circle-notch fa-spin"></i> Carregando mais ofertas...
+            <div id="loader" class="loader">
+                <i class="fas fa-spinner fa-spin"></i> Carregando mais ofertas...
             </div>
         </div>
     </main>
 
-    <footer class="main-footer-ml">
-        <div class="main-container-ml">
-            <section class="footer-categories-box">
-                <div class="categories-grid-ml" id="footer-cats-grid">
-                    </div>
-                <div class="show-more-container-footer">
-                    <button id="btn-mostrar-mais-footer" onclick="toggleFooterCategorias()">
-                        Mostrar mais <i class="fas fa-chevron-down"></i>
-                    </button>
+    <footer class="footer-ml">
+        <div class="header-container-ml">
+            <section class="footer-info-cards">
+                <div class="info-card">
+                    <img src="https://http2.mlstatic.com/storage/homes-node/navigation/desktop/payment-methods.svg">
+                    <h3>Escolha como pagar</h3>
+                    <p>Pague com cartão, boleto ou Pix. Parcele em até 12x.</p>
+                </div>
+                <div class="info-card">
+                    <img src="https://http2.mlstatic.com/storage/homes-node/navigation/desktop/shipping.svg">
+                    <h3>Frete grátis</h3>
+                    <p>Em produtos selecionados a partir de R$ 79.</p>
+                </div>
+                <div class="info-card">
+                    <img src="https://http2.mlstatic.com/storage/homes-node/navigation/desktop/protected.svg">
+                    <h3>Segurança absoluta</h3>
+                    <p>Receba o produto ou devolvemos o seu dinheiro.</p>
                 </div>
             </section>
+
+            <div class="footer-bottom">
+                <button class="btn-mais-info">Mais informações <i class="fas fa-chevron-down"></i></button>
+                <div class="footer-links">
+                    <p>Trabalhe conosco | Termos e condições | Acessibilidade | Contato</p>
+                    <p class="copyright">Copyright © 1999-2026 RadarDeOfertas LTDA.</p>
+                </div>
+            </div>
         </div>
     </footer>
 
