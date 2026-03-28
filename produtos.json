@@ -1,30 +1,116 @@
 {
   "categorias": [
-    { "nome": "⚡ Ofertas Expirando", "id": "expirando", "icone": "https://cdn-icons-png.flaticon.com/512/744/744922.png", "produtos": [
-      {"nome": "Smart TV 50' 4K Ultra HD", "preco": "2199.00", "imagem": "https://picsum.photos/400?id=101", "link": "#"},
-      {"nome": "Air Fryer Digital 5L", "preco": "429.90", "imagem": "https://picsum.photos/400?id=102", "link": "#"}
-    ]},
-    { "nome": "Casa, Móveis e Decoração", "id": "casa", "icone": "https://cdn-icons-png.flaticon.com/512/619/619153.png", "produtos": [{"nome": "Sofá Retrátil 3 Lugares", "preco": "1200.00", "imagem": "https://picsum.photos/400?id=1", "link": "#"}] },
-    { "nome": "Esportes e Fitness", "id": "esportes", "icone": "https://cdn-icons-png.flaticon.com/512/3012/3012411.png", "produtos": [{"nome": "Bicicleta Aro 29", "preco": "980.00", "imagem": "https://picsum.photos/400?id=2", "link": "#"}] },
-    { "nome": "Eletrodomésticos", "id": "eletro", "icone": "https://cdn-icons-png.flaticon.com/512/2850/2850931.png", "produtos": [{"nome": "Geladeira Frost Free", "preco": "2800.00", "imagem": "https://picsum.photos/400?id=3", "link": "#"}] },
-    { "nome": "Calçados, Roupas e Bolsas", "id": "moda", "icone": "https://cdn-icons-png.flaticon.com/512/3159/3159620.png", "produtos": [{"nome": "Tênis Running Z", "preco": "250.00", "imagem": "https://picsum.photos/400?id=4", "link": "#"}] },
-    { "nome": "Beleza e Cuidado Pessoal", "id": "beleza", "icone": "https://cdn-icons-png.flaticon.com/512/194/194931.png", "produtos": [{"nome": "Prancha Alisadora", "preco": "180.00", "imagem": "https://picsum.photos/400?id=5", "link": "#"}] },
-    { "nome": "Informática", "id": "informatica", "icone": "https://cdn-icons-png.flaticon.com/512/2777/2777142.png", "produtos": [{"nome": "Notebook i5 8GB", "preco": "3200.00", "imagem": "https://picsum.photos/400?id=6", "link": "#"}] },
-    { "nome": "Saúde", "id": "saude", "icone": "https://cdn-icons-png.flaticon.com/512/2966/2966327.png", "produtos": [{"nome": "Termômetro Digital", "preco": "45.00", "imagem": "https://picsum.photos/400?id=7", "link": "#"}] },
-    { "nome": "Acessórios para Veículos", "id": "veiculos", "icone": "https://cdn-icons-png.flaticon.com/512/741/741407.png", "produtos": [{"nome": "Central Multimídia", "preco": "550.00", "imagem": "https://picsum.photos/400?id=8", "link": "#"}] },
-    { "nome": "Ferramentas", "id": "ferramentas", "icone": "https://cdn-icons-png.flaticon.com/512/2972/2972185.png", "produtos": [{"nome": "Jogo de Chaves", "preco": "90.00", "imagem": "https://picsum.photos/400?id=9", "link": "#"}] },
-    { "nome": "Construção", "id": "construcao", "icone": "https://cdn-icons-png.flaticon.com/512/4333/4333639.png", "produtos": [{"nome": "Lustre Pendente", "preco": "210.00", "imagem": "https://picsum.photos/400?id=10", "link": "#"}] },
-    { "nome": "Indústria e Comércio", "id": "industria", "icone": "https://cdn-icons-png.flaticon.com/512/2897/2897850.png", "produtos": [{"nome": "Impressora Térmica", "preco": "320.00", "imagem": "https://picsum.photos/400?id=11", "link": "#"}] },
-    { "nome": "Celulares e Telefones", "id": "celulares", "icone": "https://cdn-icons-png.flaticon.com/512/2586/2586488.png", "produtos": [{"nome": "Galaxy S23", "preco": "3800.00", "imagem": "https://picsum.photos/400?id=12", "link": "#"}] },
-    { "nome": "Eletrônicos, Áudio e Vídeo", "id": "eletronicos_av", "icone": "https://cdn-icons-png.flaticon.com/512/3221/3221845.png", "produtos": [{"nome": "Fone Wireless Pro", "preco": "150.00", "imagem": "https://picsum.photos/400?id=13", "link": "#"}] },
-    { "nome": "Pet Shop", "id": "pet", "icone": "https://cdn-icons-png.flaticon.com/512/616/616408.png", "produtos": [{"nome": "Fonte de Água Pet", "preco": "85.00", "imagem": "https://picsum.photos/400?id=14", "link": "#"}] },
-    { "nome": "Bebês", "id": "bebes", "icone": "https://cdn-icons-png.flaticon.com/512/1043/1043231.png", "produtos": [{"nome": "Berço Portátil", "preco": "450.00", "imagem": "https://picsum.photos/400?id=15", "link": "#"}] },
-    { "nome": "Brinquedos e Hobbies", "id": "brinquedos", "icone": "https://cdn-icons-png.flaticon.com/512/3082/3082060.png", "produtos": [{"nome": "Carro Controle Remoto", "preco": "130.00", "imagem": "https://picsum.photos/400?id=16", "link": "#"}] },
-    { "nome": "Joias e Relógios", "id": "joias", "icone": "https://cdn-icons-png.flaticon.com/512/2210/2210606.png", "produtos": [{"nome": "Relógio Digital Sport", "preco": "110.00", "imagem": "https://picsum.photos/400?id=17", "link": "#"}] },
-    { "nome": "Instrumentos Musicais", "id": "musica", "icone": "https://cdn-icons-png.flaticon.com/512/3221/3221845.png", "produtos": [{"nome": "Teclado Musical", "preco": "600.00", "imagem": "https://picsum.photos/400?id=18", "link": "#"}] },
-    { "nome": "Arte, Papelaria e Armarinho", "id": "arte", "icone": "https://cdn-icons-png.flaticon.com/512/2232/2232688.png", "produtos": [{"nome": "Mochila Escolar", "preco": "140.00", "imagem": "https://picsum.photos/400?id=19", "link": "#"}] },
-    { "nome": "Games", "id": "games", "icone": "https://cdn-icons-png.flaticon.com/512/686/686589.png", "produtos": [{"nome": "Console Portátil", "preco": "250.00", "imagem": "https://picsum.photos/400?id=20", "link": "#"}] },
-    { "nome": "Livros, Revista e Comics", "id": "livros", "icone": "https://cdn-icons-png.flaticon.com/512/3389/3389081.png", "produtos": [{"nome": "HQs Coleção", "preco": "60.00", "imagem": "https://picsum.photos/400?id=21", "link": "#"}] },
-    { "nome": "Câmeras e Acessórios", "id": "cameras", "icone": "https://cdn-icons-png.flaticon.com/512/685/685655.png", "produtos": [{"nome": "Câmera de Segurança", "preco": "190.00", "imagem": "https://picsum.photos/400?id=22", "link": "#"}] }
+    {
+      "id": "expirando",
+      "nome": "OFERTAS EXPIRANDO",
+      "produtos": [
+        { "id": "exp01", "nome": "Sofá 3 Lugares Reclinável Veludo Grafite Premium", "preco": "1.890,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" },
+        { "id": "exp02", "nome": "Frigobar Retrô Vermelho 90 Litros", "preco": "1.340,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "exp03", "nome": "Smart TV 55 QLED 4K Samsung Gaming Hub", "preco": "2.999,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" },
+        { "id": "exp04", "nome": "Geladeira Brastemp Frost Free Inox 462L", "preco": "3.899,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" },
+        { "id": "exp05", "nome": "Aparador Moderno com Espelho", "preco": "450,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "exp06", "nome": "Mesa de Jantar com 6 Cadeiras Veludo", "preco": "1.200,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "exp07", "nome": "Guarda-Roupa Casal com Espelho Brisa", "preco": "1.670,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" },
+        { "id": "exp08", "nome": "Cômoda com 8 Gavetas Branca", "preco": "780,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" }
+      ]
+    },
+    {
+      "id": "casa_moveis",
+      "nome": "Casa, Móveis e Decoração",
+      "produtos": [
+        { "id": "cm01", "nome": "Mesa de Jantar 6 Cadeiras Estilo Industrial Wood", "preco": "1.490,00", "imagem": "https://www.moveisrusticos.com/wp-content/uploads/2019/12/Mesa-Industrial-Wood-220-x-100-8-Cadeiras-Iron-390x390.jpg", "link": "#" },
+        { "id": "cm02", "nome": "Poltrona Decorativa Veludo Verde Esmeralda", "preco": "680,00", "imagem": "https://images.tcdn.com.br/img/editor/up/1063132/veludoverdee.jpg", "link": "#" },
+        { "id": "cm03", "nome": "Conjunto de Panelas Cerâmica Antiaderente 5 Peças", "preco": "320,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" },
+        { "id": "cm04", "nome": "Tapete para Sala Geométrico Cinza 2x3m", "preco": "550,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "cm05", "nome": "Luminária de Chão Moderna Preta", "preco": "210,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "cm06", "nome": "Cortina para Sala Veludo 3,00 x 2,80m", "preco": "380,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" },
+        { "id": "cm07", "nome": "Cômoda para Quarto 4 Gavetas com Corrediça Telescópica", "preco": "790,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "cm08", "nome": "Guarda-Roupa Solteiro com Espelho Pratik", "preco": "1.150,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" }
+      ]
+    },
+    {
+      "id": "tecnologia",
+      "nome": "Tecnologia",
+      "produtos": [
+        { "id": "tec01", "nome": "Smartphone Samsung Galaxy S23 Ultra 256GB 12GB RAM", "preco": "7.499,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" },
+        { "id": "tec02", "nome": "Notebook Gamer Acer Nitro 5 i7 16GB 512GB SSD RTX 3050", "preco": "5.600,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" },
+        { "id": "tec03", "nome": "Smartwatch Apple Watch Series 8 GPS 41mm", "preco": "3.899,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "tec04", "nome": "Headset Gamer Sem Fio Logitech G733", "preco": "1.100,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "tec05", "nome": "Placa de Vídeo RTX 4070 Ti 12GB GDDR6X", "preco": "6.900,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" },
+        { "id": "tec06", "nome": "Monitor Gamer 27 144Hz IPS 1ms", "preco": "1.580,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "tec07", "nome": "Console PlayStation 5 Digital Edition + God of War Ragnarok", "preco": "4.200,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" },
+        { "id": "tec08", "nome": "Drone DJI Mini 3 Fly More Combo Plus", "preco": "8.100,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" }
+      ]
+    },
+    {
+      "id": "ferramentas",
+      "nome": "Ferramentas",
+      "produtos": [
+        { "id": "fer01", "nome": "Parafusadeira Furadeira a Bateria 20V DEWALT Brushless", "preco": "1.490,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "fer02", "nome": "Maleta de Ferramentas Jogo 110 Peças Vonder", "preco": "680,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" },
+        { "id": "fer03", "nome": "Esmerilhadeira Angular 4.1/2 Bosch Professional GWS 850", "preco": "450,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" },
+        { "id": "fer04", "nome": "Serra Mármore 1400W Makita + Disco Diamantado", "preco": "620,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "fer05", "nome": "Nível Laser Autonivelante 3 Linhas Verdes Stanley", "preco": "1.100,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "fer06", "nome": "Lavadora de Alta Pressão Karcher K2 Plus 1740 PSI", "preco": "799,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" },
+        { "id": "fer07", "nome": "Kit Compressor de Ar 24L + Jogo Pneumático", "preco": "1.650,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "fer08", "nome": "Roçadeira de Grama a Gasolina Profissional Husqvarna", "preco": "2.400,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" }
+      ]
+    },
+    {
+      "id": "decoracao",
+      "nome": "Decoração",
+      "produtos": [
+        { "id": "dec01", "nome": "Kit 3 Quadros Decorativos Abstratos Escandinavo", "preco": "199,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" },
+        { "id": "dec02", "nome": "Vaso Decorativo Cerâmica Geométrico Preto", "preco": "120,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "dec03", "nome": "Conjunto 2 Prateleiras Estilo Industrial Wood", "preco": "350,00", "imagem": "https://www.moveisrusticos.com/wp-content/uploads/2019/12/Mesa-Industrial-Wood-220-x-100-8-Cadeiras-Iron-390x390.jpg", "link": "#" },
+        { "id": "dec04", "nome": "Espelho Adnet Redondo Alça Couro Preto 60cm", "preco": "450,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "dec05", "nome": "Planta Artificial Palmeira Leque Alta com Vaso", "preco": "780,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" },
+        { "id": "dec06", "nome": "Relógio de Parede Moderno Números Romanos 40cm", "preco": "260,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "dec07", "nome": "Kit 6 Capas para Almofada Veludo Macrame", "preco": "150,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" },
+        { "id": "dec08", "nome": "Painel para TV até 75 Pol ripado", "preco": "1.300,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" }
+      ]
+    },
+     {
+      "id": "esportes",
+      "nome": "Esportes",
+      "produtos": [
+        { "id": "esp01", "nome": "Tênis Nike Air Zoom Pegasus 39 Preto/Verde", "preco": "890,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "esp02", "nome": "Kit 3 Faixas Elasticas Hip Band", "preco": "120,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" },
+        { "id": "esp03", "nome": "Corda de Pular Ajustavel Speed Rope Alumínio", "preco": "90,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" },
+        { "id": "esp04", "nome": "Camisa de Futebol Adidas Flamenco Oficial 2023", "preco": "350,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "esp05", "nome": "Kit 2 Halteres Ajustaveis 12kg cada", "preco": "1.200,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "esp06", "nome": "Bicicleta Aro 29 Groove Hype 9.2 Shimano Deore", "preco": "4.100,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" },
+        { "id": "esp07", "nome": "Saco de Pancada Punch Profissional 120cm", "preco": "780,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "esp08", "nome": "Colchão Pilates Yoga Fitness 10mm Profissional", "preco": "199,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" }
+      ]
+    },
+    {
+      "id": "acessorios",
+      "nome": "Acessórios",
+      "produtos": [
+        { "id": "ace01", "nome": "Óculos de Sol Ray-Ban Aviador Clássico Lente Verde", "preco": "790,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "ace02", "nome": "Mochila Feminina Veludo Preto Moderna Urbano", "preco": "210,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "ace03", "nome": "Boné New Era Classic Logo Preto/Branco", "preco": "150,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" },
+        { "id": "ace04", "nome": "Kit 6 Pares Meia Cano Curto Algodão", "preco": "90,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" },
+        { "id": "ace05", "nome": "Carteira Masculina Couro Legitimo Preta Pequena Slim", "preco": "130,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "ace06", "nome": "Cinto Masculino Couro Dupla Face Preto/Marrom", "preco": "180,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" },
+        { "id": "ace07", "nome": "Kit 3 Pulserias Masculinas de Couro e Pedra Vulcânica", "preco": "99,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "ace08", "nome": "Necessaire Organizador de Viagem Profissional Masculina", "preco": "240,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" }
+      ]
+    },
+    {
+      "id": "outras",
+      "nome": "Outras Categorias",
+      "produtos": [
+        { "id": "out01", "nome": "Kit 6 Canecas Cerâmica Arte Abstrata", "preco": "150,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" },
+        { "id": "out02", "nome": "Conjunto 2 Pratos Lanche Estilo Industrial Wood", "preco": "210,00", "imagem": "https://www.moveisrusticos.com/wp-content/uploads/2019/12/Mesa-Industrial-Wood-220-x-100-8-Cadeiras-Iron-390x390.jpg", "link": "#" },
+        { "id": "out03", "nome": "Kit Banheiro 3 Peças Vidro Jateado", "preco": "90,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "out04", "nome": "Organizador de Pia Duplo Preto", "preco": "130,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "out05", "nome": "Lixeira Banheiro Inox 5L", "preco": "180,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" },
+        { "id": "out06", "nome": "Kit 6 Porta Copos Arte Abstrata", "preco": "99,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" },
+        { "id": "out07", "nome": "Vaso Banheiro Moderna Vidro Jateado", "preco": "120,00", "imagem": "https://img.wbuy.com.br/produtos/E9C304F2/frigobar-retro-vermelho-90-litros-127v.jpg", "link": "#" },
+        { "id": "out08", "nome": "Organizador de Gaveta Banheiro Inox 5L", "preco": "240,00", "imagem": "https://images-americanas.b2w.io/produtos/01/00/sku/63148/63148152_1GG.jpg", "link": "#" }
+      ]
+    }
   ]
 }
