@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radar de Ofertas | Marketplace Profissional</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-    <header class="header">
+<header class="header">
         <div class="header-container">
             <div class="logo-row">
                 <div class="logo">
@@ -26,27 +15,11 @@
         </div>
     </header>
 
+    <div class="mobile-category-filter" id="mobile-category-filter"></div>
+
     <nav class="nav-bar" id="menu-topo"></nav>
 
-    <div class="mobile-category-filter" id="mobile-category-filter">
-        </div>
-
     <div class="main-wrapper">
-        <aside class="sidebar">
-            <div class="sidebar-box">
-                <h4>FILTRAR POR</h4>
-                <select id="sort-price">
-                    <option value="default">Mais relevantes</option>
-                    <option value="low">Menor Preço</option>
-                    <option value="high">Maior Preço</option>
-                </select>
-            </div>
-            <div class="sidebar-box">
-                <h4>CATEGORIAS</h4>
-                <div id="sidebar-cats"></div>
-            </div>
-        </aside>
-
         <main class="content">
             <section id="secao-expirando" class="expirando-block">
                 <div class="expirando-header">
@@ -62,43 +35,19 @@
 
     <footer class="main-footer">
         <div class="footer-container">
-            <section class="footer-categories">
-                <div class="footer-header">
-                    <h3>Explore Categorias</h3>
-                    <a href="#" onclick="location.reload()">Ver todas</a>
+            <section class="footer-categories-box">
+                <div class="footer-header-ml">
+                    <h3>Categorias</h3>
                 </div>
-                <div class="carousel-container">
-                    <button class="arrow-btn left" onclick="scrollCarousel('footer-cats', -1)"><i class="fas fa-chevron-left"></i></button>
-                    <div class="carousel-inner" id="footer-cats"></div>
-                    <button class="arrow-btn right" onclick="scrollCarousel('footer-cats', 1)"><i class="fas fa-chevron-right"></i></button>
-                </div>
-            </section>
-
-            <section class="footer-info">
-                <div class="info-item">
-                    <i class="far fa-credit-card fa-3x"></i>
-                    <h4>Pagamento Facilitado</h4>
-                    <p>Cartão, Boleto ou Pix em até 12x.</p>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-box fa-3x"></i>
-                    <h4>Entrega Segura</h4>
-                    <p>Rastreamento total do seu pedido.</p>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-user-shield fa-3x"></i>
-                    <h4>Compra Garantida</h4>
-                    <p>Sua satisfação ou seu dinheiro de volta.</p>
+                
+                <div class="categories-grid-ml" id="footer-cats"></div>
+                
+                <div class="show-more-container">
+                    <a href="javascript:void(0)" id="btn-mostrar-mais" onclick="toggleCategorias()">
+                        Mostrar mais categorias <i class="fas fa-chevron-down"></i>
+                    </a>
                 </div>
             </section>
 
-            <div class="footer-bottom">
-                <p>Copyright © 2026 Radar de Ofertas LTDA.</p>
-                <p>CNPJ: 03.007.331/0001-41 | Rio de Janeiro, Brasil</p>
             </div>
-        </div>
     </footer>
-
-    <script src="script.js"></script>
-</body>
-</html>
