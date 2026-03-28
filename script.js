@@ -2,13 +2,6 @@ let todosProdutos = [];
 let categoriasData = [];
 let filtroAtivo = "todos";
 
-const gridPrincipal = document.getElementById("lista-produtos");
-const gridExpirando = document.getElementById("grid-expirando");
-const secaoExpirando = document.getElementById("secao-expirando");
-const menuTopo = document.getElementById("menu-topo");
-const sidebarMenu = document.getElementById("sidebar-cats");
-const footerCats = document.getElementById("footer-cats");
-
 async function carregarSite() {
     try {
         const res = await fetch('produtos.json');
@@ -18,86 +11,128 @@ async function carregarSite() {
         categoriasData.forEach(cat => {
             cat.produtos.forEach(p => {
                 p.catId = cat.id;
+                p.catNome = cat.nome;
                 if(cat.id !== "expirando") todosProdutos.push(p);
             });
         });
 
-        desenharInterface();
+        desenharMenus();
         renderizar();
         iniciarTimer();
-    } catch (e) { console.error("Erro ao carregar dados:", e); }
+    } catch (e) { console.error("Erro ao carregar:", e); }
 }
 
-function desenharInterface() {
-    const addAll = (parent, type) => {
-        const el = document.createElement("div");
-        el.className = type; el.innerHTML = "<strong>⭐ TODAS</strong>";
-        el.onclick = () => { filtroAtivo = "todos"; renderizar(); window.scrollTo(0,0); };
-        parent.appendChild(el);
-    };
-
-    addAll(menuTopo, "nav-link");
-    addAll(sidebarMenu, "cat-item");
+function desenharMenus() {
+    const menuTopo = document.getElementById("menu-topo");
+    const sidebarMenu = document.getElementById("sidebar-cats");
+    const footerLinks = document.getElementById("footer-links");
 
     categoriasData.forEach(cat => {
         if(cat.id === "expirando") return;
+        
+        const linkHTML = `<a class="nav-link" onclick="setFiltro('${cat.id}')">${cat.nome}</a>`;
+        menuTopo.insertAdjacentHTML('beforeend', linkHTML);
+        
+        const sideHTML = `<div class="cat-item" onclick="setFiltro('${cat.id}')">${cat.nome}</div>`;
+        sidebarMenu.insertAdjacentHTML('beforeend', sideHTML);
 
-        // Nav Topo
-        const t = document.createElement("a");
-        t.className = "nav-link"; t.innerText = cat.nome;
-        t.onclick = () => { filtroAtivo = cat.id; renderizar(); window.scrollTo(0,0); };
-        menuTopo.appendChild(t);
-
-        // Sidebar
-        const s = document.createElement("div");
-        s.className = "cat-item"; s.innerText = cat.nome;
-        s.onclick = () => { filtroAtivo = cat.id; renderizar(); window.scrollTo(0,0); };
-        sidebarMenu.appendChild(s);
-
-        // Footer Carousel
-        const c = document.createElement("div");
-        c.className = "cat-card";
-        c.innerHTML = `
-            <div class="cat-card-img-box"><img src="${cat.icone}"></div>
-            <div class="cat-card-text-box"><p>${cat.nome}</p></div>
-        `;
-        c.onclick = () => { filtroAtivo = cat.id; renderizar(); window.scrollTo(0,0); };
-        footerCats.appendChild(c);
+        const footHTML = `<li onclick="setFiltro('${cat.id}')">${cat.nome}</li>`;
+        footerLinks.insertAdjacentHTML('beforeend', footHTML);
     });
 }
 
+function setFiltro(id) {
+    filtroAtivo = id;
+    renderizar();
+    window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
 function renderizar() {
-    gridPrincipal.innerHTML = "";
-    gridExpirando.innerHTML = "";
-    const sort = document.getElementById("sort-price").value;
+    const container = document.getElementById("secoes-categorias");
+    const buscaRes = document.getElementById("busca-resultado");
+    const secExpirando = document.getElementById("secao-expirando");
+    
+    container.innerHTML = "";
+    buscaRes.style.display = "none";
+    secExpirando.style.display = filtroAtivo === "todos" ? "block" : "none";
 
-    if(filtroAtivo === "todos") {
-        secaoExpirando.style.display = "block";
-        const exp = categoriasData.find(c => c.id === "expirando");
-        if(exp) exp.produtos.forEach(p => gridExpirando.appendChild(criarCard(p)));
+    if (filtroAtivo === "todos") {
+        // Renderiza Ofertas Expirando
+        const expData = categoriasData.find(c => c.id === "expirando");
+        renderizarLinha("grid-expirando", expData.produtos);
+
+        // Renderiza uma linha para cada categoria
+        categoriasData.forEach(cat => {
+            if(cat.id === "expirando") return;
+            const section = document.createElement("section");
+            section.className = "category-row";
+            const rowId = `row-${cat.id}`;
+            section.innerHTML = `
+                <div class="section-header">
+                    <h3>Mais vendidos em ${cat.nome} <a href="#">Ir para categoria</a></h3>
+                </div>
+                <div class="carousel-container">
+                    <button class="arrow-btn prev" onclick="scrollCarousel('${rowId}', -1)"><i class="fas fa-chevron-left"></i></button>
+                    <div class="grid-carrossel" id="${rowId}"></div>
+                    <button class="arrow-btn next" onclick="scrollCarousel('${rowId}', 1)"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            `;
+            container.appendChild(section);
+            renderizarLinha(rowId, cat.produtos);
+        });
     } else {
-        secaoExpirando.style.display = "none";
+        // Renderiza apenas a categoria selecionada (em grid aberto ou carrossel)
+        const cat = categoriasData.find(c => c.id === filtroAtivo);
+        const section = document.createElement("section");
+        section.className = "category-row";
+        section.innerHTML = `<h2>${cat.nome}</h2><div class="grid-carrossel search-grid" id="grid-foco"></div>`;
+        container.appendChild(section);
+        renderizarLinha("grid-foco", cat.produtos);
     }
+}
 
-    let lista = (filtroAtivo === "todos") ? [...todosProdutos] : todosProdutos.filter(p => p.catId === filtroAtivo);
+function renderizarLinha(containerId, produtos) {
+    const el = document.getElementById(containerId);
+    const sort = document.getElementById("sort-price").value;
+    let lista = [...produtos];
 
     if(sort === "low") lista.sort((a,b) => parseFloat(a.preco) - parseFloat(b.preco));
     if(sort === "high") lista.sort((a,b) => parseFloat(b.preco) - parseFloat(a.preco));
 
-    document.getElementById("titulo-pagina").innerText = filtroAtivo === "todos" ? "Todos os Produtos" : `Categoria: ${filtroAtivo}`;
-    lista.forEach(p => gridPrincipal.appendChild(criarCard(p)));
+    lista.forEach(p => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+            <div class="img-container"><img src="${p.imagem}" loading="lazy"></div>
+            <div class="info">
+                <h3>${p.nome}</h3>
+                <p class="preco">R$ ${parseFloat(p.preco).toLocaleString('pt-BR', {minimumFractionDigits: 2})}</p>
+                <p class="envio">Chegará grátis amanhã</p>
+                <span class="tag-full">FULL</span>
+            </div>
+        `;
+        el.appendChild(card);
+    });
+    
+    // Monitorar scroll para mostrar/esconder setas
+    el.addEventListener('scroll', () => toggleArrows(containerId));
+    setTimeout(() => toggleArrows(containerId), 100);
 }
 
-function criarCard(p) {
-    const d = document.createElement("div"); d.className = "card";
-    d.innerHTML = `<img src="${p.imagem}" loading="lazy"><h3>${p.nome}</h3><p class="preco">R$ ${p.preco}</p><a href="${p.link}" target="_blank" class="btn-comprar">VER OFERTA</a>`;
-    return d;
-}
-
-function scrollCarousel(id, dir) {
+function scrollCarousel(id, direcao) {
     const el = document.getElementById(id);
-    const scrollAmount = 300;
-    el.scrollBy({ left: dir * scrollAmount, behavior: 'smooth' });
+    const scrollAmount = el.offsetWidth * 0.8;
+    el.scrollBy({ left: direcao * scrollAmount, behavior: 'smooth' });
+}
+
+function toggleArrows(id) {
+    const el = document.getElementById(id);
+    const parent = el.parentElement;
+    const prevBtn = parent.querySelector('.prev');
+    const nextBtn = parent.querySelector('.next');
+    
+    if(prevBtn) prevBtn.style.display = el.scrollLeft > 10 ? "flex" : "none";
+    if(nextBtn) nextBtn.style.display = (el.scrollLeft + el.offsetWidth < el.scrollWidth - 10) ? "flex" : "none";
 }
 
 function iniciarTimer() {
@@ -108,17 +143,26 @@ function iniciarTimer() {
         const h = Math.floor(diff/3600000).toString().padStart(2,'0');
         const m = Math.floor((diff%3600000)/60000).toString().padStart(2,'0');
         const s = Math.floor((diff%60000)/1000).toString().padStart(2,'0');
-        const t = document.getElementById("timer");
-        if(t) t.innerText = `${h}:${m}:${s}`;
+        const timerEl = document.getElementById("timer");
+        if(timerEl) timerEl.innerText = `${h}:${m}:${s}`;
     }, 1000);
 }
 
 document.getElementById("sort-price").onchange = renderizar;
 document.getElementById("busca").addEventListener("input", (e) => {
     const val = e.target.value.toLowerCase();
-    const res = todosProdutos.filter(p => p.nome.toLowerCase().includes(val));
-    gridPrincipal.innerHTML = "";
-    res.forEach(p => gridPrincipal.appendChild(criarCard(p)));
+    if(val.length > 2) {
+        document.getElementById("secoes-categorias").innerHTML = "";
+        document.getElementById("secao-expirando").style.display = "none";
+        const resCont = document.getElementById("busca-resultado");
+        const grid = document.getElementById("grid-busca");
+        resCont.style.display = "block";
+        grid.innerHTML = "";
+        const filtrados = todosProdutos.filter(p => p.nome.toLowerCase().includes(val));
+        renderizarLinha("grid-busca", filtrados);
+    } else if (val.length === 0) {
+        renderizar();
+    }
 });
 
 carregarSite();
