@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radar de Ofertas | Marketplace</title>
+    <title>Radar de Ofertas | Marketplace Profissional</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -19,16 +19,31 @@
             </div>
             <div class="search-row">
                 <div class="search-box">
-                    <input type="text" id="busca" placeholder="O que você está procurando hoje?">
+                    <input type="text" id="busca" placeholder="O que você está procurando hoje?" autocomplete="off">
                     <i class="fas fa-search"></i>
+                    <div id="search-suggestions" class="search-suggestions"></div>
                 </div>
             </div>
         </div>
     </header>
 
-    <div class="mobile-category-filter" id="mobile-category-filter"></div>
+    <nav class="nav-bar-ml">
+        <div class="nav-content-ml">
+            <div class="category-dropdown">
+                <button class="dropbtn">Categorias <i class="fas fa-chevron-down"></i></button>
+                <div class="dropdown-content" id="mega-menu">
+                    </div>
+            </div>
+            <a href="#" class="nav-item-ml">Ofertas</a>
+            <a href="#" class="nav-item-ml">Cupons</a>
+            <a href="#" class="nav-item-ml">Histórico</a>
+            <a href="#" class="nav-item-ml">Contato</a>
+        </div>
+    </nav>
 
-    <nav class="nav-bar" id="menu-topo"></nav>
+    <div class="mobile-filter-container">
+        <div class="mobile-category-filter" id="mobile-category-filter"></div>
+    </div>
 
     <div class="main-wrapper">
         <aside class="sidebar">
@@ -63,7 +78,7 @@
         <div class="footer-container">
             <section class="footer-categories-box">
                 <div class="footer-header-ml">
-                    <h3>Categorias</h3>
+                    <h3>Categorias Populares</h3>
                 </div>
                 <div class="categories-grid-ml" id="footer-cats"></div>
                 <div class="show-more-container">
@@ -73,27 +88,9 @@
                 </div>
             </section>
 
-            <section class="footer-info">
-                <div class="info-item">
-                    <i class="far fa-credit-card fa-3x"></i>
-                    <h4>Pague como quiser</h4>
-                    <p>Cartão, boleto ou Pix. Parcele em até 12x.</p>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-box fa-3x"></i>
-                    <h4>Envio garantido</h4>
-                    <p>Receba seus produtos com segurança e rapidez.</p>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-user-shield fa-3x"></i>
-                    <h4>Compra Protegida</h4>
-                    <p>Sua segurança é nossa prioridade absoluta.</p>
-                </div>
-            </section>
-
             <div class="footer-bottom">
                 <p>Copyright © 2026 Radar de Ofertas LTDA.</p>
-                <p>CNPJ: 03.007.331/0001-41 | Rio de Janeiro, Brasil</p>
+                <p>CNPJ: 03.007.331/0001-41</p>
             </div>
         </div>
     </footer>
