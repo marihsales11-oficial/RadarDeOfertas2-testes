@@ -19,13 +19,8 @@
                 <input type="text" id="busca" placeholder="O que você está procurando?">
                 <i class="fas fa-search"></i>
             </div>
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                Categorias <i class="fas fa-chevron-down"></i>
-            </button>
         </div>
     </header>
-
-    <div id="mobile-dropdown" class="mobile-dropdown"></div>
 
     <nav class="nav-bar" id="menu-topo"></nav>
 
@@ -46,22 +41,16 @@
         </aside>
 
         <main class="content">
-            <div class="alert-banner">
-                <i class="fas fa-info-circle"></i> 
-                <span>Você será direcionado ao site oficial para concluir sua compra e garantir o menor preço.</span>
-            </div>
-
             <section id="secao-expirando" class="expirando-block">
                 <div class="expirando-header">
                     <h2><i class="fas fa-bolt"></i> OFERTAS EXPIRANDO</h2>
                     <div id="timer" class="timer">00:00:00</div>
                 </div>
-                <div id="grid-expirando" class="grid-layout responsive-grid"></div>
+                <div class="grid-layout" id="grid-expirando"></div>
             </section>
 
-            <div id="secoes-por-categoria"></div>
-            
-            <div id="grid-especifico" class="grid-layout responsive-grid" style="display:none;"></div>
+            <h2 class="section-title" id="titulo-pagina">Todos os Produtos</h2>
+            <div id="lista-produtos" class="grid-layout"></div>
         </main>
     </div>
 
@@ -69,8 +58,8 @@
         <div class="footer-container">
             <section class="footer-categories">
                 <div class="footer-header">
-                    <h3>Explore por Categorias</h3>
-                    <a href="#" onclick="filtrar('todos')">Mostrar todas</a>
+                    <h3>Categorias</h3>
+                    <a href="#" onclick="location.reload()">Mostrar todas as categorias</a>
                 </div>
                 <div class="carousel-container">
                     <button class="arrow-btn left" onclick="scrollCarousel('footer-cats', -1)"><i class="fas fa-chevron-left"></i></button>
@@ -81,28 +70,28 @@
 
             <section class="footer-info">
                 <div class="info-item">
-                    <i class="far fa-credit-card fa-2x"></i>
-                    <h4>Pague com Segurança</h4>
-                    <p>Checkout oficial e protegido.</p>
+                    <i class="far fa-credit-card fa-3x"></i>
+                    <h4>Escolha como pagar</h4>
+                    <p>Pague com cartão, boleto ou Pix. Parcele em até 12x com facilidade.</p>
                 </div>
                 <div class="info-item">
-                    <i class="fas fa-shipping-fast fa-2x"></i>
-                    <h4>Entrega Rápida</h4>
-                    <p>Logística das maiores lojas do país.</p>
+                    <i class="fas fa-box fa-3x"></i>
+                    <h4>Frete grátis e rápido</h4>
+                    <p>Aproveite benefícios de entrega em milhares de produtos.</p>
                 </div>
                 <div class="info-item">
-                    <i class="fas fa-headset fa-2x"></i>
-                    <h4>Suporte Afiliado</h4>
-                    <p>Dúvidas? Entre em contato conosco.</p>
+                    <i class="fas fa-user-shield fa-3x"></i>
+                    <h4>Segurança, do início ao fim</h4>
+                    <p>Proteção total em todas as suas compras e devolução fácil.</p>
                 </div>
             </section>
 
             <div class="footer-bottom">
                 <div class="bottom-links">
-                    <a href="#">Privacidade</a> | 
-                    <a href="https://wa.me/5521980081646" target="_blank">Contato do Afiliado</a>
+                    <a href="#">Trabalhe conosco</a> | <a href="#">Termos e condições</a> | <a href="#">Privacidade</a> | <a href="#">Contato</a>
                 </div>
-                <p>© 2026 Radar de Ofertas - CNPJ: 03.007.331/0001-41</p>
+                <p>Copyright © 1999-2026 Radar de Ofertas LTDA.</p>
+                <p>CNPJ n.º 03.007.331/0001-41 / Av. das Nações Unidas, nº 3.003, Osasco/SP</p>
             </div>
         </div>
     </footer>
