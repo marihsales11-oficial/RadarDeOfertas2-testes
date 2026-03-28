@@ -5,6 +5,7 @@ let filtroAtivo = "todos";
 async function carregarSite() {
     try {
         const res = await fetch('produtos.json');
+        if (!res.ok) throw new Error('Falha ao carregar JSON');
         const data = await res.json();
         categoriasData = data.categorias;
 
@@ -18,8 +19,9 @@ async function carregarSite() {
         desenharInterface();
         renderizar();
         iniciarTimer();
-        updateArrows('footer-cats');
-    } catch (e) { console.error("Erro:", e); }
+        // Inicializa as setas após um pequeno delay para o DOM carregar
+        setTimeout(() => updateArrows('footer-cats'), 300);
+    } catch (e) { console.error("Erro ao carregar o site:", e); }
 }
 
 function desenharInterface() {
@@ -27,23 +29,21 @@ function desenharInterface() {
     const sidebarMenu = document.getElementById("sidebar-cats");
     const footerCats = document.getElementById("footer-cats");
 
-    // Botão "TODAS"
-    const todasBtn = `<a class="nav-link" onclick="filtrar('todos')"><strong>⭐ TODAS</strong></a>`;
-    menuTopo.insertAdjacentHTML('beforeend', todasBtn);
+    if (!menuTopo || !footerCats) return;
+
+    menuTopo.innerHTML = `<a class="nav-link" onclick="filtrar('todos')"><strong>⭐ TODAS</strong></a>`;
+    sidebarMenu.innerHTML = "";
+    footerCats.innerHTML = "";
 
     categoriasData.forEach(cat => {
         if(cat.id === "expirando") return;
 
-        // Menu Topo
         menuTopo.insertAdjacentHTML('beforeend', `<a class="nav-link" onclick="filtrar('${cat.id}')">${cat.nome}</a>`);
-
-        // Sidebar
         sidebarMenu.insertAdjacentHTML('beforeend', `<div class="cat-item" onclick="filtrar('${cat.id}')">${cat.nome}</div>`);
 
-        // Footer Carousel (22 categorias aqui)
         const card = `
             <div class="cat-card" onclick="filtrar('${cat.id}')">
-                <div class="cat-card-img"><img src="${cat.icone}"></div>
+                <div class="cat-card-img"><img src="${cat.icone}" alt="${cat.nome}"></div>
                 <div class="cat-card-text"><p>${cat.nome}</p></div>
             </div>`;
         footerCats.insertAdjacentHTML('beforeend', card);
@@ -66,7 +66,8 @@ function renderizar() {
 
     if(filtroAtivo === "todos") {
         document.getElementById("secao-expirando").style.display = "block";
-        categoriasData.find(c => c.id === "expirando").produtos.forEach(p => gridExp.appendChild(criarCard(p)));
+        const catExp = categoriasData.find(c => c.id === "expirando");
+        if(catExp) catExp.produtos.forEach(p => gridExp.appendChild(criarCard(p)));
     } else {
         document.getElementById("secao-expirando").style.display = "none";
     }
@@ -95,10 +96,12 @@ function scrollCarousel(id, dir) {
 
 function updateArrows(id) {
     const el = document.getElementById(id);
-    const leftBtn = el.parentElement.querySelector('.left');
-    const rightBtn = el.parentElement.querySelector('.right');
-    leftBtn.style.display = el.scrollLeft > 10 ? "flex" : "none";
-    rightBtn.style.display = (el.scrollLeft + el.offsetWidth < el.scrollWidth - 10) ? "flex" : "none";
+    const leftBtn = document.getElementById('btn-prev');
+    const rightBtn = document.getElementById('btn-next');
+    if(!el || !leftBtn || !rightBtn) return;
+    
+    leftBtn.style.visibility = el.scrollLeft > 10 ? "visible" : "hidden";
+    rightBtn.style.visibility = (el.scrollLeft + el.offsetWidth < el.scrollWidth - 10) ? "visible" : "hidden";
 }
 
 function iniciarTimer() {
@@ -109,10 +112,13 @@ function iniciarTimer() {
         const h = Math.floor(diff/3600000).toString().padStart(2,'0');
         const m = Math.floor((diff%3600000)/60000).toString().padStart(2,'0');
         const s = Math.floor((diff%60000)/1000).toString().padStart(2,'0');
-        document.getElementById("timer").innerText = `${h}:${m}:${s}`;
+        const timerEl = document.getElementById("timer");
+        if(timerEl) timerEl.innerText = `${h}:${m}:${s}`;
     }, 1000);
 }
 
 document.getElementById("sort-price").onchange = renderizar;
-document.getElementById('footer-cats').addEventListener('scroll', () => updateArrows('footer-cats'));
+const footerCatsEl = document.getElementById('footer-cats');
+if(footerCatsEl) footerCatsEl.addEventListener('scroll', () => updateArrows('footer-cats'));
+
 carregarSite();
