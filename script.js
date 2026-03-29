@@ -12,7 +12,50 @@ async function init() {
         renderizarExpirando();
         renderizarFeedCompleto();
         iniciarTimer();
-    } catch (e) { console.error(e); }
+        configurarBuscaInteligente();
+    } catch (e) { console.error("Erro ao carregar dados:", e); }
+}
+
+function configurarBuscaInteligente() {
+    const input = document.getElementById('input-busca');
+    const resultados = document.getElementById('busca-resultados');
+
+    input.addEventListener('input', (e) => {
+        const termo = e.target.value.toLowerCase();
+        resultados.innerHTML = "";
+
+        if (termo.length < 1) {
+            resultados.style.display = 'none';
+            return;
+        }
+
+        let matches = [];
+        categoriasData.forEach(cat => {
+            cat.produtos.forEach(p => {
+                if (p.nome.toLowerCase().includes(termo)) matches.push(p);
+            });
+        });
+
+        if (matches.length > 0) {
+            resultados.style.display = 'block';
+            matches.slice(0, 6).forEach(p => {
+                const item = document.createElement('a');
+                item.className = 'sugestao-item';
+                item.href = "#";
+                item.innerHTML = `
+                    <img src="${p.imagem}">
+                    <div><strong>${p.nome}</strong><br>R$ ${p.preco}</div>
+                `;
+                resultados.appendChild(item);
+            });
+        } else {
+            resultados.style.display = 'none';
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.search-box')) resultados.style.display = 'none';
+    });
 }
 
 function criarCardHTML(p) {
@@ -36,12 +79,32 @@ function renderizarExpirando() {
     const grid = document.getElementById("grid-expirando");
     grid.innerHTML = "";
     if(categoriasData[0]) {
-        categoriasData[0].produtos.forEach(p => {
-            grid.appendChild(criarCardHTML(p));
-        });
+        categoriasData[0].produtos.forEach(p => grid.appendChild(criarCardHTML(p)));
     }
 }
 
+function renderizarIconesHome() {
+    const grid = document.getElementById("grid-icones-home");
+    grid.innerHTML = "";
+    const lista = expandidoHome ? categoriasData : categoriasData.slice(0, 8);
+    lista.forEach(c => {
+        const card = document.createElement("a");
+        card.className = "cat-icon-card";
+        card.href = `#cat-${c.id}`;
+        // Imagens do produtos.json, com fallback se estiver vazio
+        const iconUrl = c.icone || 'https://http2.mlstatic.com/storage/homes-node/navigation/desktop/deals.svg';
+        card.innerHTML = `<img src="${iconUrl}"><span>${c.nome}</span>`;
+        grid.appendChild(card);
+    });
+}
+
+function scrollManual(id, direction) {
+    const track = document.getElementById(`track-${id}`);
+    const amount = window.innerWidth < 768 ? track.clientWidth : track.clientWidth / 2;
+    track.scrollBy({ left: amount * direction, behavior: 'smooth' });
+}
+
+// Funções padrão mantidas do backup...
 function renderizarFeedCompleto() {
     const feed = document.getElementById("feed-infinito");
     feed.innerHTML = "";
@@ -50,7 +113,7 @@ function renderizarFeedCompleto() {
         const section = document.createElement("section");
         section.id = `cat-${cat.id}`;
         section.innerHTML = `
-            <h3 style="margin:30px 0 10px; font-weight:300; color:#666">${cat.nome}</h3>
+            <h3 style="margin:40px 0 10px; font-weight:300; color:#666">${cat.nome}</h3>
             <div class="category-carousel-container" style="position:relative">
                 <button class="carousel-arrow arrow-left" onclick="scrollManual('${cat.id}', -1)"><i class="fas fa-chevron-left"></i></button>
                 <div class="category-carousel-track" id="track-${cat.id}" style="overflow-x:hidden; display:flex"></div>
@@ -63,33 +126,6 @@ function renderizarFeedCompleto() {
     });
 }
 
-function scrollManual(id, direction) {
-    const track = document.getElementById(`track-${id}`);
-    const amount = track.clientWidth; 
-    track.scrollBy({ left: amount * direction, behavior: 'smooth' });
-}
-
-function renderizarIconesHome() {
-    const grid = document.getElementById("grid-icones-home");
-    grid.innerHTML = "";
-    const lista = expandidoHome ? categoriasData : categoriasData.slice(0, 8);
-    lista.forEach(c => {
-        const card = document.createElement("a");
-        card.className = "cat-icon-card";
-        card.href = `#cat-${c.id}`;
-        // Uso do icone do JSON ou ícone padrão do Mercado Livre se falhar
-        const iconUrl = c.icone || 'https://http2.mlstatic.com/storage/homes-node/navigation/desktop/deals.svg';
-        card.innerHTML = `<img src="${iconUrl}" style="width:45px"><span>${c.nome}</span>`;
-        grid.appendChild(card);
-    });
-}
-
-function toggleHomeCategorias() {
-    expandidoHome = !expandidoHome;
-    renderizarIconesHome();
-    document.getElementById("btn-expandir-home").innerText = expandidoHome ? "Ver menos" : "Ver mais categorias";
-}
-
 function renderizarMenus() {
     const nav = document.getElementById("menu-categorias-dt");
     categoriasData.forEach(c => {
@@ -98,6 +134,12 @@ function renderizarMenus() {
         a.innerText = c.nome;
         nav.appendChild(a);
     });
+}
+
+function toggleHomeCategorias() {
+    expandidoHome = !expandidoHome;
+    renderizarIconesHome();
+    document.getElementById("btn-expandir-home").innerText = expandidoHome ? "Ver menos categorias" : "Ver mais categorias";
 }
 
 function iniciarTimer() {
