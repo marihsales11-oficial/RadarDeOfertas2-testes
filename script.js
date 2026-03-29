@@ -16,6 +16,50 @@ async function init() {
     } catch (e) { console.error(e); }
 }
 
+function renderizarIconesHome() {
+    const grid = document.getElementById("grid-icones-home");
+    grid.innerHTML = "";
+    // Se não expandido, mostra 8. Se expandido, mostra todas.
+    const lista = expandidoHome ? categoriasData : categoriasData.slice(0, 8);
+    
+    lista.forEach(c => {
+        const card = document.createElement("a");
+        card.className = "cat-icon-card";
+        card.href = `#cat-${c.id}`;
+        // Fallback para ícone caso a URL falhe
+        const imgUrl = c.icone || 'https://http2.mlstatic.com/storage/homes-node/navigation/desktop/deals.svg';
+        card.innerHTML = `<img src="${imgUrl}"><span>${c.nome}</span>`;
+        grid.appendChild(card);
+    });
+}
+
+function toggleHomeCategorias() {
+    expandidoHome = !expandidoHome;
+    renderizarIconesHome();
+    document.getElementById("btn-expandir-home").innerText = expandidoHome ? "Mostrar menos" : "Ver mais categorias";
+}
+
+function renderizarExpirando() {
+    const grid = document.getElementById("grid-expirando");
+    grid.innerHTML = "";
+    // Renderiza todos os produtos da primeira categoria (Ofertas Expirando)
+    if(categoriasData[0]) {
+        categoriasData[0].produtos.forEach(p => {
+            const div = document.createElement("div");
+            div.className = "card";
+            div.style.flex = "0 0 224px";
+            div.innerHTML = `
+                <img src="${p.imagem}">
+                <div class="card-info">
+                    <div class="preco">R$ ${p.preco}</div>
+                    <h4>${p.nome}</h4>
+                </div>
+            `;
+            grid.appendChild(div);
+        });
+    }
+}
+
 function renderizarFeedCompleto() {
     const feed = document.getElementById("feed-infinito");
     feed.innerHTML = "";
@@ -25,11 +69,9 @@ function renderizarFeedCompleto() {
         
         const section = document.createElement("section");
         section.id = `cat-${cat.id}`;
-        section.className = "category-section";
-        
         section.innerHTML = `
             <h3 style="margin:40px 0 10px; font-weight:300; color:#666">${cat.nome}</h3>
-            <div class="category-carousel-container" data-cat="${cat.id}">
+            <div class="category-carousel-container">
                 <button class="carousel-arrow arrow-left" onclick="scrollManual('${cat.id}', -1)"><i class="fas fa-chevron-left"></i></button>
                 <div class="category-carousel-track" id="track-${cat.id}"></div>
                 <button class="carousel-arrow arrow-right" onclick="scrollManual('${cat.id}', 1)"><i class="fas fa-chevron-right"></i></button>
@@ -42,10 +84,10 @@ function renderizarFeedCompleto() {
             card.className = "card";
             card.innerHTML = `
                 <img src="${p.imagem}">
-                <div style="padding:10px">
-                    <h4 style="font-size:13px; font-weight:300; margin:0 0 10px">${p.nome}</h4>
-                    <div style="font-size:22px">R$ ${p.preco}</div>
-                    <div style="color:#00a650; font-size:12px; font-weight:bold">Frete grátis</div>
+                <div class="card-info">
+                    <h4>${p.nome}</h4>
+                    <div class="preco">R$ ${p.preco}</div>
+                    <div class="frete-gratis">Frete grátis</div>
                 </div>
             `;
             track.appendChild(card);
@@ -54,40 +96,26 @@ function renderizarFeedCompleto() {
     });
 }
 
-// LOGICA CARROSSEL AUTOMATICO
+function scrollManual(id, direction) {
+    const track = document.getElementById(`track-${id}`);
+    const amount = 236; // largura do card (224) + gap (12)
+    track.scrollBy({ left: amount * direction * 2, behavior: 'smooth' });
+}
+
 function iniciarCarrosseisAutomaticos() {
     const tracks = document.querySelectorAll('.category-carousel-track');
-    
     tracks.forEach(track => {
-        let autoScroll = setInterval(() => {
-            if (track.scrollLeft + track.clientWidth >= track.scrollWidth) {
-                track.scrollLeft = 0;
+        let interval = setInterval(() => {
+            if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 1) {
+                track.scrollTo({left: 0, behavior: 'smooth'});
             } else {
-                track.scrollLeft += 1; // Velocidade lenta
+                track.scrollBy({left: 1, behavior: 'auto'});
             }
-        }, 30);
-
-        // Para o carrossel quando o usuário interage
-        track.addEventListener('mouseenter', () => clearInterval(autoScroll));
-        track.addEventListener('mouseleave', () => {
-            autoScroll = setInterval(() => {
-                if (track.scrollLeft + track.clientWidth >= track.scrollWidth) {
-                    track.scrollLeft = 0;
-                } else {
-                    track.scrollLeft += 1;
-                }
-            }, 30);
-        });
+        }, 40);
+        track.addEventListener('mouseenter', () => clearInterval(interval));
     });
 }
 
-function scrollManual(id, direction) {
-    const track = document.getElementById(`track-${id}`);
-    const amount = track.clientWidth * 0.7;
-    track.scrollBy({ left: amount * direction, behavior: 'smooth' });
-}
-
-// Demais funções (Timer e Menus)
 function renderizarMenus() {
     const nav = document.getElementById("menu-categorias-dt");
     categoriasData.forEach(c => {
@@ -95,29 +123,6 @@ function renderizarMenus() {
         a.href = `#cat-${c.id}`;
         a.innerText = c.nome;
         nav.appendChild(a);
-    });
-}
-
-function renderizarIconesHome() {
-    const grid = document.getElementById("grid-icones-home");
-    grid.innerHTML = "";
-    const lista = expandidoHome ? categoriasData : categoriasData.slice(0, 8);
-    lista.forEach(c => {
-        const card = document.createElement("a");
-        card.className = "cat-icon-card";
-        card.href = `#cat-${c.id}`;
-        card.innerHTML = `<img src="${c.icone}"><span>${c.nome}</span>`;
-        grid.appendChild(card);
-    });
-}
-
-function renderizarExpirando() {
-    const grid = document.getElementById("grid-expirando");
-    categoriasData[0].produtos.forEach(p => {
-        const div = document.createElement("div");
-        div.className = "card";
-        div.innerHTML = `<img src="${p.imagem}"><div style="padding:10px"><div style="font-size:20px">R$ ${p.preco}</div></div>`;
-        grid.appendChild(div);
     });
 }
 
@@ -129,7 +134,8 @@ function iniciarTimer() {
         const h = Math.floor(diff/3600000).toString().padStart(2,'0');
         const m = Math.floor((diff%3600000)/60000).toString().padStart(2,'0');
         const s = Math.floor((diff%60000)/1000).toString().padStart(2,'0');
-        document.getElementById("timer").innerText = `${h}:${m}:${s}`;
+        const timerEl = document.getElementById("timer");
+        if(timerEl) timerEl.innerText = `${h}:${m}:${s}`;
     }, 1000);
 }
 
