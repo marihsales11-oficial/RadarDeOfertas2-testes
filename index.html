@@ -11,49 +11,28 @@
 
     <header class="header">
         <div class="header-container-ml">
-            <div class="top-header">
+            <div class="logo-row">
                 <a href="#" class="logo">
-                    <div class="logo-circle">
-                        <i class="fas fa-satellite-dish"></i>
-                    </div>
+                    <div class="logo-circle"><i class="fas fa-satellite-dish"></i></div>
                     <div class="logo-text">RADAR<span>DEOFERTAS</span></div>
                 </a>
+            </div>
+
+            <div class="search-row">
                 <div class="search-box">
-                    <input type="text" id="input-busca" placeholder="Buscar produtos, marcas e muito mais...">
-                    <button><i class="fas fa-search"></i></button>
-                </div>
-                <div class="promo-header">
-                    <img src="https://http2.mlstatic.com/dfp/6d616c61-6d61-4f10-91a6-89c0700d3d0f.webp" alt="Promoção">
+                    <input type="text" id="input-busca" placeholder="O que você está procurando hoje?" autocomplete="off">
+                    <button id="btn-busca"><i class="fas fa-search"></i></button>
                 </div>
             </div>
 
             <nav class="nav-bar">
-                <div class="nav-left">
-                    <div class="nav-address">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <div>
-                            <span class="send-to">Enviar para</span>
-                            <span class="address-name">Capital</span>
-                        </div>
-                    </div>
-                    <div class="nav-links">
-                        <div class="category-dropdown">
-                            <button class="dropbtn">Categorias <i class="fas fa-chevron-down"></i></button>
-                            <div class="dropdown-content" id="menu-categorias-dt">
-                                </div>
-                        </div>
-                        <a href="#">Ofertas do dia</a>
-                        <a href="#">Histórico</a>
-                        <a href="#">Moda</a>
-                        <a href="#">Vender</a>
-                        <a href="#">Contato</a>
-                    </div>
+                <div class="category-dropdown">
+                    <button class="dropbtn">Categorias <i class="fas fa-chevron-down"></i></button>
+                    <div class="dropdown-content" id="menu-categorias-dt"></div>
                 </div>
-                
-                <div class="nav-right">
-                    <a href="#" class="btn-login">Crie a sua conta</a>
+                <div class="user-menu">
+                    <a href="#">Crie sua conta</a>
                     <a href="#">Entre</a>
-                    <a href="#">Compras</a>
                     <a href="#"><i class="fas fa-shopping-cart"></i></a>
                 </div>
             </nav>
@@ -69,58 +48,34 @@
                         <h2>OFERTAS EXPIRANDO</h2>
                     </div>
                     <div class="flash-timer">
-                        <span>Termina em:</span>
+                        <span class="timer-label">Termina em:</span>
                         <div id="timer" class="digital-clock">00:00:00</div>
                     </div>
                 </div>
-                
-                <div class="flash-grid" id="grid-expirando">
-                    </div>
+                <div class="flash-grid" id="grid-expirando"></div>
             </div>
         </section>
 
         <div class="header-container-ml">
-            <section class="home-categories">
+            <section class="home-categories" id="secao-icones">
                 <h2 class="section-title">Categorias populares</h2>
-                <div class="categories-icon-grid" id="grid-icones-home">
-                    </div>
+                <div class="categories-icon-grid" id="grid-icones-home"></div>
                 <div class="show-more-center">
                     <button id="btn-expandir-home" onclick="toggleHomeCategorias()">Ver mais categorias</button>
                 </div>
             </section>
 
-            <div id="feed-infinito">
-                </div>
+            <div id="feed-infinito"></div>
             
             <div id="loader" class="loader">
-                <i class="fas fa-spinner fa-spin"></i> Carregando mais ofertas...
+                <i class="fas fa-spinner fa-spin"></i>
             </div>
         </div>
     </main>
 
     <footer class="footer-ml">
         <div class="header-container-ml">
-            <section class="footer-info-cards">
-                <div class="info-card">
-                    <img src="https://http2.mlstatic.com/storage/homes-node/navigation/desktop/payment-methods.svg">
-                    <h3>Escolha como pagar</h3>
-                    <p>Pague com cartão, boleto ou Pix. Parcele em até 12x.</p>
-                </div>
-                <div class="info-card">
-                    <img src="https://http2.mlstatic.com/storage/homes-node/navigation/desktop/shipping.svg">
-                    <h3>Frete grátis</h3>
-                    <p>Em produtos selecionados a partir de R$ 79.</p>
-                </div>
-                <div class="info-card">
-                    <img src="https://http2.mlstatic.com/storage/homes-node/navigation/desktop/protected.svg">
-                    <h3>Segurança absoluta</h3>
-                    <p>Receba o produto ou devolvemos o seu dinheiro.</p>
-                </div>
-            </section>
-
             <div class="footer-bottom">
-                <p>A RadarDeOfertas LTDA não vende produtos, apenas seleciona e divulga as melhores ofertas dos principais marketplaces.</p>
-                <p>Trabalhe conosco | Termos e condições | Contato</p>
                 <p class="copyright">Copyright © 1999-2026 RadarDeOfertas LTDA.</p>
             </div>
         </div>
