@@ -11,9 +11,48 @@ async function init() {
         renderizarIconesHome();
         renderizarExpirando();
         renderizarFeedCompleto();
-        iniciarTimer();
         
-    } catch (e) { console.error("Erro ao carregar dados:", e); }
+        // Inicializa a Busca Inteligente
+        configurarBusca();
+        
+    } catch (e) { console.error(e); }
+}
+
+function configurarBusca() {
+    const input = document.getElementById('input-busca');
+    input.addEventListener('input', (e) => {
+        const termo = e.target.value.toLowerCase();
+        const secoes = document.querySelectorAll('.category-section');
+        const homeIcons = document.getElementById('secao-icones');
+
+        if (termo.length > 0) {
+            homeIcons.style.display = 'none'; // Esconde ícones populares ao buscar
+            secoes.forEach(secao => {
+                const nomeCat = secao.dataset.nome.toLowerCase();
+                const temProduto = Array.from(secao.querySelectorAll('h3')).some(h => h.innerText.toLowerCase().includes(termo));
+                
+                // Se a categoria ou algum produto nela der match, mantém a seção
+                if (nomeCat.includes(termo) || temProduto) {
+                    secao.style.display = 'block';
+                } else {
+                    secao.style.display = 'none';
+                }
+            });
+        } else {
+            homeIcons.style.display = 'block';
+            secoes.forEach(s => s.style.display = 'block');
+        }
+    });
+}
+
+function renderizarMenus() {
+    const nav = document.getElementById("menu-categorias-dt");
+    categoriasData.forEach(c => {
+        const a = document.createElement("a");
+        a.href = `#cat-${c.id}`;
+        a.innerText = c.nome;
+        nav.appendChild(a);
+    });
 }
 
 function renderizarFeedCompleto() {
@@ -25,79 +64,36 @@ function renderizarFeedCompleto() {
         
         const section = document.createElement("section");
         section.id = `cat-${cat.id}`;
+        section.className = "category-section";
+        section.dataset.nome = cat.nome;
+        
         section.innerHTML = `
-            <h3 class="section-title" style="margin:40px 0 10px; font-weight:300; text-align:left">${cat.nome}</h3>
+            <h3 style="margin:40px 0 10px; font-weight:300; color:#666">${cat.nome}</h3>
             <div class="category-carousel-container">
-                <button class="carousel-btn btn-prev"><i class="fas fa-chevron-left"></i></button>
                 <div class="category-carousel-track"></div>
-                <button class="carousel-btn btn-next"><i class="fas fa-chevron-right"></i></button>
             </div>
         `;
         
         const track = section.querySelector(".category-carousel-track");
         cat.produtos.forEach(p => {
-            const cardLink = document.createElement("a");
-            cardLink.className = "card-link";
-            cardLink.style.textDecoration = "none";
-            cardLink.href = p.link || "#";
-            cardLink.innerHTML = `
-                <div class="card">
-                    <img src="${p.imagem}" loading="lazy">
-                    <div class="card-info">
-                        <h3 style="font-size: 13px; font-weight: 300; color: #333; margin: 0;">${p.nome}</h3>
-                        <div class="preco">R$ ${p.preco}</div>
-                        <div class="frete-gratis">Frete grátis</div>
-                    </div>
-                </div>
+            const card = document.createElement("div");
+            card.className = "card";
+            card.innerHTML = `
+                <img src="${p.imagem}" loading="lazy">
+                <h3>${p.nome}</h3>
+                <div class="preco">R$ ${p.preco}</div>
+                <div style="color:#00a650; font-size:12px; font-weight:bold">Frete grátis</div>
             `;
-            track.appendChild(cardLink);
+            track.appendChild(card);
         });
-        
         feed.appendChild(section);
-        setupCarousel(section);
     });
+    document.getElementById("loader").style.display = "none";
 }
 
-function setupCarousel(section) {
-    const track = section.querySelector('.category-carousel-track');
-    const btnNext = section.querySelector('.btn-next');
-    const btnPrev = section.querySelector('.btn-prev');
-    
-    // Scroll Manual
-    btnNext.onclick = () => track.scrollBy({ left: track.offsetWidth / 2, behavior: 'smooth' });
-    btnPrev.onclick = () => track.scrollBy({ left: -track.offsetWidth / 2, behavior: 'smooth' });
-
-    // Auto Scroll Lento
-    let isPaused = false;
-    track.onmouseenter = () => isPaused = true;
-    track.onmouseleave = () => isPaused = false;
-
-    setInterval(() => {
-        if (!isPaused) {
-            if (track.scrollLeft + track.offsetWidth >= track.scrollWidth) {
-                track.scrollTo({ left: 0, behavior: 'smooth' });
-            } else {
-                track.scrollBy({ left: 1, behavior: 'auto' });
-            }
-        }
-    }, 40); // Velocidade do auto-scroll
-}
-
-function renderizarMenus() {
-    const navDT = document.getElementById("menu-categorias-dt");
-    if (!navDT) return;
-    navDT.innerHTML = "";
-    categoriasData.forEach(c => {
-        const a = document.createElement("a");
-        a.href = `#cat-${c.id}`;
-        a.innerText = c.nome;
-        navDT.appendChild(a);
-    });
-}
-
+// Funções de timer e ícones mantidas com ajustes de ID
 function renderizarIconesHome() {
     const grid = document.getElementById("grid-icones-home");
-    if (!grid) return;
     grid.innerHTML = "";
     const lista = expandidoHome ? categoriasData : categoriasData.slice(0, 8);
     lista.forEach(c => {
@@ -117,36 +113,25 @@ function toggleHomeCategorias() {
 
 function renderizarExpirando() {
     const grid = document.getElementById("grid-expirando");
-    if (!grid || !categoriasData[0]) return;
-    grid.innerHTML = "";
     categoriasData[0].produtos.forEach(p => {
         const div = document.createElement("div");
         div.className = "card";
-        div.innerHTML = `
-            <img src="${p.imagem}">
-            <div class="card-info">
-                <h3 style="font-size: 13px; font-weight: 300; color: #333; margin: 0;">${p.nome}</h3>
-                <div class="preco">R$ ${p.preco}</div>
-                <div class="frete-gratis">Frete grátis</div>
-            </div>
-        `;
+        div.innerHTML = `<img src="${p.imagem}"><div class="preco">R$ ${p.preco}</div><h3>${p.nome}</h3>`;
         grid.appendChild(div);
     });
 }
 
 function iniciarTimer() {
-    const timerEl = document.getElementById("timer");
-    if (!timerEl) return;
     setInterval(() => {
         const now = new Date();
         const end = new Date(); end.setHours(23, 59, 59);
         const diff = end - now;
-        if (diff <= 0) return;
         const h = Math.floor(diff/3600000).toString().padStart(2,'0');
         const m = Math.floor((diff%3600000)/60000).toString().padStart(2,'0');
         const s = Math.floor((diff%60000)/1000).toString().padStart(2,'0');
-        timerEl.innerText = `${h}:${m}:${s}`;
+        document.getElementById("timer").innerText = `${h}:${m}:${s}`;
     }, 1000);
 }
 
 init();
+iniciarTimer();
