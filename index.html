@@ -1,53 +1,122 @@
-<footer class="footer-v2">
-    <div class="header-container-ml">
-        <div class="footer-benefits">
-            <div class="benefit-item">
-                <img src="https://http2.mlstatic.com/storage/homes-node/navigation/desktop/payment-methods.svg" alt="Pagar">
-                <h4>Escolha como pagar</h4>
-                <p>Com Mercado Pago, você paga com cartão, boleto ou Pix. Você também pode pagar em até 12x sem cartão com a Linha de Crédito.</p>
-                <a href="#">Como pagar com Mercado Pago</a>
-            </div>
-            <div class="benefit-item">
-                <img src="https://http2.mlstatic.com/storage/homes-node/navigation/desktop/shipping.svg" alt="Frete">
-                <h4>Frete grátis por ser sua primeira compra</h4>
-                <p>Aproveite este benefício em milhões de produtos.</p>
-            </div>
-            <div class="benefit-item">
-                <img src="https://http2.mlstatic.com/storage/homes-node/navigation/desktop/protected.svg" alt="Segurança">
-                <h4>Segurança, do início ao fim</h4>
-                <p>Você não gostou do que comprou? Devolva! No Mercado Livre não há nada que você não possa fazer, porque você está sempre protegido.</p>
-                <a href="#">Como te protegemos</a>
-            </div>
-        </div>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radar de Ofertas | Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-        <hr class="footer-divider">
-
-        <div class="footer-links-section">
-            <h5>Termos mais procurados</h5>
-            <div class="terms-cloud">
-                <span>Apple Watch</span> - <span>Ar Condicionado</span> - <span>Bicicletas</span> - <span>Iphone 16</span> - <span>Notebook</span> - <span>Xbox Series X</span>
+    <header class="header">
+        <div class="header-container-ml">
+            <div class="logo-row">
+                <a href="#" class="logo">
+                    <div class="logo-circle"><i class="fas fa-satellite-dish"></i></div>
+                    <div class="logo-text">RADAR<span>DEOFERTAS</span></div>
+                </a>
             </div>
-            
-            <h5>Pesquise produto por letra inicial</h5>
-            <div class="alphabet-row">
-                A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+
+            <div class="search-row">
+                <div class="search-box">
+                    <input type="text" id="input-busca" placeholder="Buscar produtos, marcas e muito mais..." autocomplete="off">
+                    <button id="btn-busca"><i class="fas fa-search"></i></button>
+                </div>
             </div>
-        </div>
 
-        <div class="footer-info-bar">
-            <button class="btn-more-info">Mais informações <i class="fas fa-chevron-up"></i></button>
-        </div>
-
-        <div class="footer-legal">
-            <nav class="legal-nav">
-                <a href="#">Trabalhe conosco</a>
-                <a href="#">Termos e condições</a>
-                <a href="#">Promoções</a>
-                <a href="#">Contato</a>
-                <a href="#">Informações sobre seguros</a>
+            <nav class="nav-bar">
+                <div class="category-dropdown">
+                    <button class="dropbtn">Categorias <i class="fas fa-chevron-down"></i></button>
+                    <div class="dropdown-content" id="menu-categorias-dt"></div>
+                </div>
             </nav>
-            <p>Copyright © 1999-2026 RadarDeOfertas LTDA.</p>
-            <p class="address">CNPJ n.º 03.007.331/0001-41 / Av. das Nações Unidas, nº 3.003, Bonfim, Osasco/SP - CEP 06233-903</p>
         </div>
-    </div>
-</footer>
+    </header>
+
+    <main>
+        <section class="flash-deals-hero" id="secao-expirando">
+            <div class="header-container-ml">
+                <div class="flash-header">
+                    <div class="flash-title">
+                        <i class="fas fa-bolt"></i>
+                        <h2>OFERTAS EXPIRANDO</h2>
+                    </div>
+                    <div class="flash-timer">
+                        <div id="timer" class="digital-clock">00:00:00</div>
+                    </div>
+                </div>
+                <div class="flash-grid" id="grid-expirando"></div>
+            </div>
+        </section>
+
+        <div class="header-container-ml">
+            <section class="home-categories" id="secao-categorias-icones">
+                <h2 class="section-title">Categorias populares</h2>
+                <div class="categories-icon-grid" id="grid-icones-home"></div>
+                <div class="show-more-center">
+                    <button id="btn-expandir-home" onclick="toggleHomeCategorias()">Ver mais categorias</button>
+                </div>
+            </section>
+
+            <div id="feed-infinito"></div>
+        </div>
+    </main>
+
+    <footer class="footer-ml">
+        <div class="header-container-ml">
+            <section class="footer-benefits">
+                <div class="benefit-card">
+                    <img src="https://http2.mlstatic.com/storage/homes-node/navigation/desktop/payment-methods.svg">
+                    <h3>Escolha como pagar</h3>
+                    <p>Com Mercado Pago, você paga com cartão, boleto ou Pix. Você também pode pagar em até 12x sem cartão com a Linha de Crédito.</p>
+                    <a href="#">Como pagar com Mercado Pago</a>
+                </div>
+                <div class="benefit-card">
+                    <img src="https://http2.mlstatic.com/storage/homes-node/navigation/desktop/shipping.svg">
+                    <h3>Frete grátis por ser sua primeira compra</h3>
+                    <p>Aproveite este benefício em milhões de produtos.</p>
+                </div>
+                <div class="benefit-card">
+                    <img src="https://http2.mlstatic.com/storage/homes-node/navigation/desktop/protected.svg">
+                    <h3>Segurança, do início ao fim</h3>
+                    <p>Você não gostou do que comprou? Devolva! No Mercado Livre não há nada que você não possa fazer, porque você está sempre protegido.</p>
+                    <a href="#">Como te protegemos</a>
+                </div>
+            </section>
+
+            <hr class="footer-divider">
+
+            <section class="footer-seo-links">
+                <h4>Termos mais procurados</h4>
+                <p class="seo-text">
+                    Apple Watch - Ar Condicionado - Ar Condicionado Inverter - Bicicletas - Cafeteira - Carros Novos - Computador - Fogão 4 Bocas - Fone De Ouvido Bluetooth - Freezer Vertical - Geladeira Frost Free - Guarda Roupa Casal - Guarda Roupa Solteiro - Ipad - Iphone - Iphone 16 - Notebook - Playstation 5 - Xbox Series X - Xiaomi
+                </p>
+                
+                <h4>Pesquise produto por letra inicial</h4>
+                <div class="alphabet-list">
+                    A - B - C - D - E - F - G - H - I - J - K - L - M - N - O - P - Q - R - S - T - U - V - W - X - Y - Z
+                </div>
+            </section>
+
+            <div class="footer-extra-info">
+                <button class="btn-info-toggle">Mais informações <i class="fas fa-chevron-up"></i></button>
+            </div>
+
+            <div class="footer-bottom-legal">
+                <nav class="legal-links">
+                    <a href="#">Trabalhe conosco</a>
+                    <a href="#">Termos e condições</a>
+                    <a href="#">Promos</a>
+                    <a href="#">Acessibilidade</a>
+                    <a href="#">Contato</a>
+                </nav>
+                <p>Copyright © 1999-2026 RadarDeOfertas LTDA.</p>
+                <p class="cnpj-text">CNPJ n.º 03.007.331/0001-41 / Av. das Nações Unidas, nº 3.003, Bonfim, Osasco/SP</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
