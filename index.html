@@ -21,17 +21,19 @@
             <div class="search-row">
                 <div class="search-box">
                     <input type="text" id="input-busca" placeholder="Buscar produtos, marcas e muito mais..." autocomplete="off">
-                    <button id="btn-busca"><i class="fas fa-search"></i></button>
-                    <div id="busca-resultados" class="busca-sugestoes"></div>
+                    <button><i class="fas fa-search"></i></button>
                 </div>
             </div>
 
             <nav class="nav-bar">
                 <div class="category-dropdown">
-                    <div class="select-wrapper">
-                        <button class="dropbtn">Categorias <i class="fas fa-chevron-down"></i></button>
-                        <div class="dropdown-content" id="menu-categorias-dt"></div>
-                    </div>
+                    <button class="dropbtn">Categorias <i class="fas fa-chevron-down"></i></button>
+                    <div class="dropdown-content" id="menu-categorias-dt"></div>
+                </div>
+                <div class="user-menu">
+                    <a href="#">Crie sua conta</a>
+                    <a href="#">Entre</a>
+                    <a href="#"><i class="fas fa-shopping-cart"></i></a>
                 </div>
             </nav>
         </div>
@@ -63,6 +65,10 @@
             </section>
 
             <div id="feed-infinito"></div>
+            
+            <div id="loader" class="loader" style="text-align: center; padding: 20px; display: none;">
+                <i class="fas fa-spinner fa-spin"></i>
+            </div>
         </div>
     </main>
 
@@ -70,30 +76,31 @@
         <div class="header-container-ml">
             <section class="footer-info-cards">
                 <div class="info-card">
-                    <div class="icon-box"><img src="https://http2.mlstatic.com/storage/homes-node/navigation/desktop/payment-methods.svg"></div>
+                    <img src="https://http2.mlstatic.com/storage/homes-node/navigation/desktop/payment-methods.svg" alt="Pague como quiser">
                     <div class="info-card-text">
-                        <h3>Escolha como pagar</h3>
-                        <p>Com cartão, boleto ou Pix. Parcele suas compras.</p>
-                        <a href="#">Ver meios de pagamento</a>
+                        <h3>Pague como quiser</h3>
+                        <p>Com cartão, boleto ou Pix. Você também pode pagar em até 12x no cartão.</p>
+                        <a href="#">Como pagar</a>
                     </div>
                 </div>
                 <div class="info-card">
-                    <div class="icon-box"><img src="https://http2.mlstatic.com/storage/homes-node/navigation/desktop/shipping.svg"></div>
+                    <img src="https://http2.mlstatic.com/storage/homes-node/navigation/desktop/shipping.svg" alt="Frete grátis">
                     <div class="info-card-text">
                         <h3>Frete grátis</h3>
-                        <p>Aproveite este benefício em milhões de produtos.</p>
-                        <a href="#">Saiba mais</a>
+                        <p>Em milhares de produtos novos, a partir de R$ 79.</p>
+                        <a href="#">Saiba mais sobre o benefício</a>
                     </div>
                 </div>
                 <div class="info-card">
-                    <div class="icon-box"><img src="https://http2.mlstatic.com/storage/homes-node/navigation/desktop/protected.svg"></div>
+                    <img src="https://http2.mlstatic.com/storage/homes-node/navigation/desktop/protected.svg" alt="Segurança">
                     <div class="info-card-text">
-                        <h3>Segurança de ponta a ponta</h3>
-                        <p>Você está sempre protegido em suas compras.</p>
-                        <a href="#">Como protegemos você</a>
+                        <h3>Segurança, do início ao fim</h3>
+                        <p>Não gostou? Devolva grátis. Você tem 30 dias para devolver o produto.</p>
+                        <a href="#">Como funciona a Devolução garantida</a>
                     </div>
                 </div>
             </section>
+
             <div class="footer-bottom">
                 <p>Copyright © 1999-2026 RadarDeOfertas LTDA.</p>
             </div>
