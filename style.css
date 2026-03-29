@@ -6,41 +6,52 @@
 }
 
 * { box-sizing: border-box; }
-body { background: var(--ml-bg); margin: 0; font-family: 'Proxima Nova', sans-serif; scroll-behavior: smooth; padding-top: 150px; }
+body { background: var(--ml-bg); margin: 0; font-family: 'Proxima Nova', sans-serif; scroll-behavior: smooth; padding-top: 140px; }
 
+.header-container-ml { max-width: var(--container-max); margin: 0 auto; padding: 0 15px; width: 100%; position: relative; }
+
+/* Header Fixado */
 .header { background: var(--ml-yellow); padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.1); position: fixed; top: 0; width: 100%; z-index: 2000; }
-.header-container-ml { max-width: var(--container-max); margin: 0 auto; padding: 0 10px; width: 100%; }
+.logo-row { text-align: center; margin-bottom: 8px; }
+.logo { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #2d3277; font-weight: bold; font-size: 20px; }
+.logo-circle { background: #ff4500; color: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; }
 
-/* Dropdown com Scroll Corrigido */
-.dropdown-content { display: none; position: absolute; background: #fff; min-width: 250px; max-height: 350px; overflow-y: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 3000; }
-.category-dropdown:hover .dropdown-content { display: block; }
+/* Busca Inteligente */
+.search-row { display: flex; justify-content: center; margin-bottom: 8px; position: relative; }
+.search-box { width: 100%; max-width: 600px; display: flex; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.1); border-radius: 2px; }
+.search-box input { border: none; padding: 12px 15px; width: 100%; outline: none; font-size: 16px; }
 
-/* 2 ITENS POR LINHA NO MOBILE */
-.flash-grid, .category-carousel-track { display: flex; flex-wrap: wrap; gap: 0; list-style: none; padding: 0; margin: 0; }
-
-.card-wrapper { flex: 0 0 50%; padding: 5px; }
-
-@media (min-width: 992px) {
-    .card-wrapper { flex: 0 0 25%; }
-    .flash-grid { flex-wrap: nowrap; overflow-x: auto; }
+.busca-sugestoes {
+    position: absolute; top: 100%; left: 0; right: 0; background: #fff;
+    border-top: 1px solid #eee; border-radius: 0 0 4px 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    max-height: 300px; overflow-y: auto; display: none; z-index: 3000; margin: 0 auto; max-width: 600px;
 }
+.sugestao-item { padding: 10px 15px; display: flex; align-items: center; gap: 10px; cursor: pointer; text-decoration: none; color: #333; font-size: 14px; border-bottom: 1px solid #f5f5f5; }
+.sugestao-item:hover { background: #f5f5f5; color: var(--ml-blue); }
+.sugestao-item img { width: 35px; height: 35px; object-fit: contain; }
 
-/* Card Visual Restaurado */
-.card { background: #fff; border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 1px 2px rgba(0,0,0,0.1); height: 100%; border: 1px solid #eee; text-decoration: none; color: inherit; }
+/* Categorias Populares */
+.categories-icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; margin-top: 20px; }
+.cat-icon-card { background: #fff; padding: 20px; border-radius: 8px; text-align: center; text-decoration: none; color: #333; transition: 0.2s; display: flex; flex-direction: column; align-items: center; }
+.cat-icon-card img { width: 45px; height: 45px; margin-bottom: 10px; object-fit: contain; }
+
+/* Cards e Grades */
+.flash-grid { display: flex; flex-wrap: wrap; gap: 0; margin-top: 10px; }
+.card-wrapper { flex: 0 0 50%; padding: 5px; }
+@media (min-width: 992px) { .card-wrapper { flex: 0 0 25%; } }
+
+.card { background: #fff; border-radius: 4px; overflow: hidden; height: 100%; display: flex; flex-direction: column; box-shadow: 0 1px 2px rgba(0,0,0,0.1); border: 1px solid #eee; }
 .card img { width: 100%; aspect-ratio: 1/1; object-fit: contain; background: #fff; padding: 10px; }
-.card-info { padding: 10px; flex-grow: 1; }
-.card-info h4 { font-size: 13px; font-weight: 300; margin: 0 0 8px; color: #333; height: 36px; overflow: hidden; }
-.preco { font-size: 20px; font-weight: 500; color: #333; }
-.btn-comprar { background: var(--ml-blue); color: #fff; text-align: center; padding: 8px; border-radius: 4px; font-weight: bold; display: block; margin-top: 10px; font-size: 14px; }
+.card-info { padding: 15px; flex-grow: 1; }
+.card-info h4 { font-size: 14px; font-weight: 300; margin: 0 0 10px; color: #666; height: 38px; overflow: hidden; }
+.preco { font-size: 22px; font-weight: 400; color: #333; }
+.btn-comprar { background: var(--ml-blue); color: #fff; text-align: center; padding: 10px; border-radius: 4px; font-weight: bold; display: block; text-decoration: none; margin-top: 10px; }
 
-/* Setas */
-.carousel-arrow { position: absolute; top: 40%; transform: translateY(-50%); background: #fff; border: none; width: 40px; height: 40px; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.2); cursor: pointer; z-index: 100; color: var(--ml-blue); display: flex; align-items: center; justify-content: center; }
-.arrow-left { left: -10px; }
-.arrow-right { right: -10px; }
-
-/* Footer */
-.footer-ml { background: #fff; border-top: 1px solid #ddd; padding: 40px 0; margin-top: 60px; }
-.footer-info-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
-.info-card { display: flex; align-items: flex-start; gap: 10px; text-align: left; }
+/* Footer Estilo Imagem 1 */
+.footer-ml { background: #fff; border-top: 1px solid #ddd; padding: 40px 0; margin-top: 50px; }
+.footer-info-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; border-bottom: 1px solid #eee; padding-bottom: 30px; }
+.info-card { display: flex; align-items: flex-start; gap: 15px; }
 .info-card img { width: 45px; height: 45px; }
-@media (max-width: 768px) { .footer-info-cards { grid-template-columns: 1fr; } }
+.footer-extra { padding: 30px 0; border-bottom: 1px solid #eee; }
+.footer-extra p, .alphabet { font-size: 13px; color: #999; line-height: 1.8; }
+.footer-bottom { padding-top: 20px; font-size: 12px; color: #333; }
