@@ -1,4 +1,5 @@
 let categoriasData = [];
+let expandidoHome = false;
 
 async function init() {
     try {
@@ -11,58 +12,8 @@ async function init() {
         renderizarExpirando();
         renderizarFeedCompleto();
         
-        configurarBuscaInteligente();
+        iniciarCarrosseisAutomaticos();
     } catch (e) { console.error(e); }
-}
-
-function configurarBuscaInteligente() {
-    const input = document.getElementById('input-busca');
-    const resultados = document.getElementById('busca-resultados');
-
-    input.addEventListener('input', (e) => {
-        const termo = e.target.value.toLowerCase();
-        resultados.innerHTML = "";
-
-        if (termo.length < 1) {
-            resultados.style.display = 'none';
-            return;
-        }
-
-        // Busca em todos os produtos de todas as categorias
-        let matches = [];
-        categoriasData.forEach(cat => {
-            cat.produtos.forEach(p => {
-                if (p.nome.toLowerCase().includes(termo)) {
-                    matches.push({...p, catId: cat.id});
-                }
-            });
-        });
-
-        if (matches.length > 0) {
-            resultados.style.display = 'block';
-            matches.slice(0, 6).forEach(p => {
-                const item = document.createElement('a');
-                item.className = 'sugestao-item';
-                item.href = `#cat-${p.catId}`; // Vai direto para a categoria
-                item.innerHTML = `
-                    <img src="${p.imagem}">
-                    <div>
-                        <strong>${p.nome}</strong><br>
-                        <span style="color:#00a650">R$ ${p.preco}</span>
-                    </div>
-                `;
-                item.onclick = () => { resultados.style.display = 'none'; };
-                resultados.appendChild(item);
-            });
-        } else {
-            resultados.style.display = 'none';
-        }
-    });
-
-    // Fecha sugestões ao clicar fora
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.search-box')) resultados.style.display = 'none';
-    });
 }
 
 function renderizarFeedCompleto() {
@@ -74,13 +25,14 @@ function renderizarFeedCompleto() {
         
         const section = document.createElement("section");
         section.id = `cat-${cat.id}`;
+        section.className = "category-section";
         
         section.innerHTML = `
-            <h3 class="section-title">${cat.nome}</h3>
-            <div class="category-carousel-container">
-                <button class="carousel-arrow arrow-left" onclick="scrollCarousel('${cat.id}', -1)"><i class="fas fa-chevron-left"></i></button>
+            <h3 style="margin:40px 0 10px; font-weight:300; color:#666">${cat.nome}</h3>
+            <div class="category-carousel-container" data-cat="${cat.id}">
+                <button class="carousel-arrow arrow-left" onclick="scrollManual('${cat.id}', -1)"><i class="fas fa-chevron-left"></i></button>
                 <div class="category-carousel-track" id="track-${cat.id}"></div>
-                <button class="carousel-arrow arrow-right" onclick="scrollCarousel('${cat.id}', 1)"><i class="fas fa-chevron-right"></i></button>
+                <button class="carousel-arrow arrow-right" onclick="scrollManual('${cat.id}', 1)"><i class="fas fa-chevron-right"></i></button>
             </div>
         `;
         
@@ -90,10 +42,10 @@ function renderizarFeedCompleto() {
             card.className = "card";
             card.innerHTML = `
                 <img src="${p.imagem}">
-                <div class="card-info">
-                    <h3>${p.nome}</h3>
-                    <div class="preco-card">R$ ${p.preco}</div>
-                    <div class="frete-label">Frete grátis</div>
+                <div style="padding:10px">
+                    <h4 style="font-size:13px; font-weight:300; margin:0 0 10px">${p.nome}</h4>
+                    <div style="font-size:22px">R$ ${p.preco}</div>
+                    <div style="color:#00a650; font-size:12px; font-weight:bold">Frete grátis</div>
                 </div>
             `;
             track.appendChild(card);
@@ -102,27 +54,55 @@ function renderizarFeedCompleto() {
     });
 }
 
-function scrollCarousel(id, direction) {
-    const track = document.getElementById(`track-${id}`);
-    const scrollAmount = track.clientWidth * 0.8;
-    track.scrollBy({ left: scrollAmount * direction, behavior: 'smooth' });
+// LOGICA CARROSSEL AUTOMATICO
+function iniciarCarrosseisAutomaticos() {
+    const tracks = document.querySelectorAll('.category-carousel-track');
+    
+    tracks.forEach(track => {
+        let autoScroll = setInterval(() => {
+            if (track.scrollLeft + track.clientWidth >= track.scrollWidth) {
+                track.scrollLeft = 0;
+            } else {
+                track.scrollLeft += 1; // Velocidade lenta
+            }
+        }, 30);
+
+        // Para o carrossel quando o usuário interage
+        track.addEventListener('mouseenter', () => clearInterval(autoScroll));
+        track.addEventListener('mouseleave', () => {
+            autoScroll = setInterval(() => {
+                if (track.scrollLeft + track.clientWidth >= track.scrollWidth) {
+                    track.scrollLeft = 0;
+                } else {
+                    track.scrollLeft += 1;
+                }
+            }, 30);
+        });
+    });
 }
 
-// Outras funções de renderização mantidas...
+function scrollManual(id, direction) {
+    const track = document.getElementById(`track-${id}`);
+    const amount = track.clientWidth * 0.7;
+    track.scrollBy({ left: amount * direction, behavior: 'smooth' });
+}
+
+// Demais funções (Timer e Menus)
 function renderizarMenus() {
-    const navDT = document.getElementById("menu-categorias-dt");
+    const nav = document.getElementById("menu-categorias-dt");
     categoriasData.forEach(c => {
         const a = document.createElement("a");
         a.href = `#cat-${c.id}`;
         a.innerText = c.nome;
-        navDT.appendChild(a);
+        nav.appendChild(a);
     });
 }
 
 function renderizarIconesHome() {
     const grid = document.getElementById("grid-icones-home");
     grid.innerHTML = "";
-    categoriasData.slice(0, 8).forEach(c => {
+    const lista = expandidoHome ? categoriasData : categoriasData.slice(0, 8);
+    lista.forEach(c => {
         const card = document.createElement("a");
         card.className = "cat-icon-card";
         card.href = `#cat-${c.id}`;
@@ -136,11 +116,7 @@ function renderizarExpirando() {
     categoriasData[0].produtos.forEach(p => {
         const div = document.createElement("div");
         div.className = "card";
-        div.innerHTML = `
-            <img src="${p.imagem}">
-            <div class="preco-card">R$ ${p.preco}</div>
-            <p style="font-size:13px">${p.nome}</p>
-        `;
+        div.innerHTML = `<img src="${p.imagem}"><div style="padding:10px"><div style="font-size:20px">R$ ${p.preco}</div></div>`;
         grid.appendChild(div);
     });
 }
