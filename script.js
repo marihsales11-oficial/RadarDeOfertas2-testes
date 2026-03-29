@@ -1,4 +1,5 @@
 let categoriasData = [];
+let expandidoHome = false;
 
 async function init() {
     try {
@@ -10,20 +11,9 @@ async function init() {
         renderizarIconesHome();
         renderizarExpirando();
         renderizarFeedCompleto();
+        iniciarTimer();
         
-        iniciarCarrosseisLentos();
-    } catch (e) { console.error(e); }
-}
-
-function renderizarExpirando() {
-    const grid = document.getElementById("grid-expirando");
-    grid.innerHTML = "";
-    if(categoriasData[0]) {
-        // Renderiza os primeiros 6 itens (ajustável)
-        categoriasData[0].produtos.forEach(p => {
-            grid.appendChild(criarCardHTML(p));
-        });
-    }
+    } catch (e) { console.error("Erro ao carregar dados:", e); }
 }
 
 function renderizarFeedCompleto() {
@@ -36,91 +26,127 @@ function renderizarFeedCompleto() {
         const section = document.createElement("section");
         section.id = `cat-${cat.id}`;
         section.innerHTML = `
-            <h3 style="margin:30px 0 10px; font-weight:300; color:#666">${cat.nome}</h3>
+            <h3 class="section-title" style="margin:40px 0 10px; font-weight:300; text-align:left">${cat.nome}</h3>
             <div class="category-carousel-container">
-                <button class="carousel-arrow arrow-left" onclick="scrollManual('${cat.id}', -1)">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="category-carousel-track" id="track-${cat.id}"></div>
-                <button class="carousel-arrow arrow-right" onclick="scrollManual('${cat.id}', 1)">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
+                <button class="carousel-btn btn-prev"><i class="fas fa-chevron-left"></i></button>
+                <div class="category-carousel-track"></div>
+                <button class="carousel-btn btn-next"><i class="fas fa-chevron-right"></i></button>
             </div>
         `;
         
         const track = section.querySelector(".category-carousel-track");
         cat.produtos.forEach(p => {
-            track.appendChild(criarCardHTML(p));
+            const cardLink = document.createElement("a");
+            cardLink.className = "card-link";
+            cardLink.style.textDecoration = "none";
+            cardLink.href = p.link || "#";
+            cardLink.innerHTML = `
+                <div class="card">
+                    <img src="${p.imagem}" loading="lazy">
+                    <div class="card-info">
+                        <h3 style="font-size: 13px; font-weight: 300; color: #333; margin: 0;">${p.nome}</h3>
+                        <div class="preco">R$ ${p.preco}</div>
+                        <div class="frete-gratis">Frete grátis</div>
+                    </div>
+                </div>
+            `;
+            track.appendChild(cardLink);
         });
+        
         feed.appendChild(section);
+        setupCarousel(section);
     });
 }
 
-function criarCardHTML(p) {
-    const div = document.createElement("div");
-    div.className = "card";
-    div.innerHTML = `
-        <img src="${p.imagem}" loading="lazy">
-        <div class="card-info">
-            <div class="preco">R$ ${p.preco}</div>
-            <h4>${p.nome}</h4>
-            <div class="frete-gratis">Frete grátis</div>
-        </div>
-    `;
-    return div;
-}
+function setupCarousel(section) {
+    const track = section.querySelector('.category-carousel-track');
+    const btnNext = section.querySelector('.btn-next');
+    const btnPrev = section.querySelector('.btn-prev');
+    
+    // Scroll Manual
+    btnNext.onclick = () => track.scrollBy({ left: track.offsetWidth / 2, behavior: 'smooth' });
+    btnPrev.onclick = () => track.scrollBy({ left: -track.offsetWidth / 2, behavior: 'smooth' });
 
-// Navegação por clique nas setas (Desktop e Mobile)
-function scrollManual(id, direction) {
-    const track = document.getElementById(`track-${id}`);
-    const cardWidth = track.querySelector('.card').offsetWidth + 10; // largura + gap
-    track.scrollBy({ left: cardWidth * direction * 2, behavior: 'smooth' });
-}
+    // Auto Scroll Lento
+    let isPaused = false;
+    track.onmouseenter = () => isPaused = true;
+    track.onmouseleave = () => isPaused = false;
 
-// Carrossel Lento Automático
-function iniciarCarrosseisLentos() {
-    const tracks = document.querySelectorAll('.category-carousel-track');
-    tracks.forEach(track => {
-        let isMoving = true;
-        let interval = setInterval(() => {
-            if (!isMoving) return;
-            if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 2) {
-                track.scrollLeft = 0;
+    setInterval(() => {
+        if (!isPaused) {
+            if (track.scrollLeft + track.offsetWidth >= track.scrollWidth) {
+                track.scrollTo({ left: 0, behavior: 'smooth' });
             } else {
-                track.scrollLeft += 1;
+                track.scrollBy({ left: 1, behavior: 'auto' });
             }
-        }, 50);
-
-        // Para ao tocar ou passar o mouse
-        track.addEventListener('mouseenter', () => isMoving = false);
-        track.addEventListener('mouseleave', () => isMoving = true);
-        track.addEventListener('touchstart', () => isMoving = false);
-        track.addEventListener('touchend', () => {
-            setTimeout(() => isMoving = true, 2000);
-        });
-    });
+        }
+    }, 40); // Velocidade do auto-scroll
 }
 
 function renderizarMenus() {
-    const nav = document.getElementById("menu-categorias-dt");
+    const navDT = document.getElementById("menu-categorias-dt");
+    if (!navDT) return;
+    navDT.innerHTML = "";
     categoriasData.forEach(c => {
         const a = document.createElement("a");
         a.href = `#cat-${c.id}`;
         a.innerText = c.nome;
-        nav.appendChild(a);
+        navDT.appendChild(a);
     });
 }
 
 function renderizarIconesHome() {
     const grid = document.getElementById("grid-icones-home");
+    if (!grid) return;
     grid.innerHTML = "";
-    categoriasData.slice(0, 8).forEach(c => {
+    const lista = expandidoHome ? categoriasData : categoriasData.slice(0, 8);
+    lista.forEach(c => {
         const card = document.createElement("a");
         card.className = "cat-icon-card";
         card.href = `#cat-${c.id}`;
         card.innerHTML = `<img src="${c.icone}"><span>${c.nome}</span>`;
         grid.appendChild(card);
     });
+}
+
+function toggleHomeCategorias() {
+    expandidoHome = !expandidoHome;
+    renderizarIconesHome();
+    document.getElementById("btn-expandir-home").innerText = expandidoHome ? "Mostrar menos" : "Ver mais categorias";
+}
+
+function renderizarExpirando() {
+    const grid = document.getElementById("grid-expirando");
+    if (!grid || !categoriasData[0]) return;
+    grid.innerHTML = "";
+    categoriasData[0].produtos.forEach(p => {
+        const div = document.createElement("div");
+        div.className = "card";
+        div.innerHTML = `
+            <img src="${p.imagem}">
+            <div class="card-info">
+                <h3 style="font-size: 13px; font-weight: 300; color: #333; margin: 0;">${p.nome}</h3>
+                <div class="preco">R$ ${p.preco}</div>
+                <div class="frete-gratis">Frete grátis</div>
+            </div>
+        `;
+        grid.appendChild(div);
+    });
+}
+
+function iniciarTimer() {
+    const timerEl = document.getElementById("timer");
+    if (!timerEl) return;
+    setInterval(() => {
+        const now = new Date();
+        const end = new Date(); end.setHours(23, 59, 59);
+        const diff = end - now;
+        if (diff <= 0) return;
+        const h = Math.floor(diff/3600000).toString().padStart(2,'0');
+        const m = Math.floor((diff%3600000)/60000).toString().padStart(2,'0');
+        const s = Math.floor((diff%60000)/1000).toString().padStart(2,'0');
+        timerEl.innerText = `${h}:${m}:${s}`;
+    }, 1000);
 }
 
 init();
