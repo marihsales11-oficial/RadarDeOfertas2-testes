@@ -16,42 +16,81 @@ body { background: var(--ml-bg); margin: 0; font-family: 'Proxima Nova', sans-se
 .logo { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #2d3277; font-weight: bold; font-size: 20px; }
 .logo-circle { background: #ff4500; color: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; }
 
-/* Busca Inteligente */
+/* Busca e Sugestões */
 .search-row { display: flex; justify-content: center; margin-bottom: 8px; position: relative; }
-.search-box { width: 100%; max-width: 600px; display: flex; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.1); border-radius: 2px; }
+.search-box { width: 100%; max-width: 600px; display: flex; background: #fff; border-radius: 2px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
 .search-box input { border: none; padding: 12px 15px; width: 100%; outline: none; font-size: 16px; }
 
 .busca-sugestoes {
     position: absolute; top: 100%; left: 0; right: 0; background: #fff;
-    border-top: 1px solid #eee; border-radius: 0 0 4px 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-top: 1px solid #eee; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     max-height: 300px; overflow-y: auto; display: none; z-index: 3000; margin: 0 auto; max-width: 600px;
 }
-.sugestao-item { padding: 10px 15px; display: flex; align-items: center; gap: 10px; cursor: pointer; text-decoration: none; color: #333; font-size: 14px; border-bottom: 1px solid #f5f5f5; }
-.sugestao-item:hover { background: #f5f5f5; color: var(--ml-blue); }
-.sugestao-item img { width: 35px; height: 35px; object-fit: contain; }
 
-/* Categorias Populares */
-.categories-icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; margin-top: 20px; }
-.cat-icon-card { background: #fff; padding: 20px; border-radius: 8px; text-align: center; text-decoration: none; color: #333; transition: 0.2s; display: flex; flex-direction: column; align-items: center; }
-.cat-icon-card img { width: 45px; height: 45px; margin-bottom: 10px; object-fit: contain; }
+/* CORREÇÃO FILTRO CATEGORIAS (BARRA BAGUNÇADA) */
+.category-dropdown { position: relative; display: inline-block; padding-top: 5px; border-top: 1px solid rgba(0,0,0,0.05); }
+.dropbtn { background: none; border: none; cursor: pointer; font-size: 14px; color: #333; display: flex; align-items: center; gap: 5px; }
+.dropdown-content { 
+    display: none; 
+    position: absolute; 
+    background: #fff; 
+    min-width: 250px; 
+    max-height: 350px; /* Altura limite para caber na tela */
+    overflow-y: auto;  /* Barra de rolagem funcional */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15); 
+    z-index: 3000; 
+    top: 100%; 
+    left: 0; 
+    border-radius: 0 0 4px 4px;
+}
+.dropdown-content a { color: #333; padding: 12px 16px; text-decoration: none; display: block; border-bottom: 1px solid #f5f5f5; font-size: 14px; }
+.dropdown-content a:hover { background: var(--ml-bg); }
+.category-dropdown:hover .dropdown-content { display: block; }
 
-/* Cards e Grades */
-.flash-grid { display: flex; flex-wrap: wrap; gap: 0; margin-top: 10px; }
+/* Cards e Carrossel */
+.category-carousel-container { position: relative; margin: 20px 0 40px; }
+.category-carousel-track { display: flex; overflow-x: auto; scroll-behavior: smooth; padding-bottom: 15px; scrollbar-width: none; }
+.category-carousel-track::-webkit-scrollbar { display: none; }
+
 .card-wrapper { flex: 0 0 50%; padding: 5px; }
 @media (min-width: 992px) { .card-wrapper { flex: 0 0 25%; } }
 
 .card { background: #fff; border-radius: 4px; overflow: hidden; height: 100%; display: flex; flex-direction: column; box-shadow: 0 1px 2px rgba(0,0,0,0.1); border: 1px solid #eee; }
 .card img { width: 100%; aspect-ratio: 1/1; object-fit: contain; background: #fff; padding: 10px; }
 .card-info { padding: 15px; flex-grow: 1; }
-.card-info h4 { font-size: 14px; font-weight: 300; margin: 0 0 10px; color: #666; height: 38px; overflow: hidden; }
 .preco { font-size: 22px; font-weight: 400; color: #333; }
 .btn-comprar { background: var(--ml-blue); color: #fff; text-align: center; padding: 10px; border-radius: 4px; font-weight: bold; display: block; text-decoration: none; margin-top: 10px; }
 
-/* Footer Estilo Imagem 1 */
+/* CORREÇÃO DAS SETAS (SUMIRAM OU BAGUNÇARAM) */
+.carousel-arrow { 
+    position: absolute; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    background: #fff; 
+    border: none; 
+    width: 45px; 
+    height: 45px; 
+    border-radius: 50%; 
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2); 
+    cursor: pointer; 
+    z-index: 100; 
+    color: var(--ml-blue); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 18px; 
+}
+.arrow-left { left: -20px; }
+.arrow-right { right: -20px; }
+@media (max-width: 768px) {
+    .arrow-left { left: -5px; }
+    .arrow-right { right: -5px; }
+    .carousel-arrow { width: 35px; height: 35px; }
+}
+
+/* Footer Profissional */
 .footer-ml { background: #fff; border-top: 1px solid #ddd; padding: 40px 0; margin-top: 50px; }
 .footer-info-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; border-bottom: 1px solid #eee; padding-bottom: 30px; }
 .info-card { display: flex; align-items: flex-start; gap: 15px; }
 .info-card img { width: 45px; height: 45px; }
-.footer-extra { padding: 30px 0; border-bottom: 1px solid #eee; }
-.footer-extra p, .alphabet { font-size: 13px; color: #999; line-height: 1.8; }
-.footer-bottom { padding-top: 20px; font-size: 12px; color: #333; }
+.footer-extra { padding: 30px 0; border-bottom: 1px solid #eee; font-size: 13px; color: #999; }
