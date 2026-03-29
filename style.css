@@ -6,47 +6,94 @@
 }
 
 * { box-sizing: border-box; }
-body { background: var(--ml-bg); margin: 0; font-family: 'Proxima Nova', sans-serif; scroll-behavior: smooth; padding-top: 150px; }
+body { background: var(--ml-bg); margin: 0; font-family: 'Proxima Nova', sans-serif; scroll-behavior: smooth; padding-top: 140px; }
 
-/* Header Sticky e Nav */
+/* Header & Nav */
 .header { background: var(--ml-yellow); padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.1); position: fixed; top: 0; width: 100%; z-index: 2000; }
-.header-container-ml { max-width: var(--container-max); margin: 0 auto; padding: 0 15px; }
-.logo-row { text-align: center; margin-bottom: 8px; }
-.logo { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #2d3277; font-weight: bold; font-size: 20px; }
-.search-row { display: flex; justify-content: center; margin-bottom: 8px; position: relative; }
-.search-box { width: 100%; max-width: 600px; display: flex; background: #fff; border-radius: 2px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+.header-container-ml { max-width: var(--container-max); margin: 0 auto; padding: 0 15px; width: 100%; position: relative; }
+
+/* Busca */
+.search-row { display: flex; justify-content: center; margin-bottom: 8px; }
+.search-box { width: 100%; max-width: 600px; display: flex; background: #fff; border-radius: 2px; position: relative; }
 .search-box input { border: none; padding: 12px 15px; width: 100%; outline: none; font-size: 16px; }
 
-/* Dropdown Categorias */
-.category-dropdown { display: flex; align-items: center; padding-top: 5px; border-top: 1px solid rgba(0,0,0,0.05); }
-.dropbtn { background: none; border: none; cursor: pointer; font-size: 14px; color: #333; display: flex; align-items: center; gap: 5px; }
-.dropdown-content { display: none; position: absolute; top: 100%; left: 0; background: #fff; min-width: 250px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 3000; border-radius: 4px; max-height: 400px; overflow-y: auto; }
-.dropdown-content a { color: #333; padding: 12px 16px; text-decoration: none; display: block; border-bottom: 1px solid #f5f5f5; }
-.category-dropdown:hover .dropdown-content { display: block; }
+/* Grid de Ofertas Expirando (Ajustado para 2 colunas no mobile) */
+.flash-grid { 
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 10px; 
+    margin-top: 15px;
+}
 
-/* Categorias Populares (Icones) */
-.categories-icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; margin-top: 20px; }
-.cat-icon-card { background: #fff; padding: 15px; border-radius: 8px; text-align: center; text-decoration: none; color: #333; display: flex; flex-direction: column; align-items: center; transition: 0.2s; }
-.cat-icon-card img { width: 45px; height: 45px; margin-bottom: 10px; object-fit: contain; }
+/* Container do Carrossel de Categorias */
+.category-carousel-container { 
+    position: relative; 
+    margin: 20px 0 40px; 
+    padding: 0 10px; 
+}
 
-/* Carrossel e Cards (Visual Imagem 2 Corrigido) */
-.category-carousel-container { position: relative; margin: 20px 0 40px; padding: 0 45px; }
-.category-carousel-track { display: flex; gap: 12px; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; padding: 10px 0; }
+.category-carousel-track { 
+    display: flex; 
+    gap: 10px; 
+    overflow-x: auto; 
+    scroll-behavior: smooth; 
+    scrollbar-width: none; 
+    padding: 10px 0; 
+}
 .category-carousel-track::-webkit-scrollbar { display: none; }
-.category-carousel-track > * { flex: 0 0 224px; } /* Largura fixa para caber o card da imagem 2 */
 
-.carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: #fff; border: none; width: 40px; height: 40px; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.2); cursor: pointer; z-index: 100; color: var(--ml-blue); display: flex; align-items: center; justify-content: center; }
-.arrow-left { left: 0; }
-.arrow-right { right: 0; }
+/* Cards Individuais (PROPORÇÃO CORRIGIDA) */
+.card { 
+    background: #fff; 
+    border-radius: 4px; 
+    overflow: hidden; 
+    display: flex; 
+    flex-direction: column; 
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    flex: 0 0 calc(50% - 5px); /* Garante 2 por linha no mobile */
+    min-width: calc(50% - 5px);
+}
 
-.card { background: #fff; border-radius: 4px; overflow: hidden; height: 100%; display: flex; flex-direction: column; transition: 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-.card img { width: 100%; height: 224px; object-fit: cover; } /* Visual da Imagem 2 */
-.card-info { padding: 12px; flex-grow: 1; border-top: 1px solid #eee; }
-.card-info h4 { font-size: 14px; font-weight: 300; margin: 0 0 8px; color: #333; }
-.preco { font-size: 20px; font-weight: 400; color: #333; }
-.frete-gratis { color: #00a650; font-size: 12px; font-weight: bold; margin-top: 5px; }
+.card img { 
+    width: 100%; 
+    aspect-ratio: 1 / 1; /* Mantém a imagem sempre quadrada */
+    object-fit: cover; 
+}
 
-/* Seção Expirando */
-.flash-deals-hero { background: #fff; padding: 20px 0; border-bottom: 1px solid #ddd; }
-.flash-grid { display: flex; gap: 15px; overflow-x: auto; scrollbar-width: none; }
-.flash-grid::-webkit-scrollbar { display: none; }
+.card-info { padding: 10px; flex-grow: 1; }
+.card-info h4 { font-size: 13px; font-weight: 300; margin: 0 0 5px; color: #333; height: 32px; overflow: hidden; }
+.preco { font-size: 18px; font-weight: 500; color: #333; }
+.frete-gratis { color: #00a650; font-size: 11px; font-weight: bold; }
+
+/* Setas de Navegação (Área de toque otimizada) */
+.carousel-arrow { 
+    position: absolute; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    background: rgba(255,255,255,0.9); 
+    border: none; 
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2); 
+    z-index: 100; 
+    color: var(--ml-blue); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    cursor: pointer;
+}
+.arrow-left { left: -5px; }
+.arrow-right { right: -5px; }
+
+/* Desktop: Ajuste para 5 itens por linha */
+@media (min-width: 992px) {
+    .flash-grid { grid-template-columns: repeat(5, 1fr); }
+    .category-carousel-track > * { 
+        flex: 0 0 calc(20% - 8px); 
+        min-width: calc(20% - 8px); 
+    }
+    .carousel-arrow { width: 45px; height: 45px; }
+    .arrow-left { left: -22px; }
+    .arrow-right { right: -22px; }
+}
