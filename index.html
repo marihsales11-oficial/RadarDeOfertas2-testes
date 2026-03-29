@@ -38,15 +38,14 @@
         <section class="flash-deals-hero" id="secao-expirando">
             <div class="header-container-ml">
                 <div class="flash-header">
-                    <div class="flash-title">
-                        <i class="fas fa-bolt"></i>
-                        <h2>OFERTAS EXPIRANDO</h2>
-                    </div>
-                    <div class="flash-timer">
-                        <div id="timer" class="digital-clock">00:00:00</div>
-                    </div>
+                    <div class="flash-title"><i class="fas fa-bolt"></i> <h2>OFERTAS EXPIRANDO</h2></div>
+                    <div class="flash-timer"><div id="timer" class="digital-clock">00:00:00</div></div>
                 </div>
-                <div class="flash-grid mobile-two-columns" id="grid-expirando"></div>
+                <div class="carousel-wrapper">
+                    <button class="carousel-arrow arrow-left" onclick="scrollManual('expirando', -1)"><i class="fas fa-chevron-left"></i></button>
+                    <div class="flash-grid mobile-two-columns" id="grid-expirando"></div>
+                    <button class="carousel-arrow arrow-right" onclick="scrollManual('expirando', 1)"><i class="fas fa-chevron-right"></i></button>
+                </div>
             </div>
         </section>
 
@@ -70,11 +69,11 @@
                     <img src="https://http2.mlstatic.com/storage/homes-node/navigation/desktop/payment-methods.svg">
                     <h3>Escolha como pagar</h3>
                     <p>Com Mercado Pago, você paga com cartão, boleto ou Pix.</p>
-                    <a href="#">Como pagar</a>
+                    <a href="#">Como pagar com Mercado Pago</a>
                 </div>
                 <div class="benefit-card">
                     <img src="https://http2.mlstatic.com/storage/homes-node/navigation/desktop/shipping.svg">
-                    <h3>Frete grátis</h3>
+                    <h3>Frete grátis por ser sua primeira compra</h3>
                     <p>Aproveite este benefício em milhões de produtos.</p>
                 </div>
                 <div class="benefit-card">
@@ -85,8 +84,21 @@
                 </div>
             </section>
 
+            <hr class="footer-divider">
+
+            <section class="footer-seo">
+                <h4>Termos mais procurados</h4>
+                <p class="seo-text">Apple Watch - Ar Condicionado - Bicicletas - Iphone 16 - Notebook - Xbox Series X - Xiaomi</p>
+                <h4>Pesquise produto por letra inicial</h4>
+                <p class="alphabet">A - B - C - D - E - F - G - H - I - J - K - L - M - N - O - P - Q - R - S - T - U - V - W - X - Y - Z</p>
+            </section>
+
             <div class="footer-bottom-legal">
+                <nav class="legal-links">
+                    <a href="#">Trabalhe conosco</a> <a href="#">Termos e condições</a> <a href="#">Acessibilidade</a> <a href="#">Contato</a>
+                </nav>
                 <p>Copyright © 1999-2026 RadarDeOfertas LTDA.</p>
+                <p class="cnpj">CNPJ n.º 03.007.331/0001-41 / Av. das Nações Unidas, nº 3.003, Bonfim, Osasco/SP</p>
             </div>
         </div>
     </footer>
