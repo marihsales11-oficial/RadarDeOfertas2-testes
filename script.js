@@ -12,7 +12,58 @@ async function init() {
         renderizarExpirando();
         renderizarFeedCompleto();
         iniciarTimer();
+        
+        // Ativa a busca inteligente
+        configurarBusca();
     } catch (e) { console.error("Erro ao carregar dados:", e); }
+}
+
+// NOVA FUNÇÃO: Configura o listener de busca
+function configurarBusca() {
+    const inputBusca = document.getElementById("input-busca");
+    inputBusca.addEventListener("input", (e) => {
+        const termo = e.target.value.toLowerCase();
+        filtrarConteudo(termo);
+    });
+}
+
+// NOVA FUNÇÃO: Filtra e renderiza apenas o que condiz com a busca
+function filtrarConteudo(termo) {
+    const feed = document.getElementById("feed-infinito");
+    const gridExpirando = document.getElementById("grid-expirando");
+    const heroSection = document.querySelector(".flash-deals-hero");
+    const categoriasPopulares = document.querySelector(".home-categories");
+
+    // Se a busca estiver vazia, volta ao estado original e mostra tudo
+    if (termo === "") {
+        heroSection.style.display = "block";
+        categoriasPopulares.style.display = "block";
+        renderizarExpirando();
+        renderizarFeedCompleto();
+        return;
+    }
+
+    // Esconde banners e categorias para focar nos resultados
+    heroSection.style.display = "none";
+    categoriasPopulares.style.display = "none";
+
+    feed.innerHTML = `<h2 class="section-title">Resultados para: "${termo}"</h2><div class="flash-grid" id="search-results-grid"></div>`;
+    const resultsGrid = document.getElementById("search-results-grid");
+
+    let encontrouAlgo = false;
+
+    categoriasData.forEach(cat => {
+        cat.produtos.forEach(p => {
+            if (p.nome.toLowerCase().includes(termo)) {
+                resultsGrid.appendChild(criarCardHTML(p));
+                encontrouAlgo = true;
+            }
+        });
+    });
+
+    if (!encontrouAlgo) {
+        resultsGrid.innerHTML = "<p style='grid-column: 1/-1; padding: 20px; color: #666;'>Nenhum produto encontrado.</p>";
+    }
 }
 
 function renderizarFeedCompleto() {
@@ -62,7 +113,6 @@ function criarCardHTML(p) {
 
 function scrollManual(id, direction) {
     const track = document.getElementById(`track-${id}`);
-    // Se mobile, pula a largura visível total (2 cards), se desktop pula meia tela (2 cards)
     const amount = window.innerWidth < 768 ? track.clientWidth : track.clientWidth / 2;
     track.scrollBy({ left: amount * direction, behavior: 'smooth' });
 }
