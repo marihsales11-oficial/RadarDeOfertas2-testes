@@ -13,28 +13,31 @@ async function init() {
         renderizarFeedCompleto();
         iniciarTimer();
         
-        // Ativa a busca inteligente
         configurarBusca();
     } catch (e) { console.error("Erro ao carregar dados:", e); }
 }
 
-// NOVA FUNÇÃO: Configura o listener de busca
+// Função auxiliar para remover acentos e converter para minúsculo
+function normalizarTexto(texto) {
+    return texto
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+}
+
 function configurarBusca() {
     const inputBusca = document.getElementById("input-busca");
     inputBusca.addEventListener("input", (e) => {
-        const termo = e.target.value.toLowerCase();
+        const termo = normalizarTexto(e.target.value);
         filtrarConteudo(termo);
     });
 }
 
-// NOVA FUNÇÃO: Filtra e renderiza apenas o que condiz com a busca
 function filtrarConteudo(termo) {
     const feed = document.getElementById("feed-infinito");
-    const gridExpirando = document.getElementById("grid-expirando");
     const heroSection = document.querySelector(".flash-deals-hero");
     const categoriasPopulares = document.querySelector(".home-categories");
 
-    // Se a busca estiver vazia, volta ao estado original e mostra tudo
     if (termo === "") {
         heroSection.style.display = "block";
         categoriasPopulares.style.display = "block";
@@ -43,18 +46,20 @@ function filtrarConteudo(termo) {
         return;
     }
 
-    // Esconde banners e categorias para focar nos resultados
     heroSection.style.display = "none";
     categoriasPopulares.style.display = "none";
 
-    feed.innerHTML = `<h2 class="section-title">Resultados para: "${termo}"</h2><div class="flash-grid" id="search-results-grid"></div>`;
+    feed.innerHTML = `<h2 class="section-title">Resultados da busca</h2><div class="flash-grid" id="search-results-grid"></div>`;
     const resultsGrid = document.getElementById("search-results-grid");
 
     let encontrouAlgo = false;
 
     categoriasData.forEach(cat => {
         cat.produtos.forEach(p => {
-            if (p.nome.toLowerCase().includes(termo)) {
+            // Normaliza o nome do produto para comparar com o termo normalizado
+            const nomeProdutoNormalizado = normalizarTexto(p.nome);
+            
+            if (nomeProdutoNormalizado.includes(termo)) {
                 resultsGrid.appendChild(criarCardHTML(p));
                 encontrouAlgo = true;
             }
@@ -62,7 +67,7 @@ function filtrarConteudo(termo) {
     });
 
     if (!encontrouAlgo) {
-        resultsGrid.innerHTML = "<p style='grid-column: 1/-1; padding: 20px; color: #666;'>Nenhum produto encontrado.</p>";
+        resultsGrid.innerHTML = "<p style='grid-column: 1/-1; padding: 20px; color: #666;'>Nenhum produto encontrado para sua busca.</p>";
     }
 }
 
