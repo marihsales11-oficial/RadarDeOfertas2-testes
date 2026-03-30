@@ -19,56 +19,80 @@ body { background: var(--ml-bg); margin: 0; font-family: 'Proxima Nova', sans-se
 .search-box { width: 100%; max-width: 600px; margin: 0 auto; display: flex; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.1); border-radius: 2px; }
 .search-box input { border: none; padding: 12px 15px; width: 100%; outline: none; font-size: 16px; }
 
-/* Dropdown */
+/* Dropdown Categorias - CORRIGIDO COM SCROLL */
 .category-dropdown { display: flex; padding-top: 5px; border-top: 1px solid rgba(0,0,0,0.05); }
 .dropbtn { background: none; border: none; cursor: pointer; font-size: 14px; color: #333; }
-.dropdown-content { display: none; position: absolute; background: #fff; min-width: 250px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 3000; top: 100%; left: 0; max-height: 350px; overflow-y: auto; }
+.dropdown-content { 
+    display: none; 
+    position: absolute; 
+    background: #fff; 
+    min-width: 250px; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
+    z-index: 3000; 
+    top: 100%; 
+    left: 0; 
+    max-height: 350px; /* Altura limite */
+    overflow-y: auto;  /* Barra de rolagem ativada */
+}
 .dropdown-content a { color: #333; padding: 12px 16px; text-decoration: none; display: block; border-bottom: 1px solid #f5f5f5; }
 .category-dropdown:hover .dropdown-content { display: block; }
 
-/* Categorias */
+/* Categorias Populares */
 .categories-icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; margin-top: 20px; }
-.cat-icon-card { background: #fff; padding: 20px; border-radius: 8px; text-align: center; text-decoration: none; color: #333; transition: 0.2s; display: flex; flex-direction: column; align-items: center; min-height: 120px; }
+.cat-icon-card { 
+    background: #fff; padding: 20px; border-radius: 8px; text-align: center; 
+    text-decoration: none; color: #333; transition: 0.2s; display: flex; 
+    flex-direction: column; align-items: center;
+}
 .cat-icon-card img { width: 45px; height: 45px; margin-bottom: 10px; object-fit: contain; }
 .cat-icon-card span { font-size: 13px; font-weight: 500; }
 
-/* Grid Ofertas */
+/* Grid Ofertas Expirando */
 .flash-deals-hero { background: #e62e2d; padding: 20px 0 30px; color: #fff; margin-top: 10px; }
 .flash-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
 
-/* Cards */
-.card-wrapper { flex: 0 0 25%; padding: 5px; }
+/* Cards Profissionais */
+.card-wrapper { flex: 0 0 25%; padding: 5px; } /* Wrapper para controle de largura */
 .card { background: #fff; border-radius: 4px; overflow: hidden; height: 100%; display: flex; flex-direction: column; box-shadow: 0 1px 2px rgba(0,0,0,0.1); color: #333; text-decoration: none; border: 1px solid transparent; }
+.card:hover { border-color: #ddd; }
 .card img { width: 100%; aspect-ratio: 1/1; object-fit: contain; background: #fff; padding: 10px; }
 .card-info { padding: 15px; flex-grow: 1; border-top: 1px solid #eee; }
+.card-info h4 { font-size: 14px; font-weight: 300; margin: 0 0 10px; line-height: 1.4; color: #666; height: 38px; overflow: hidden; }
 .preco { font-size: 22px; font-weight: 400; color: #333; margin-bottom: 10px; }
-.btn-comprar { background: var(--ml-blue); color: #fff; text-align: center; padding: 10px; border-radius: 4px; font-weight: bold; display: block; text-decoration: none; margin-top: auto; }
+.btn-comprar { 
+    background: var(--ml-blue); color: #fff; text-align: center; 
+    padding: 10px; border-radius: 4px; font-weight: bold; 
+    display: block; text-decoration: none; margin-top: auto; 
+}
 
-/* Footer SEO & Links */
+/* Carrossel */
+.category-carousel-container { position: relative; margin: 20px 0 40px; padding: 0 40px; }
+.category-carousel-track { display: flex; overflow-x: auto; scroll-behavior: smooth; padding-bottom: 15px; scrollbar-width: none; }
+.category-carousel-track::-webkit-scrollbar { display: none; }
+
+.carousel-arrow { 
+    position: absolute; top: 50%; transform: translateY(-50%); 
+    background: #fff; border: none; width: 45px; height: 45px; 
+    border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.2); 
+    cursor: pointer; z-index: 100; color: var(--ml-blue); display: flex; 
+    align-items: center; justify-content: center; font-size: 18px; 
+}
+.arrow-left { left: 0; }
+.arrow-right { right: 0; }
+
+/* Footer */
 .footer-ml { background: #fff; border-top: 1px solid #ddd; padding: 40px 0; margin-top: 50px; }
 .footer-info-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; padding-bottom: 40px; border-bottom: 1px solid #eee; }
 .info-card { text-align: center; }
 .info-card img { width: 50px; margin-bottom: 15px; }
+.info-card h3 { font-size: 18px; font-weight: 400; margin: 0 0 10px; }
+.info-card p { font-size: 14px; color: #666; line-height: 1.4; }
+.info-card a { font-size: 13px; color: var(--ml-blue); text-decoration: none; }
 
-.seo-footer { padding: 30px 0; border-bottom: 1px solid #eee; }
-.seo-footer h4 { font-size: 16px; margin-bottom: 15px; color: #333; }
-.keywords-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
-.keywords-grid span { font-size: 12px; color: #666; cursor: pointer; }
-.keywords-grid span:hover { color: var(--ml-blue); }
-
-.alphabet-search { margin: 20px 0; font-size: 13px; color: #333; }
-.letters { color: var(--ml-blue); font-weight: bold; letter-spacing: 2px; margin-top: 5px; }
-
-.footer-links { display: flex; flex-wrap: wrap; gap: 20px; padding: 20px 0; border-bottom: 1px solid #eee; }
-.footer-links a { font-size: 13px; color: #333; text-decoration: none; }
-.footer-links a:hover { color: var(--ml-blue); }
-
-.footer-bottom { text-align: left; padding: 20px 0; }
-.cnpj-info { font-size: 10px; color: #999; margin-top: 10px; line-height: 1.5; }
-
-/* Mobile */
+/* Mobile - 2 ITENS POR LINHA */
 @media (max-width: 768px) {
     .flash-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .category-carousel-track .card-wrapper { flex: 0 0 50%; } /* Força 2 cards no mobile */
     .footer-info-cards { grid-template-columns: 1fr; }
-    .card-wrapper { flex: 0 0 50%; }
+    .carousel-arrow { width: 35px; height: 35px; }
 }
