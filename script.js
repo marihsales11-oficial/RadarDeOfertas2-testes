@@ -17,7 +17,7 @@ async function init() {
     } catch (e) { console.error("Erro ao carregar dados:", e); }
 }
 
-// Função para remover acentos e transformar em minúsculo
+// Função auxiliar para remover acentos e converter para minúsculo
 function normalizarTexto(texto) {
     return texto
         .toLowerCase()
@@ -56,8 +56,10 @@ function filtrarConteudo(termo) {
 
     categoriasData.forEach(cat => {
         cat.produtos.forEach(p => {
-            const nomeNormalizado = normalizarTexto(p.nome);
-            if (nomeNormalizado.includes(termo)) {
+            // Normaliza o nome do produto para comparar com o termo normalizado
+            const nomeProdutoNormalizado = normalizarTexto(p.nome);
+            
+            if (nomeProdutoNormalizado.includes(termo)) {
                 resultsGrid.appendChild(criarCardHTML(p));
                 encontrouAlgo = true;
             }
@@ -65,7 +67,7 @@ function filtrarConteudo(termo) {
     });
 
     if (!encontrouAlgo) {
-        resultsGrid.innerHTML = "<p style='grid-column: 1/-1; padding: 20px; color: #666;'>Nenhum produto encontrado.</p>";
+        resultsGrid.innerHTML = "<p style='grid-column: 1/-1; padding: 20px; color: #666;'>Nenhum produto encontrado para sua busca.</p>";
     }
 }
 
@@ -124,18 +126,11 @@ function renderizarIconesHome() {
     const grid = document.getElementById("grid-icones-home");
     grid.innerHTML = "";
     const lista = expandidoHome ? categoriasData : categoriasData.slice(0, 8);
-    
-    const iconesFixos = {
-        "Ofertas Expirando": "https://http2.mlstatic.com/storage/homes-node/navigation/desktop/deals.svg",
-        "Casa, Móveis e Decoração": "https://http2.mlstatic.com/storage/homes-node/navigation/desktop/home.svg",
-        "Esportes e Fitness": "https://http2.mlstatic.com/storage/homes-node/navigation/desktop/sports.svg"
-    };
-
     lista.forEach(c => {
         const card = document.createElement("a");
         card.className = "cat-icon-card";
         card.href = `#cat-${c.id}`;
-        const iconUrl = c.icone || iconesFixos[c.nome] || 'https://http2.mlstatic.com/storage/homes-node/navigation/desktop/categories.svg';
+        const iconUrl = c.icone || 'https://http2.mlstatic.com/storage/homes-node/navigation/desktop/deals.svg';
         card.innerHTML = `<img src="${iconUrl}"><span>${c.nome}</span>`;
         grid.appendChild(card);
     });
