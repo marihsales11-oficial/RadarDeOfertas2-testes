@@ -17,7 +17,6 @@ async function init() {
     } catch (e) { console.error("Erro ao carregar dados:", e); }
 }
 
-// Função auxiliar para remover acentos e converter para minúsculo
 function normalizarTexto(texto) {
     return texto
         .toLowerCase()
@@ -56,9 +55,7 @@ function filtrarConteudo(termo) {
 
     categoriasData.forEach(cat => {
         cat.produtos.forEach(p => {
-            // Normaliza o nome do produto para comparar com o termo normalizado
             const nomeProdutoNormalizado = normalizarTexto(p.nome);
-            
             if (nomeProdutoNormalizado.includes(termo)) {
                 resultsGrid.appendChild(criarCardHTML(p));
                 encontrouAlgo = true;
@@ -104,6 +101,13 @@ function criarCardHTML(p) {
     const a = document.createElement("a");
     a.className = "card";
     a.href = "#";
+    
+    // Adicionado o redirecionamento com mensagem de segurança solicitado
+    a.onclick = (e) => {
+        e.preventDefault();
+        alert("Direcionando para a página do ML para que você realize sua compra com total segurança.");
+    };
+
     a.innerHTML = `
         <img src="${p.imagem}" loading="lazy">
         <div class="card-info">
