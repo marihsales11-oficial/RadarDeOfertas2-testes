@@ -1,98 +1,185 @@
-:root {
-    --ml-yellow: #fff159;
-    --ml-bg: #ebebeb;
-    --ml-blue: #3483fa;
-    --container-max: 1200px;
+let categoriasData = [];
+let expandidoHome = false;
+
+async function init() {
+    try {
+        const res = await fetch('produtos.json');
+        const data = await res.json();
+        categoriasData = data.categorias;
+        
+        renderizarMenus();
+        renderizarIconesHome();
+        renderizarExpirando();
+        renderizarFeedCompleto();
+        iniciarTimer();
+        
+        configurarBusca();
+    } catch (e) { console.error("Erro ao carregar dados:", e); }
 }
 
-* { box-sizing: border-box; }
-body { background: var(--ml-bg); margin: 0; font-family: 'Proxima Nova', sans-serif; scroll-behavior: smooth; padding-top: 140px; }
-
-.header-container-ml { max-width: var(--container-max); margin: 0 auto; padding: 0 15px; width: 100%; position: relative; }
-
-/* Header Fixado */
-.header { background: var(--ml-yellow); padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.1); position: fixed; top: 0; width: 100%; z-index: 2000; }
-.logo-row { text-align: center; margin-bottom: 8px; }
-.logo { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #2d3277; font-weight: bold; font-size: 20px; }
-.logo-circle { background: #ff4500; color: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; }
-
-.search-box { width: 100%; max-width: 600px; margin: 0 auto; display: flex; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.1); border-radius: 2px; }
-.search-box input { border: none; padding: 12px 15px; width: 100%; outline: none; font-size: 16px; }
-
-/* Dropdown Categorias - CORRIGIDO COM SCROLL */
-.category-dropdown { display: flex; padding-top: 5px; border-top: 1px solid rgba(0,0,0,0.05); }
-.dropbtn { background: none; border: none; cursor: pointer; font-size: 14px; color: #333; }
-.dropdown-content { 
-    display: none; 
-    position: absolute; 
-    background: #fff; 
-    min-width: 250px; 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
-    z-index: 3000; 
-    top: 100%; 
-    left: 0; 
-    max-height: 350px; /* Altura limite */
-    overflow-y: auto;  /* Barra de rolagem ativada */
-}
-.dropdown-content a { color: #333; padding: 12px 16px; text-decoration: none; display: block; border-bottom: 1px solid #f5f5f5; }
-.category-dropdown:hover .dropdown-content { display: block; }
-
-/* Categorias Populares */
-.categories-icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; margin-top: 20px; }
-.cat-icon-card { 
-    background: #fff; padding: 20px; border-radius: 8px; text-align: center; 
-    text-decoration: none; color: #333; transition: 0.2s; display: flex; 
-    flex-direction: column; align-items: center;
-}
-.cat-icon-card img { width: 45px; height: 45px; margin-bottom: 10px; object-fit: contain; }
-.cat-icon-card span { font-size: 13px; font-weight: 500; }
-
-/* Grid Ofertas Expirando */
-.flash-deals-hero { background: #e62e2d; padding: 20px 0 30px; color: #fff; margin-top: 10px; }
-.flash-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-
-/* Cards Profissionais */
-.card-wrapper { flex: 0 0 25%; padding: 5px; } /* Wrapper para controle de largura */
-.card { background: #fff; border-radius: 4px; overflow: hidden; height: 100%; display: flex; flex-direction: column; box-shadow: 0 1px 2px rgba(0,0,0,0.1); color: #333; text-decoration: none; border: 1px solid transparent; }
-.card:hover { border-color: #ddd; }
-.card img { width: 100%; aspect-ratio: 1/1; object-fit: contain; background: #fff; padding: 10px; }
-.card-info { padding: 15px; flex-grow: 1; border-top: 1px solid #eee; }
-.card-info h4 { font-size: 14px; font-weight: 300; margin: 0 0 10px; line-height: 1.4; color: #666; height: 38px; overflow: hidden; }
-.preco { font-size: 22px; font-weight: 400; color: #333; margin-bottom: 10px; }
-.btn-comprar { 
-    background: var(--ml-blue); color: #fff; text-align: center; 
-    padding: 10px; border-radius: 4px; font-weight: bold; 
-    display: block; text-decoration: none; margin-top: auto; 
+function normalizarTexto(texto) {
+    return texto
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
 }
 
-/* Carrossel */
-.category-carousel-container { position: relative; margin: 20px 0 40px; padding: 0 40px; }
-.category-carousel-track { display: flex; overflow-x: auto; scroll-behavior: smooth; padding-bottom: 15px; scrollbar-width: none; }
-.category-carousel-track::-webkit-scrollbar { display: none; }
-
-.carousel-arrow { 
-    position: absolute; top: 50%; transform: translateY(-50%); 
-    background: #fff; border: none; width: 45px; height: 45px; 
-    border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.2); 
-    cursor: pointer; z-index: 100; color: var(--ml-blue); display: flex; 
-    align-items: center; justify-content: center; font-size: 18px; 
+function configurarBusca() {
+    const inputBusca = document.getElementById("input-busca");
+    inputBusca.addEventListener("input", (e) => {
+        const termo = normalizarTexto(e.target.value);
+        filtrarConteudo(termo);
+    });
 }
-.arrow-left { left: 0; }
-.arrow-right { right: 0; }
 
-/* Footer */
-.footer-ml { background: #fff; border-top: 1px solid #ddd; padding: 40px 0; margin-top: 50px; }
-.footer-info-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; padding-bottom: 40px; border-bottom: 1px solid #eee; }
-.info-card { text-align: center; }
-.info-card img { width: 50px; margin-bottom: 15px; }
-.info-card h3 { font-size: 18px; font-weight: 400; margin: 0 0 10px; }
-.info-card p { font-size: 14px; color: #666; line-height: 1.4; }
-.info-card a { font-size: 13px; color: var(--ml-blue); text-decoration: none; }
+function filtrarConteudo(termo) {
+    const feed = document.getElementById("feed-infinito");
+    const heroSection = document.querySelector(".flash-deals-hero");
+    const categoriasPopulares = document.querySelector(".home-categories");
 
-/* Mobile - 2 ITENS POR LINHA */
-@media (max-width: 768px) {
-    .flash-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .category-carousel-track .card-wrapper { flex: 0 0 50%; } /* Força 2 cards no mobile */
-    .footer-info-cards { grid-template-columns: 1fr; }
-    .carousel-arrow { width: 35px; height: 35px; }
+    if (termo === "") {
+        heroSection.style.display = "block";
+        categoriasPopulares.style.display = "block";
+        renderizarExpirando();
+        renderizarFeedCompleto();
+        return;
+    }
+
+    heroSection.style.display = "none";
+    categoriasPopulares.style.display = "none";
+
+    feed.innerHTML = `<h2 class="section-title">Resultados da busca</h2><div class="flash-grid" id="search-results-grid"></div>`;
+    const resultsGrid = document.getElementById("search-results-grid");
+
+    let encontrouAlgo = false;
+
+    categoriasData.forEach(cat => {
+        cat.produtos.forEach(p => {
+            const nomeProdutoNormalizado = normalizarTexto(p.nome);
+            if (nomeProdutoNormalizado.includes(termo)) {
+                resultsGrid.appendChild(criarCardHTML(p));
+                encontrouAlgo = true;
+            }
+        });
+    });
+
+    if (!encontrouAlgo) {
+        resultsGrid.innerHTML = "<p style='grid-column: 1/-1; padding: 20px; color: #666;'>Nenhum produto encontrado para sua busca.</p>";
+    }
 }
+
+function renderizarFeedCompleto() {
+    const feed = document.getElementById("feed-infinito");
+    feed.innerHTML = "";
+    
+    categoriasData.forEach((cat, index) => {
+        if (index === 0) return;
+        
+        const section = document.createElement("section");
+        section.id = `cat-${cat.id}`;
+        section.innerHTML = `
+            <h3 style="margin:40px 0 15px; font-weight:300; color:#666">${cat.nome}</h3>
+            <div class="category-carousel-container">
+                <button class="carousel-arrow arrow-left" onclick="scrollManual('${cat.id}', -1)"><i class="fas fa-chevron-left"></i></button>
+                <div class="category-carousel-track" id="track-${cat.id}"></div>
+                <button class="carousel-arrow arrow-right" onclick="scrollManual('${cat.id}', 1)"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        `;
+        
+        const track = section.querySelector(".category-carousel-track");
+        cat.produtos.forEach(p => {
+            const wrapper = document.createElement("div");
+            wrapper.className = "card-wrapper";
+            wrapper.appendChild(criarCardHTML(p));
+            track.appendChild(wrapper);
+        });
+        feed.appendChild(section);
+    });
+}
+
+function criarCardHTML(p) {
+    const a = document.createElement("a");
+    a.className = "card";
+    a.href = "#";
+    
+    // Adicionado o redirecionamento com mensagem de segurança solicitado
+    a.onclick = (e) => {
+        e.preventDefault();
+        alert("Direcionando para a página do ML para que você realize sua compra com total segurança.");
+    };
+
+    a.innerHTML = `
+        <img src="${p.imagem}" loading="lazy">
+        <div class="card-info">
+            <h4>${p.nome}</h4>
+            <div class="preco">R$ ${p.preco}</div>
+            <div style="color:#00a650; font-size:12px; font-weight:bold; margin-bottom:15px">Frete grátis</div>
+            <div class="btn-comprar">Comprar agora</div>
+        </div>
+    `;
+    return a;
+}
+
+function scrollManual(id, direction) {
+    const track = document.getElementById(`track-${id}`);
+    const amount = window.innerWidth < 768 ? track.clientWidth : track.clientWidth / 2;
+    track.scrollBy({ left: amount * direction, behavior: 'smooth' });
+}
+
+function renderizarIconesHome() {
+    const grid = document.getElementById("grid-icones-home");
+    grid.innerHTML = "";
+    const lista = expandidoHome ? categoriasData : categoriasData.slice(0, 8);
+    lista.forEach(c => {
+        const card = document.createElement("a");
+        card.className = "cat-icon-card";
+        card.href = `#cat-${c.id}`;
+        const iconUrl = c.icone || 'https://http2.mlstatic.com/storage/homes-node/navigation/desktop/deals.svg';
+        card.innerHTML = `<img src="${iconUrl}"><span>${c.nome}</span>`;
+        grid.appendChild(card);
+    });
+}
+
+function renderizarExpirando() {
+    const grid = document.getElementById("grid-expirando");
+    grid.innerHTML = "";
+    if(categoriasData[0]) {
+        categoriasData[0].produtos.forEach(p => {
+            const wrapper = document.createElement("div");
+            wrapper.style.padding = "5px";
+            wrapper.appendChild(criarCardHTML(p));
+            grid.appendChild(wrapper);
+        });
+    }
+}
+
+function toggleHomeCategorias() {
+    expandidoHome = !expandidoHome;
+    renderizarIconesHome();
+    document.getElementById("btn-expandir-home").innerText = expandidoHome ? "Ver menos categorias" : "Ver mais categorias";
+}
+
+function renderizarMenus() {
+    const nav = document.getElementById("menu-categorias-dt");
+    categoriasData.forEach(c => {
+        const a = document.createElement("a");
+        a.href = `#cat-${c.id}`;
+        a.innerText = c.nome;
+        nav.appendChild(a);
+    });
+}
+
+function iniciarTimer() {
+    setInterval(() => {
+        const now = new Date();
+        const end = new Date(); end.setHours(23, 59, 59);
+        const diff = end - now;
+        const h = Math.floor(diff/3600000).toString().padStart(2,'0');
+        const m = Math.floor((diff%3600000)/60000).toString().padStart(2,'0');
+        const s = Math.floor((diff%60000)/1000).toString().padStart(2,'0');
+        const timerEl = document.getElementById("timer");
+        if(timerEl) timerEl.innerText = `${h}:${m}:${s}`;
+    }, 1000);
+}
+
+init();
