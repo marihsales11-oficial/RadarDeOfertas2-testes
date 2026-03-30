@@ -12,103 +12,87 @@ async function init() {
         renderizarExpirando();
         renderizarFeedCompleto();
         iniciarTimer();
+        configurarBusca();
     } catch (e) { console.error("Erro ao carregar dados:", e); }
+}
+
+function criarCardHTML(p) {
+    const div = document.createElement("div");
+    div.className = "card";
+    div.innerHTML = `
+        <img src="${p.imagem}" loading="lazy">
+        <h4>${p.nome}</h4>
+        <div class="preco">R$ ${p.preco}</div>
+        <div class="frete">Frete grátis</div>
+        <button class="btn-comprar" onclick="comprar(this)">Comprar agora</button>
+    `;
+    return div;
+}
+
+function comprar(btn) {
+    btn.classList.add('loading');
+    setTimeout(() => {
+        alert("Você está sendo redirecionado para a página de Afiliados do Mercado Livre, sua compra é segura.");
+        btn.classList.remove('loading');
+        window.open("https://www.mercadolivre.com.br", "_blank");
+    }, 1200);
+}
+
+function scrollManual(id, direction) {
+    const el = document.getElementById(id);
+    const scrollAmount = el.clientWidth * 0.8;
+    el.scrollBy({ left: scrollAmount * direction, behavior: 'smooth' });
+}
+
+function renderizarExpirando() {
+    const grid = document.getElementById("grid-expirando");
+    if(categoriasData[0]) {
+        categoriasData[0].produtos.forEach(p => grid.appendChild(criarCardHTML(p)));
+    }
 }
 
 function renderizarFeedCompleto() {
     const feed = document.getElementById("feed-infinito");
     feed.innerHTML = "";
-    
-    categoriasData.forEach((cat, index) => {
-        if (index === 0) return;
-        
+    categoriasData.slice(1).forEach(cat => {
         const section = document.createElement("section");
-        section.id = `cat-${cat.id}`;
         section.innerHTML = `
-            <h3 style="margin:40px 0 15px; font-weight:300; color:#666">${cat.nome}</h3>
-            <div class="category-carousel-container">
-                <button class="carousel-arrow arrow-left" onclick="scrollManual('${cat.id}', -1)"><i class="fas fa-chevron-left"></i></button>
-                <div class="category-carousel-track" id="track-${cat.id}"></div>
-                <button class="carousel-arrow arrow-right" onclick="scrollManual('${cat.id}', 1)"><i class="fas fa-chevron-right"></i></button>
+            <h3 class="section-title">${cat.nome}</h3>
+            <div class="carousel-container-global">
+                <button class="btn-scroll left" onclick="scrollManual('track-${cat.id}', -1)"><i class="fas fa-chevron-left"></i></button>
+                <div class="products-grid-scroll" id="track-${cat.id}"></div>
+                <button class="btn-scroll right" onclick="scrollManual('track-${cat.id}', 1)"><i class="fas fa-chevron-right"></i></button>
             </div>
         `;
-        
-        const track = section.querySelector(".category-carousel-track");
-        cat.produtos.forEach(p => {
-            const wrapper = document.createElement("div");
-            wrapper.className = "card-wrapper";
-            wrapper.appendChild(criarCardHTML(p));
-            track.appendChild(wrapper);
-        });
+        const track = section.querySelector(".products-grid-scroll");
+        cat.produtos.forEach(p => track.appendChild(criarCardHTML(p)));
         feed.appendChild(section);
     });
 }
 
-function criarCardHTML(p) {
-    const a = document.createElement("a");
-    a.className = "card";
-    a.href = "#";
-    a.innerHTML = `
-        <img src="${p.imagem}" loading="lazy">
-        <div class="card-info">
-            <h4>${p.nome}</h4>
-            <div class="preco">R$ ${p.preco}</div>
-            <div style="color:#00a650; font-size:12px; font-weight:bold; margin-bottom:15px">Frete grátis</div>
-            <div class="btn-comprar">Comprar agora</div>
-        </div>
-    `;
-    return a;
-}
-
-function scrollManual(id, direction) {
-    const track = document.getElementById(`track-${id}`);
-    // Se mobile, pula a largura visível total (2 cards), se desktop pula meia tela (2 cards)
-    const amount = window.innerWidth < 768 ? track.clientWidth : track.clientWidth / 2;
-    track.scrollBy({ left: amount * direction, behavior: 'smooth' });
-}
-
-function renderizarIconesHome() {
-    const grid = document.getElementById("grid-icones-home");
-    grid.innerHTML = "";
-    const lista = expandidoHome ? categoriasData : categoriasData.slice(0, 8);
-    lista.forEach(c => {
-        const card = document.createElement("a");
-        card.className = "cat-icon-card";
-        card.href = `#cat-${c.id}`;
-        const iconUrl = c.icone || 'https://http2.mlstatic.com/storage/homes-node/navigation/desktop/deals.svg';
-        card.innerHTML = `<img src="${iconUrl}"><span>${c.nome}</span>`;
-        grid.appendChild(card);
-    });
-}
-
-function renderizarExpirando() {
-    const grid = document.getElementById("grid-expirando");
-    grid.innerHTML = "";
-    if(categoriasData[0]) {
-        categoriasData[0].produtos.forEach(p => {
-            const wrapper = document.createElement("div");
-            wrapper.style.padding = "5px";
-            wrapper.appendChild(criarCardHTML(p));
-            grid.appendChild(wrapper);
-        });
-    }
-}
-
-function toggleHomeCategorias() {
-    expandidoHome = !expandidoHome;
-    renderizarIconesHome();
-    document.getElementById("btn-expandir-home").innerText = expandidoHome ? "Ver menos categorias" : "Ver mais categorias";
-}
-
 function renderizarMenus() {
-    const nav = document.getElementById("menu-categorias-dt");
+    const menu = document.getElementById("menu-categorias-dt");
     categoriasData.forEach(c => {
         const a = document.createElement("a");
-        a.href = `#cat-${c.id}`;
+        a.href = `#track-${c.id}`;
         a.innerText = c.nome;
-        nav.appendChild(a);
+        menu.appendChild(a);
     });
 }
+
+function configurarBusca() {
+    const input = document.getElementById('input-busca');
+    input.addEventListener('input', (e) => {
+        const termo = e.target.value.toLowerCase();
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            const nome = card.querySelector('h4').innerText.toLowerCase();
+            card.style.display = nome.includes(termo) ? "flex" : "none";
+        });
+    });
+}
+
+// ... manter funções auxiliares (Timer, IconesHome) ...
 
 function iniciarTimer() {
     setInterval(() => {
@@ -118,8 +102,7 @@ function iniciarTimer() {
         const h = Math.floor(diff/3600000).toString().padStart(2,'0');
         const m = Math.floor((diff%3600000)/60000).toString().padStart(2,'0');
         const s = Math.floor((diff%60000)/1000).toString().padStart(2,'0');
-        const timerEl = document.getElementById("timer");
-        if(timerEl) timerEl.innerText = `${h}:${m}:${s}`;
+        document.getElementById("timer").innerText = `${h}:${m}:${s}`;
     }, 1000);
 }
 
