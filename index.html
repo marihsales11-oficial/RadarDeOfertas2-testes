@@ -28,14 +28,15 @@
             <nav class="nav-bar">
                 <div class="category-dropdown">
                     <button class="dropbtn">Categorias <i class="fas fa-chevron-down"></i></button>
-                    <div class="dropdown-content" id="menu-categorias-dt"></div>
+                    <div class="dropdown-content" id="menu-categorias-dt">
+                        </div>
                 </div>
             </nav>
         </div>
     </header>
 
     <main>
-        <section class="flash-deals-hero">
+        <section class="flash-deals-hero" id="secao-expirando">
             <div class="header-container-ml">
                 <div class="flash-header">
                     <div class="flash-title">
@@ -46,12 +47,17 @@
                         <div id="timer" class="digital-clock">00:00:00</div>
                     </div>
                 </div>
-                <div class="flash-grid" id="grid-expirando"></div>
+                
+                <div class="carousel-container-global">
+                    <button class="btn-scroll left" onclick="scrollManual('grid-expirando', -1)"><i class="fas fa-chevron-left"></i></button>
+                    <div class="products-grid-scroll" id="grid-expirando"></div>
+                    <button class="btn-scroll right" onclick="scrollManual('grid-expirando', 1)"><i class="fas fa-chevron-right"></i></button>
+                </div>
             </div>
         </section>
 
         <div class="header-container-ml">
-            <section class="home-categories">
+            <section class="home-categories" id="secao-categorias-icones">
                 <h2 class="section-title">Categorias populares</h2>
                 <div class="categories-icon-grid" id="grid-icones-home"></div>
                 <div class="show-more-center">
@@ -65,25 +71,42 @@
 
     <footer class="footer-ml">
         <div class="header-container-ml">
-            <section class="footer-info-cards">
-                <div class="info-card">
+            <div class="footer-benefits">
+                <div class="benefit-item">
                     <img src="https://http2.mlstatic.com/storage/homes-node/navigation/desktop/payment-methods.svg">
                     <h3>Escolha como pagar</h3>
-                    <p>Com cartão, boleto ou Pix. Parcele suas compras.</p>
+                    <p>Com Mercado Pago, você paga com cartão, boleto ou Pix. Parcele em até 12x.</p>
+                    <a href="#">Como pagar com Mercado Pago</a>
                 </div>
-                <div class="info-card">
+                <div class="benefit-item">
                     <img src="https://http2.mlstatic.com/storage/homes-node/navigation/desktop/shipping.svg">
-                    <h3>Frete grátis</h3>
-                    <p>Benefício para milhares de produtos.</p>
+                    <h3>Frete grátis por ser sua primeira compra</h3>
+                    <p>Aproveite este benefício em milhões de produtos selecionados.</p>
                 </div>
-                <div class="info-card">
+                <div class="benefit-item">
                     <img src="https://http2.mlstatic.com/storage/homes-node/navigation/desktop/protected.svg">
-                    <h3>Segurança absoluta</h3>
-                    <p>Você está sempre protegido.</p>
+                    <h3>Segurança, do início ao fim</h3>
+                    <p>Você está sempre protegido. Não gostou? Devolva sem custo.</p>
+                    <a href="#">Como te protegemos</a>
                 </div>
-            </section>
+            </div>
+
+            <hr class="footer-divider">
+
+            <div class="footer-seo">
+                <p><strong>Termos mais procurados:</strong> Apple Watch, Ar Condicionado, Bicicletas, iPhone 16, Notebook, Xbox Series X, Geladeira.</p>
+                <p><strong>Pesquise por letra:</strong> A - B - C - D - E - F - G - H - I - J - K - L - M - N - O - P - Q - R - S - T - U - V - W - X - Y - Z</p>
+            </div>
+
             <div class="footer-bottom">
+                <div class="legal-links">
+                    <a href="#">Trabalhe conosco</a>
+                    <a href="#">Termos e condições</a>
+                    <a href="#">Acessibilidade</a>
+                    <a href="#">Contato</a>
+                </div>
                 <p>Copyright © 1999-2026 RadarDeOfertas LTDA.</p>
+                <p style="font-size: 10px; color: #bbb;">CNPJ n.º 03.007.331/0001-41 / Av. das Nações Unidas, nº 3.003, Osasco/SP</p>
             </div>
         </div>
     </footer>
