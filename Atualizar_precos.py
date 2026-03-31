@@ -5,26 +5,25 @@ import os
 import time
 import urllib3
 
-# Desabilita avisos de certificados SSL (essencial para ambientes de servidor)
+# Desabilita avisos de certificados SSL
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def extrair_id_ml(url):
-    """Extrai o código MLB de qualquer formato de link do Mercado Livre"""
     match = re.search(r'MLB-?(\d+)', str(url))
     if match:
         return f"MLB{match.group(1)}"
     return None
 
 def obter_preco_atualizado(ml_id):
-    """Captura o menor preço (Pix/Oferta) usando o link de produto direto"""
+    """Busca o menor preço com centavos (Pix/Oferta)"""
     try:
-        # Formato de link mais "leve" para o servidor do GitHub processar
-        ml_id_formatado = ml_id.replace('MLB', 'MLB-')
-        url_produto = f"https://produto.mercadolivre.com.br/{ml_id_formatado}"
+        # Link de catálogo/produto que o ML usa internamente
+        url_produto = f"https://www.mercadolivre.com.br/p/{ml_id}"
         
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
-            'Accept-Language': 'pt-BR,pt;q=0.9',
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+            'Accept-Language': 'pt-BR,pt;q=0.9'
         }
         
         response = requests.get(url_produto, headers=headers, timeout=20, verify=False)
@@ -32,35 +31,42 @@ def obter_preco_atualizado(ml_id):
         if response.status_code == 200:
             html = response.text
             
-            # Procura por todos os padrões de preço no HTML (Promotion, Sale ou Price)
-            # Pegamos o menor valor positivo encontrado na página
-            precos = re.findall(r'\"amount\":(\d+\.\d+)', html)
-            precos += re.findall(r'\"price\":(\d+\.\d+)', html)
+            # Lista de padrões para buscar preços com centavos (ex: 650.32)
+            padroes = [
+                r'\"promotion_price\":\{\"amount\":(\d+\.\d+)', # Preço Pix/Oferta
+                r'\"sale_price\":(\d+\.\d+)',                  # Preço de venda atual
+                r'\"price\":(\d+\.\d+)',                       # Preço genérico
+                r'content=\"(\d+\.\d+)\" property=\"product:price:amount\"' # Meta tag
+            ]
             
-            if precos:
-                lista_numerica = [float(p) for p in precos if float(p) > 5]
-                if lista_numerica:
-                    menor_preco = min(lista_numerica)
-                    return f"{menor_preco:,.2f}".replace('.', 'X').replace(',', '.').replace('X', ',')
-        
-        print(f"   ❌ Erro de Acesso ao ID {ml_id}: Status {response.status_code}")
+            encontrados = []
+            for p in padroes:
+                matches = re.findall(p, html)
+                for m in matches:
+                    encontrados.append(float(m))
+            
+            if encontrados:
+                menor_valor = min(encontrados)
+                # Formata para padrão brasileiro: 650.32 -> 650,32
+                return f"{menor_valor:,.2f}".replace('.', 'X').replace(',', '.').replace('X', ',')
+
+        print(f"   ⚠️ Status {response.status_code} mas preço não localizado no HTML.")
     except Exception as e:
         print(f"   ❌ Erro de Conexão: {e}")
     return None
 
 def processar_json():
-    # Caminho do arquivo no repositório
     caminho_json = 'produtos.json'
     
     if not os.path.exists(caminho_json):
-        print(f"❌ ERRO: Arquivo {caminho_json} não encontrado no repositório.")
+        print(f"❌ ERRO: {caminho_json} não encontrado.")
         return
 
     with open(caminho_json, 'r', encoding='utf-8') as f:
         data = json.load(f)
 
     print("\n" + "="*60)
-    print("🚀 EXECUTANDO ATUALIZAÇÃO NO GITHUB ACTIONS")
+    print("🚀 BUSCANDO PREÇOS REAIS (COM CENTAVOS)")
     print("="*60)
     
     houve_alteracao = False
@@ -68,33 +74,30 @@ def processar_json():
     for categoria in data.get('categorias', []):
         print(f"\n📂 Categoria: {categoria['nome']}")
         for produto in categoria.get('produtos', []):
-            url = produto.get('link', '')
-            ml_id = extrair_id_ml(url)
+            ml_id = extrair_id_ml(produto.get('link', ''))
             
             if ml_id:
                 print(f"🔎 Analisando: {produto['nome']}...")
                 novo_preco = obter_preco_atualizado(ml_id)
                 
                 if novo_preco:
-                    # Se o preço for diferente dos R$ 7000 (ou qualquer valor atual), atualiza
                     if produto['preco'] != novo_preco:
-                        print(f"   ✅ SUCESSO: R$ {produto['preco']} -> R$ {novo_preco}")
+                        print(f"   ✅ ATUALIZADO: R$ {produto['preco']} -> R$ {novo_preco}")
                         produto['preco'] = novo_preco
                         houve_alteracao = True
                     else:
-                        print(f"   ✨ Preço já atualizado (R$ {novo_preco})")
+                        print(f"   ✨ Preço já é o menor (R$ {novo_preco})")
                 
-                time.sleep(2) # Pausa maior para evitar bloqueios no IP do GitHub
+                time.sleep(2)
             else:
                 print(f"   ⚠️ Pulo: {produto['nome']} (Link s/ MLB)")
 
-    # Salva o arquivo apenas se houve mudança real nos valores
     if houve_alteracao:
         with open(caminho_json, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
-        print("\n✅ ALTERAÇÕES SALVAS NO ARQUIVO.")
+        print("\n✅ ARQUIVO produtos.json ATUALIZADO NO SERVIDOR.")
     else:
-        print("\nℹ️ NENHUMA ALTERAÇÃO NECESSÁRIA.")
+        print("\nℹ️ NADA A ALTERAR.")
 
 if __name__ == "__main__":
     processar_json()
