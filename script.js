@@ -14,14 +14,22 @@ async function init() {
         iniciarTimer();
         
         configurarBusca();
+        
+        // Adiciona ouvinte global para capturar cliques nos botões 'Comprar agora'
+        document.body.addEventListener('click', function(e) {
+            if (e.target && e.target.classList.contains('btn-comprar')) {
+                // Previne o comportamento padrão (link âncora '#')
+                e.preventDefault();
+                // Exibe o modal de carregamento estilo game
+                mostrarModalRedirecionamento();
+            }
+        });
+
     } catch (e) { console.error("Erro ao carregar dados:", e); }
 }
 
 function normalizarTexto(texto) {
-    return texto
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "");
+    return texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
 function configurarBusca() {
@@ -47,16 +55,14 @@ function filtrarConteudo(termo) {
 
     heroSection.style.display = "none";
     categoriasPopulares.style.display = "none";
-
     feed.innerHTML = `<h2 class="section-title">Resultados da busca</h2><div class="flash-grid" id="search-results-grid"></div>`;
+    
     const resultsGrid = document.getElementById("search-results-grid");
-
     let encontrouAlgo = false;
 
     categoriasData.forEach(cat => {
         cat.produtos.forEach(p => {
-            const nomeProdutoNormalizado = normalizarTexto(p.nome);
-            if (nomeProdutoNormalizado.includes(termo)) {
+            if (normalizarTexto(p.nome).includes(termo)) {
                 resultsGrid.appendChild(criarCardHTML(p));
                 encontrouAlgo = true;
             }
@@ -64,7 +70,7 @@ function filtrarConteudo(termo) {
     });
 
     if (!encontrouAlgo) {
-        resultsGrid.innerHTML = "<p style='grid-column: 1/-1; padding: 20px; color: #666;'>Nenhum produto encontrado para sua busca.</p>";
+        resultsGrid.innerHTML = "<p style='grid-column: 1/-1; padding: 20px; color: #666;'>Nenhum produto encontrado.</p>";
     }
 }
 
@@ -98,16 +104,10 @@ function renderizarFeedCompleto() {
 }
 
 function criarCardHTML(p) {
-    const a = document.createElement("a");
-    a.className = "card";
-    a.href = "#";
-    
-    a.onclick = (e) => {
-        e.preventDefault();
-        alert("Direcionando para a página do ML para que você realize sua compra com total segurança.");
-    };
-
-    a.innerHTML = `
+    const divCard = document.createElement("div"); // Mudado de 'a' para 'div' para gerenciar clique melhor
+    divCard.className = "card";
+    // Mantenha o href simulado se preferir, mas div é mais seguro para prevenir pulos de página
+    divCard.innerHTML = `
         <img src="${p.imagem}" loading="lazy">
         <div class="card-info">
             <h4>${p.nome}</h4>
@@ -116,7 +116,7 @@ function criarCardHTML(p) {
             <div class="btn-comprar">Comprar agora</div>
         </div>
     `;
-    return a;
+    return divCard;
 }
 
 function scrollManual(id, direction) {
@@ -161,35 +161,25 @@ function toggleHomeCategorias() {
 function renderizarMenus() {
     const nav = document.getElementById("menu-categorias-dt");
     const dropBtn = document.querySelector(".dropbtn");
-    
     if(!nav || !dropBtn) return;
 
     categoriasData.forEach(c => {
         const a = document.createElement("a");
         a.href = `#cat-${c.id}`;
         a.innerText = c.nome;
-        // Fecha o menu ao selecionar no mobile
-        a.addEventListener("click", () => {
-            const content = document.querySelector(".dropdown-content");
-            if(content) content.style.display = "none";
-        });
+        a.addEventListener("click", () => nav.classList.remove("show"));
         nav.appendChild(a);
     });
 
-    // Toggle para mobile
     dropBtn.addEventListener("click", (e) => {
         e.stopPropagation();
-        const content = document.querySelector(".dropdown-content");
-        if(content) {
-            const isVisible = content.style.display === "block";
-            content.style.display = isVisible ? "none" : "block";
-        }
+        nav.classList.toggle("show");
     });
 
-    // Fecha ao clicar fora
-    document.addEventListener("click", () => {
-        const content = document.querySelector(".dropdown-content");
-        if(content) content.style.display = "none";
+    document.addEventListener("click", (e) => {
+        if (!e.target.closest('.category-dropdown')) {
+            nav.classList.remove("show");
+        }
     });
 }
 
@@ -206,4 +196,36 @@ function iniciarTimer() {
     }, 1000);
 }
 
+// =========================================
+// LÓGICA DO MODAL DE REDIRECIONAMENTO (NOVA)
+// =========================================
+const modal = document.getElementById('redirectModal');
+
+function mostrarModalRedirecionamento() {
+    if (!modal) return;
+    
+    // Adiciona classe de visibilidade
+    modal.classList.add('visible');
+    
+    // Bloqueia o scroll do body enquanto o modal estiver aberto
+    document.body.style.overflow = 'hidden';
+
+    // Simula o tempo de redirecionamento (3 segundos)
+    setTimeout(() => {
+        esconderModalRedirecionamento();
+        // Aqui você faria o redirecionamento real para o link de afiliado do ML
+        // window.location.href = p.link_afiliado; 
+    }, 3000); 
+}
+
+function esconderModalRedirecionamento() {
+    if (!modal) return;
+    
+    modal.classList.remove('visible');
+    
+    // Restaura o scroll do body
+    document.body.style.overflow = '';
+}
+
+// Inicializa a aplicação
 init();
