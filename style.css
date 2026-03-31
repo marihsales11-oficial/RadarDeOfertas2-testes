@@ -68,8 +68,8 @@ body {
 }
 .search-box input { border: none; padding: 12px 15px; width: 100%; outline: none; font-size: 16px; }
 
-/* --- Dropdown Categorias --- */
-.category-dropdown { position: relative; display: flex; padding-top: 5px; border-top: 1px solid rgba(0,0,0,0.05); }
+/* --- Dropdown Categorias (Blindado para não afetar Footer) --- */
+.category-dropdown { position: relative; display: flex; padding-top: 5px; }
 .dropbtn { background: none; border: none; cursor: pointer; font-size: 14px; color: #333; padding: 10px 0; }
 
 .dropdown-content { 
@@ -83,30 +83,26 @@ body {
     left: 0; 
     max-height: 400px; 
     overflow-y: auto;  
-    border-radius: 4px;
+    border-radius: 0 0 4px 4px;
     -webkit-overflow-scrolling: touch;
 }
 
-/* Feedback visual ao interagir com categorias */
+/* Regra específica para links DO MENU para não quebrar links do footer */
 .dropdown-content a { 
-    color: #333; 
-    padding: 14px 16px; 
-    text-decoration: none; 
-    display: block; 
-    border-bottom: 1px solid #f5f5f5; 
-    font-size: 14px;
-    transition: background 0.2s, color 0.2s;
+    color: #333 !important; 
+    padding: 12px 16px !important; 
+    text-decoration: none !important; 
+    display: block !important; 
+    border-bottom: 1px solid #f5f5f5 !important; 
+    font-size: 14px !important;
+    text-align: left !important;
 }
 
-.dropdown-content a:hover, 
-.dropdown-content a:active,
-.dropdown-content a:focus { 
-    background-color: #f7f7f7; 
-    color: var(--ml-blue);
-    outline: none;
+.dropdown-content a:hover { 
+    background-color: #f7f7f7 !important; 
+    color: var(--ml-blue) !important;
 }
 
-/* Exibição via Hover (Desktop) e via Classe (Mobile) */
 .category-dropdown:hover .dropdown-content,
 .dropdown-content.show { 
     display: block; 
@@ -119,7 +115,6 @@ body {
     text-decoration: none; color: #333; transition: 0.2s; display: flex; 
     flex-direction: column; align-items: center;
 }
-.cat-icon-card:hover { transform: translateY(-3px); box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
 .cat-icon-card img { width: 45px; height: 45px; margin-bottom: 10px; object-fit: contain; }
 .cat-icon-card span { font-size: 13px; font-weight: 500; }
 
@@ -132,9 +127,8 @@ body {
 .card { 
     background: #fff; border-radius: 4px; overflow: hidden; height: 100%; 
     display: flex; flex-direction: column; box-shadow: 0 1px 2px rgba(0,0,0,0.1); 
-    color: #333; text-decoration: none; border: 1px solid transparent; cursor: pointer; 
+    color: #333; text-decoration: none; border: 1px solid transparent; 
 }
-.card:hover { border-color: #ddd; }
 .card img { width: 100%; aspect-ratio: 1/1; object-fit: contain; background: #fff; padding: 10px; }
 .card-info { padding: 15px; flex-grow: 1; border-top: 1px solid #eee; }
 .card-info h4 { font-size: 14px; font-weight: 300; margin: 0 0 10px; line-height: 1.4; color: #666; height: 38px; overflow: hidden; }
@@ -145,39 +139,30 @@ body {
     display: block; text-decoration: none; margin-top: auto; 
 }
 
-/* --- Carrossel --- */
-.category-carousel-container { position: relative; margin: 20px 0 40px; padding: 0 40px; }
-.category-carousel-track { display: flex; overflow-x: auto; scroll-behavior: smooth; padding-bottom: 15px; scrollbar-width: none; }
-.category-carousel-track::-webkit-scrollbar { display: none; }
-
-.carousel-arrow { 
-    position: absolute; top: 50%; transform: translateY(-50%); 
-    background: #fff; border: none; width: 45px; height: 45px; 
-    border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.2); 
-    cursor: pointer; z-index: 100; color: var(--ml-blue); display: flex; 
-    align-items: center; justify-content: center; font-size: 18px; 
-}
-.arrow-left { left: 0; }
-.arrow-right { right: 0; }
-
-/* --- Footer --- */
+/* --- Footer (Restaurado e Protegido) --- */
 .footer-ml { background: #fff; border-top: 1px solid #ddd; padding: 40px 0 20px; margin-top: 50px; }
 .footer-info-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; padding-bottom: 40px; border-bottom: 1px solid #eee; }
-.info-card { text-align: center; display: flex; flex-direction: column; align-items: center; }
-.footer-icon { font-size: 40px; color: var(--ml-blue); margin-bottom: 15px; height: 50px; display: flex; align-items: center; }
-.info-card h3 { font-size: 18px; font-weight: 400; margin: 0 0 10px; color: var(--ml-text-dark); }
-.info-card p { font-size: 14px; color: var(--ml-text-light); line-height: 1.4; }
+.info-card { text-align: center; }
+.footer-icon { font-size: 40px; color: var(--ml-blue); margin-bottom: 15px; display: block; }
+
+.footer-seo { padding: 30px 0; border-bottom: 1px solid #eee; }
+.footer-seo h4 { font-size: 16px; font-weight: 600; margin-bottom: 15px; color: var(--ml-text-dark); }
+.tags-container-inline { font-size: 13px; color: var(--ml-text-light); line-height: 1.8; text-align: justify; }
+
+.alphabet-search { margin-top: 25px; font-size: 14px; color: var(--ml-text-dark); }
+.letters-inline { color: var(--ml-blue); font-weight: bold; margin-top: 10px; letter-spacing: 2px; }
+
+.footer-links { padding: 25px 0; }
+.links-row { display: flex; flex-wrap: wrap; gap: 15px 25px; justify-content: flex-start; }
+.links-row a { font-size: 13px; color: var(--ml-blue); text-decoration: none; }
 
 .footer-bottom { border-top: 1px solid #eee; padding-top: 25px; text-align: center; font-size: 14px; color: var(--ml-text-dark); }
-.safe-buy-text { color: #00a650; font-size: 13px; font-weight: bold; margin: 10px 0; }
+.safe-buy-text { color: #00a650; font-size: 13px; font-weight: bold; margin: 10px 0; display: flex; align-items: center; justify-content: center; gap: 5px; }
 .company-address { font-size: 12px; color: var(--ml-text-discreet); margin-top: 15px; line-height: 1.6; }
 
 /* --- Mobile --- */
 @media (max-width: 768px) {
-    body { padding-top: 130px; }
     .flash-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .category-carousel-track .card-wrapper { flex: 0 0 50%; }
     .footer-info-cards { grid-template-columns: 1fr; }
-    .carousel-arrow { width: 35px; height: 35px; }
-    .dropdown-content { width: 100vw; left: -15px; border-radius: 0; }
+    .links-row { justify-content: center; }
 }
