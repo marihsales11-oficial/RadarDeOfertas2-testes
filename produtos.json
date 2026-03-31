@@ -5,7 +5,7 @@
       "nome": "⚡ Ofertas Expirando", 
       "icone": "https://cdn-icons-png.flaticon.com/512/744/744922.png", 
       "produtos": [
-        {"nome": "Samsung Galaxy A06 5g Dual Sim 128gb preto", "preco": "650,00", "imagem": "https://http2.mlstatic.com/D_NQ_NP_2X_716412-MLA99524473372_122025-F.webp"},
+        {"nome": "Samsung Galaxy A06 5g Dual Sim 128gb preto", "preco": "650,00", "imagem": "https://http2.mlstatic.com/D_NQ_NP_2X_716412-MLA99524473372_122025-F.webp", "link": "https://www.mercadolivre.com.br/samsung-galaxy-a06-5g-dual-sim-128gb-preto/p/MLB48946861?matt_event_ts=1774924557017&matt_d2id=88608949-47f4-49ac-bb16-c4d2742efa77&matt_tracing_id=d8a493bb-8536-465a-8cb7-675d360fa94d#reco_backend=item_decorator&reco_client=home_affiliate-profile&reco_item_pos=0&source=affiliate-profile&reco_backend_type=function&reco_id=39fd52c1-67a9-4ee1-bd22-4431b08c3e34&tracking_id=aae8a1d0-0bee-4b23-8005-9ed912b4d400&c_id=/home/card-featured/element&c_uid=512c82ed-4f1b-4b0c-a10e-5bdbb2521f37"},
         {"nome": "Fritadeira Sem Óleo Air Fryer 4L", "preco": "389,90", "imagem": "https://picsum.photos/400?random=2"},
         {"nome": "Smartphone 128GB 5G Câmera Tripla", "preco": "1.450,00", "imagem": "https://picsum.photos/400?random=3"},
         {"nome": "Cadeira Gamer Reclinável Ergonômica", "preco": "890,00", "imagem": "https://picsum.photos/400?random=4"},
