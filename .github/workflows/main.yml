@@ -1,0 +1,34 @@
+name: Atualizar Precos Diariamente
+
+on:
+  schedule:
+    # Rodar todo dia às 09:00 (horário UTC, que é 06:00 no Brasil)
+    - cron: '0 9 * * *'
+  workflow_dispatch: # Permite que você rode manualmente clicando em um botão
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout do código
+      uses: actions/checkout@v3
+
+    - name: Configurar Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Instalar dependencias
+      run: pip install requests urllib3
+
+    - name: Executar script de atualizacao
+      run: python Atualizar_precos.py
+
+    - name: Salvar alteracoes no JSON
+      run: |
+        git config --global user.name 'GitHub Action'
+        git config --global user.email 'action@github.com'
+        git add produtos.json
+        git commit -m "Auto: Atualizacao de precos" || echo "Sem alteracoes para salvar"
+        git push
