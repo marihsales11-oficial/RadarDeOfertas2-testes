@@ -16,7 +16,7 @@
     { 
       "id": "casa", 
       "nome": "Casa, Móveis e Decoração", 
-      "icone": "https://cdn-icons-png.flaticon.com/512/2667/2667104.png", 
+      "icone": "https://img.icons8.com/fluency/96/home.png", 
       "produtos": [
          {"nome": "Sofá 3 Lugares Retrátil Veludo", "preco": "1.200,00", "imagem": "https://picsum.photos/400?random=7"},
          {"nome": "Mesa de Jantar 4 Cadeiras Madeira", "preco": "850,00", "imagem": "https://picsum.photos/400?random=8"},
