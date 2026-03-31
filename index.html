@@ -4,12 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Radar de Ofertas - Mercado Livre</title>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Proxima+Nova:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,31 +16,24 @@
         <div class="header-container-ml">
             <div class="logo-row">
                 <a href="#" class="logo">
-                    <div class="logo-circle">
-                        <i class="fas fa-bolt"></i>
-                    </div>
+                    <div class="logo-circle"><i class="fas fa-bolt"></i></div>
                     <span>Radar de Ofertas</span>
                 </a>
             </div>
-            
             <div class="search-box">
                 <input type="text" id="input-busca" placeholder="Buscar produtos, marcas e muito mais...">
             </div>
-
             <div class="category-dropdown">
                 <button class="dropbtn">Categorias <i class="fas fa-chevron-down"></i></button>
-                <div class="dropdown-content" id="menu-categorias-dt">
-                    </div>
+                <div class="dropdown-content" id="menu-categorias-dt"></div>
             </div>
         </div>
     </header>
 
     <main class="header-container-ml">
-
         <section class="home-categories">
             <h2 class="section-title">Categorias populares</h2>
-            <div class="categories-icon-grid" id="grid-icones-home">
-                </div>
+            <div class="categories-icon-grid" id="grid-icones-home"></div>
             <button class="btn-ver-mais" id="btn-expandir-home" onclick="toggleHomeCategorias()">Ver mais categorias</button>
         </section>
 
@@ -53,20 +44,17 @@
                     <span class="timer-text">Ofertas que expiram em:</span>
                     <div class="timer-box" id="timer">00:00:00</div>
                 </div>
-                <div class="flash-grid" id="grid-expirando">
-                    </div>
+                <div class="flash-grid" id="grid-expirando"></div>
             </div>
         </section>
 
         <section class="infinite-feed" id="feed-infinito">
             <h2 class="section-title">Mais ofertas para você</h2>
-            </section>
-
+        </section>
     </main>
 
     <footer class="footer-ml">
         <div class="header-container-ml">
-            
             <div class="footer-info-cards">
                 <div class="info-card">
                     <div class="footer-icon"><i class="fas fa-credit-card"></i></div>
@@ -86,16 +74,11 @@
             </div>
 
             <div class="footer-seo">
-                <h4>Mais procurados</h4>
-                <div class="tags-container-inline">
-                    <span>Celular</span> • <span>Notebook</span> • <span>Tênis Masculino</span> • <span>Smart TV</span> • <span>Geladeira</span> • <span>Ar Condicionado</span> • <span>iPhone</span> • <span>Cadeira Gamer</span> • <span>Fone Bluetooth</span> • <span>Monitor</span> • <span>Drone</span> • <span>Placa de Vídeo</span> • <span>Lavadora</span> • <span>Fogão</span> • <span>Micro-ondas</span> • <span>Guarda-roupa</span> • <span>Sofá 3 lugares</span> • <span>Pneu Aro 14</span>
-                </div>
-                
+                <h4>Termos mais procurados</h4>
+                <div class="tags-container-inline" id="container-tags-dinamicas"></div>
                 <div class="alphabet-search">
-                    <div>Busca alfabética:</div>
-                    <div class="letters-inline">
-                        A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 0-9
-                    </div>
+                    <div>Pesquise produto por letra inicial</div>
+                    <div class="letters-inline" id="alfabeto-container"></div>
                 </div>
             </div>
 
@@ -107,7 +90,6 @@
                     <a href="#">Como cuidamos da sua privacidade</a>
                     <a href="#">Contato</a>
                     <a href="#">Informações sobre seguros</a>
-                    <a href="#">Blog</a>
                 </div>
             </div>
 
@@ -117,7 +99,7 @@
                 </div>
                 <div class="company-address">
                     CNPJ n.º 03.007.331/0001-41 / Av. das Nações Unidas, nº 3.003, Bonfim, Osasco/SP - CEP 06233-903 <br>
-                    Radar de Ofertas - Programa de Afiliados Mercado Livre. Todos os direitos reservados.
+                    Radar de Ofertas - Programa de Afiliados Mercado Livre.
                 </div>
             </div>
         </div>
@@ -125,12 +107,8 @@
 
     <div id="redirectModal" class="game-modal-overlay">
         <div class="game-modal-content">
-            <div class="logo-circle modal-logo">
-                <i class="fas fa-bolt"></i>
-            </div>
-            
+            <div class="logo-circle modal-logo"><i class="fas fa-bolt"></i></div>
             <div class="game-loader-spinner"></div>
-            
             <p class="modal-message">Redirecionando para que você aproveite a oferta do Afiliado do ML, obrigado! :😁</p>
         </div>
     </div>
