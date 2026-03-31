@@ -8,6 +8,7 @@
     --container-max: 1200px;
 }
 
+/* --- Reset e Global --- */
 * { box-sizing: border-box; }
 body { 
     background: var(--ml-bg); 
@@ -17,17 +18,126 @@ body {
     padding-top: 140px; 
 }
 
-.header-container-ml { max-width: var(--container-max); margin: 0 auto; padding: 0 15px; width: 100%; position: relative; }
+.header-container-ml { 
+    max-width: var(--container-max); 
+    margin: 0 auto; 
+    padding: 0 15px; 
+    width: 100%; 
+    position: relative; 
+}
 
-/* --- Header --- */
-.header { background: var(--ml-yellow); padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.1); position: fixed; top: 0; width: 100%; z-index: 2000; }
+/* --- Header Fixado --- */
+.header { 
+    background: var(--ml-yellow); 
+    padding: 10px 0; 
+    border-bottom: 1px solid rgba(0,0,0,0.1); 
+    position: fixed; 
+    top: 0; 
+    width: 100%; 
+    z-index: 2000; 
+}
 .logo-row { text-align: center; margin-bottom: 8px; }
-.logo { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #2d3277; font-weight: bold; font-size: 20px; }
-.logo-circle { background: #ff4500; color: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; }
-.search-box { width: 100%; max-width: 600px; margin: 0 auto; display: flex; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.1); border-radius: 2px; }
+.logo { 
+    display: inline-flex; 
+    align-items: center; 
+    gap: 8px; 
+    text-decoration: none; 
+    color: #2d3277; 
+    font-weight: bold; 
+    font-size: 20px; 
+}
+.logo-circle { 
+    background: #ff4500; 
+    color: white; 
+    border-radius: 50%; 
+    width: 30px; 
+    height: 30px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+}
+
+.search-box { 
+    width: 100%; 
+    max-width: 600px; 
+    margin: 0 auto; 
+    display: flex; 
+    background: #fff; 
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1); 
+    border-radius: 2px; 
+}
 .search-box input { border: none; padding: 12px 15px; width: 100%; outline: none; font-size: 16px; }
 
-/* --- Carrossel e Setas Inteligentes --- */
+/* --- Dropdown Categorias --- */
+.category-dropdown { position: relative; display: flex; padding-top: 5px; }
+.dropbtn { background: none; border: none; cursor: pointer; font-size: 14px; color: #333; padding: 10px 0; }
+
+.dropdown-content { 
+    display: none; 
+    position: absolute; 
+    background: #fff; 
+    min-width: 260px; 
+    box-shadow: 0 8px 166px rgba(0,0,0,0.15); 
+    z-index: 3000; 
+    top: 100%; 
+    left: 0; 
+    max-height: 400px; 
+    overflow-y: auto;  
+    border-radius: 0 0 4px 4px;
+}
+.dropdown-content a { 
+    color: #333 !important; 
+    padding: 12px 16px !important; 
+    text-decoration: none !important; 
+    display: block !important; 
+    border-bottom: 1px solid #f5f5f5 !important; 
+    font-size: 14px !important;
+}
+.category-dropdown:hover .dropdown-content { display: block; }
+
+/* --- Seção Ofertas Flash (Expirando) --- */
+.flash-deals-hero { 
+    background: #e62e2d; 
+    padding: 20px 0 30px; 
+    color: #fff; 
+    margin-top: 10px; 
+    border-radius: 8px;
+}
+.timer-wrapper { 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 10px; 
+    font-size: 20px; 
+    font-weight: bold; 
+    margin-bottom: 20px; 
+}
+.timer-box { background: rgba(0,0,0,0.2); padding: 5px 10px; border-radius: 4px; }
+
+/* Grid de Produtos */
+.flash-grid { 
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 20px; 
+}
+
+/* --- Botão Ver Mais Ofertas (Exclusivo para Expirando) --- */
+.btn-ver-mais { 
+    background: #fff; 
+    border: 1px solid var(--ml-blue); 
+    color: var(--ml-blue); 
+    padding: 12px 40px; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    display: block; 
+    margin: 30px auto 0; 
+    font-weight: 600; 
+    font-size: 16px;
+    transition: 0.2s;
+}
+.btn-ver-mais:hover { background: rgba(52, 131, 250, 0.05); }
+
+/* --- Carrosséis de Categorias --- */
 .category-carousel-container { position: relative; margin: 20px 0 40px; }
 .category-carousel-track { 
     display: flex; 
@@ -39,72 +149,100 @@ body {
 }
 .category-carousel-track::-webkit-scrollbar { display: none; }
 
+/* Setas Inteligentes */
 .carousel-arrow { 
-    position: absolute; top: 50%; transform: translateY(-50%); 
-    background: #fff; border: none; width: 45px; height: 45px; 
-    border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.2); 
-    cursor: pointer; z-index: 100; color: var(--ml-blue); 
-    display: flex; align-items: center; justify-content: center; 
-    transition: opacity 0.3s ease;
+    position: absolute; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    background: #fff; 
+    border: none; 
+    width: 45px; 
+    height: 45px; 
+    border-radius: 50%; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2); 
+    cursor: pointer; 
+    z-index: 100; 
+    color: var(--ml-blue); 
+    display: flex; /* Controlado pelo JS (flex ou none) */
+    align-items: center; 
+    justify-content: center; 
+    font-size: 18px; 
 }
 .arrow-left { left: -22px; }
 .arrow-right { right: -22px; }
 
-/* --- Grid e Cards --- */
-.section-title { font-size: 24px; font-weight: 300; color: #333; margin: 30px 0 20px; }
-.flash-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-
+/* --- Cards de Produto --- */
+.card-wrapper { flex: 0 0 25%; padding: 5px; }
 .card { 
-    background: #fff; border-radius: 4px; overflow: hidden; height: 100%; 
-    display: flex; flex-direction: column; box-shadow: 0 1px 2px rgba(0,0,0,0.1); 
+    background: #fff; 
+    border-radius: 4px; 
+    overflow: hidden; 
+    height: 100%; 
+    display: flex; 
+    flex-direction: column; 
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1); 
+    border: 1px solid transparent; 
 }
+.card:hover { border-color: #ddd; }
 .card img { width: 100%; aspect-ratio: 1/1; object-fit: contain; padding: 10px; }
 .card-info { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; }
-.card-info h4 { font-size: 14px; font-weight: 300; margin: 0 0 10px; color: #666; height: 40px; overflow: hidden; }
+.card-info h4 { font-size: 14px; color: #666; height: 38px; overflow: hidden; margin-bottom: 10px; font-weight: 300; }
 .preco { font-size: 22px; font-weight: 400; color: #333; margin-bottom: 10px; }
-
 .btn-comprar { 
-    background: var(--ml-blue); color: #fff; text-align: center; 
-    padding: 10px; border-radius: 4px; font-weight: bold; 
-    border: none; width: 100%; cursor: pointer; margin-top: auto;
-}
-
-/* --- Botão Ver Mais Ofertas --- */
-.btn-ver-mais { 
-    background: #fff; 
-    border: 1px solid var(--ml-blue); 
-    color: var(--ml-blue); 
-    padding: 12px 40px; 
-    border-radius: 6px; 
+    background: var(--ml-blue); 
+    color: #fff; 
+    text-align: center; 
+    padding: 10px; 
+    border-radius: 4px; 
+    font-weight: bold; 
+    border: none; 
+    width: 100%; 
     cursor: pointer; 
-    display: block; 
-    margin: 40px auto; 
-    font-weight: 600; 
-    font-size: 16px;
-    transition: 0.2s;
+    margin-top: auto;
 }
-.btn-ver-mais:hover { background: rgba(52, 131, 250, 0.05); }
 
 /* --- Modal Redirecionamento --- */
-.game-modal-overlay { 
-    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-    background: rgba(0, 0, 0, 0.85); z-index: 5000; justify-content: center; align-items: center; 
+.game-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 5000;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
-.game-modal-overlay.visible { display: flex; }
-.game-modal-content { 
-    background: #1a1a1a; border: 2px solid #ff4500; border-radius: 15px; 
-    padding: 40px; text-align: center; width: 90%; max-width: 450px; color: #fff; 
+.game-modal-overlay.visible { display: flex; opacity: 1; }
+.game-modal-content {
+    background: #1a1a1a;
+    border: 2px solid #ff4500;
+    border-radius: 15px;
+    padding: 40px;
+    text-align: center;
+    max-width: 450px;
+    width: 90%;
+    color: #fff;
+    box-shadow: 0 0 30px rgba(255, 69, 0, 0.6);
 }
-.game-loader-spinner { 
-    width: 50px; height: 50px; border: 5px solid rgba(255, 255, 255, 0.1); 
-    border-top: 5px solid #ff4500; border-radius: 50%; margin: 20px auto; 
-    animation: spin 1s linear infinite; 
+.game-loader-spinner {
+    width: 50px; height: 50px;
+    border: 5px solid rgba(255, 255, 255, 0.1);
+    border-top: 5px solid #ff4500;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    animation: spin 1s linear infinite;
 }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
+/* --- Footer --- */
+.footer-ml { background: #fff; border-top: 1px solid #ddd; padding: 40px 0; margin-top: 50px; }
+.footer-bottom { text-align: center; font-size: 12px; color: var(--ml-text-discreet); border-top: 1px solid #eee; padding-top: 20px; }
+
 /* --- Mobile --- */
 @media (max-width: 768px) {
-    .flash-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
     body { padding-top: 130px; }
-    .arrow-left, .arrow-right { display: none !important; } /* No mobile usa-se o touch scroll */
+    .flash-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .card-wrapper { flex: 0 0 50%; }
+    .carousel-arrow { display: none !important; } /* Mobile usa scroll manual */
 }
