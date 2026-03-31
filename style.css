@@ -133,15 +133,25 @@ body {
 .arrow-left { left: 0; }
 .arrow-right { right: 0; }
 
-/* --- Footer Refatorado (Integração Total) --- */
+/* --- Footer Refatorado --- */
 .footer-ml { background: #fff; border-top: 1px solid #ddd; padding: 40px 0 20px; margin-top: 50px; }
 
 .footer-info-cards { 
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; 
     padding-bottom: 40px; border-bottom: 1px solid #eee; 
 }
-.info-card { text-align: center; }
-.info-card img { width: 50px; height: 50px; margin-bottom: 15px; object-fit: contain; }
+.info-card { text-align: center; display: flex; flex-direction: column; align-items: center; }
+
+/* Estilização dos Novos Ícones */
+.footer-icon {
+    font-size: 40px;
+    color: var(--ml-blue);
+    margin-bottom: 15px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
 .info-card h3 { font-size: 18px; font-weight: 400; margin: 0 0 10px; color: var(--ml-text-dark); }
 .info-card p { font-size: 14px; color: var(--ml-text-light); line-height: 1.4; }
 
