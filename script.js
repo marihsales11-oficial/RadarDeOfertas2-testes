@@ -17,7 +17,6 @@ async function init() {
         
         // Ouvinte global para capturar cliques nos botões 'Comprar agora'
         document.body.addEventListener('click', function(e) {
-            // Verifica se o clique foi no botão ou em algum ícone dentro dele
             const btn = e.target.closest('.btn-comprar');
             
             if (btn) {
@@ -116,14 +115,10 @@ function renderizarFeedCompleto() {
     });
 }
 
-/**
- * Cria o HTML do Card injetando o link de afiliado no data-url
- */
 function criarCardHTML(p) {
     const divCard = document.createElement("div");
     divCard.className = "card";
     
-    // Define o link vindo do JSON ou um padrão caso esteja vazio
     const linkDestino = p.link || "https://www.mercadolivre.com.br";
 
     divCard.innerHTML = `
@@ -186,7 +181,7 @@ function renderizarMenus() {
     const dropBtn = document.querySelector(".dropbtn");
     if(!nav || !dropBtn) return;
 
-    nav.innerHTML = ""; // Limpa antes de renderizar
+    nav.innerHTML = ""; 
     categoriasData.forEach(c => {
         const a = document.createElement("a");
         a.href = `#cat-${c.id}`;
@@ -226,7 +221,7 @@ function iniciarTimer() {
 }
 
 // =========================================
-// LÓGICA DO MODAL DE REDIRECIONAMENTO
+// LÓGICA DO MODAL DE REDIRECIONAMENTO (FIX MOBILE)
 // =========================================
 function mostrarModalRedirecionamento(url) {
     const modal = document.getElementById('redirectModal');
@@ -235,11 +230,12 @@ function mostrarModalRedirecionamento(url) {
     modal.classList.add('visible');
     document.body.style.overflow = 'hidden';
 
-    // Simula o tempo de carregamento (2.5 segundos) e então abre o link
+    // Redirecionamento na mesma aba para evitar o bloqueio de pop-ups em celulares físicos
     setTimeout(() => {
-        esconderModalRedirecionamento();
-        // Abre o link de afiliado em nova aba
-        window.open(url, '_blank');
+        window.location.href = url;
+        
+        // Fecha o modal caso o usuário clique em 'voltar' no dispositivo
+        setTimeout(() => esconderModalRedirecionamento(), 500);
     }, 2500); 
 }
 
@@ -251,5 +247,4 @@ function esconderModalRedirecionamento() {
     document.body.style.overflow = '';
 }
 
-// Inicializa a aplicação
 init();
