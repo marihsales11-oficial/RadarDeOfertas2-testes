@@ -1,6 +1,6 @@
 let categoriasData = [];
 let expandidoHome = false;
-let limiteExpirando = 8; // Controle de paginação apenas para a primeira categoria
+let limiteExpirando = 8; // Controle de paginação para Ofertas Expirando
 
 async function init() {
     try {
@@ -11,11 +11,11 @@ async function init() {
         renderizarMenus();
         renderizarIconesHome();
         renderizarExpirando();
-        renderizarFeedCompleto(); // Restaura todos os carrosséis de todas as categorias
+        renderizarFeedCompleto();
         iniciarTimer();
         configurarBusca();
         
-        // Ouvinte global para os botões de compra (Redirecionamento Mobile Fix)
+        // Redirecionamento compatível com Android/iOS
         document.body.addEventListener('click', function(e) {
             const btn = e.target.closest('.btn-comprar');
             if (btn) {
@@ -27,7 +27,7 @@ async function init() {
             }
         });
 
-        // Inicializa o estado das setas após a renderização
+        // Força verificação de setas em todos os dispositivos após carregar
         setTimeout(() => {
             categoriasData.forEach(cat => gerenciarSetas(cat.id));
         }, 1000);
@@ -37,7 +37,7 @@ async function init() {
     }
 }
 
-// --- LÓGICA DAS SETAS INTELIGENTES (IMAGEM 1) ---
+// --- LÓGICA DAS SETAS (ATIVAS EM TODOS OS SISTEMAS) ---
 function gerenciarSetas(trackId) {
     const track = document.getElementById(`track-${trackId}`);
     if (!track) return;
@@ -46,13 +46,12 @@ function gerenciarSetas(trackId) {
     const btnLeft = container.querySelector('.arrow-left');
     const btnRight = container.querySelector('.arrow-right');
 
+    // Em dispositivos touch, as setas ajudam na navegação visual
     if (btnLeft) {
-        // Some se estiver no início (margem de 5px para erro de renderização)
-        btnLeft.style.display = track.scrollLeft <= 5 ? 'none' : 'flex';
+        btnLeft.style.display = track.scrollLeft <= 10 ? 'none' : 'flex';
     }
     if (btnRight) {
-        // Some se o scroll chegar ao fim do conteúdo
-        const fimDoScroll = track.scrollLeft + track.clientWidth >= track.scrollWidth - 10;
+        const fimDoScroll = track.scrollLeft + track.clientWidth >= track.scrollWidth - 15;
         btnRight.style.display = fimDoScroll ? 'none' : 'flex';
     }
 }
@@ -63,11 +62,11 @@ function scrollManual(id, direction) {
     const amount = track.clientWidth * 0.8;
     track.scrollBy({ left: amount * direction, behavior: 'smooth' });
     
-    // Atualiza as setas logo após o comando de scroll
+    // Atualiza visibilidade após o movimento
     setTimeout(() => gerenciarSetas(id), 500);
 }
 
-// --- CATEGORIA EXPIRANDO COM PAGINAÇÃO (IMAGEM 2) ---
+// --- CATEGORIA EXPIRANDO (CORREÇÃO MOBILE PARA O BOTÃO) ---
 function renderizarExpirando() {
     const grid = document.getElementById("grid-expirando");
     if (!grid || !categoriasData[0]) return;
@@ -75,11 +74,10 @@ function renderizarExpirando() {
     const produtos = categoriasData[0].produtos;
     grid.innerHTML = "";
 
-    // Exibe apenas a quantidade definida pelo limite
     const exibidos = produtos.slice(0, limiteExpirando);
     exibidos.forEach(p => grid.appendChild(criarCardHTML(p)));
 
-    // Gerencia o botão "Ver mais Ofertas" abaixo da grade vermelha
+    // Garante que o botão apareça em qualquer sistema/tamanho de tela
     let btnVerMais = document.getElementById("btn-mais-expirando");
     
     if (limiteExpirando < produtos.length) {
@@ -87,12 +85,12 @@ function renderizarExpirando() {
             btnVerMais = document.createElement("button");
             btnVerMais.id = "btn-mais-expirando";
             btnVerMais.className = "btn-ver-mais";
+            btnVerMais.style.display = "block"; // Força exibição
             btnVerMais.innerText = "Ver mais Ofertas";
             btnVerMais.onclick = () => {
                 limiteExpirando += 8;
                 renderizarExpirando();
             };
-            // Insere o botão logo após o grid dentro da seção hero
             grid.after(btnVerMais);
         }
     } else if (btnVerMais) {
@@ -100,19 +98,20 @@ function renderizarExpirando() {
     }
 }
 
-// --- RENDERIZAÇÃO DO FEED POR CATEGORIAS (MANTENDO MASSA DE DADOS) ---
+// --- FEED COMPLETO (RESTAURAÇÃO TOTAL DE DADOS) ---
 function renderizarFeedCompleto() {
     const feed = document.getElementById("feed-infinito");
     if (!feed) return;
     feed.innerHTML = '<h2 class="section-title">Mais ofertas para você</h2>';
     
     categoriasData.forEach((cat, index) => {
-        if (index === 0) return; // A primeira categoria já é exibida na seção Hero (Expirando)
+        if (index === 0) return; 
         
         const section = document.createElement("section");
         section.id = `cat-${cat.id}`;
+        section.className = "category-section";
         section.innerHTML = `
-            <h3 style="margin:40px 0 15px; font-weight:300; color:#666">${cat.nome}</h3>
+            <h3 class="category-name-title">${cat.nome}</h3>
             <div class="category-carousel-container">
                 <button class="carousel-arrow arrow-left" onclick="scrollManual('${cat.id}', -1)"><i class="fas fa-chevron-left"></i></button>
                 <div class="category-carousel-track" id="track-${cat.id}"></div>
@@ -121,8 +120,6 @@ function renderizarFeedCompleto() {
         `;
         
         const track = section.querySelector(".category-carousel-track");
-        
-        // Listener de scroll para as setas inteligentes
         track.addEventListener('scroll', () => gerenciarSetas(cat.id), { passive: true });
         
         cat.produtos.forEach(p => {
@@ -133,6 +130,8 @@ function renderizarFeedCompleto() {
         });
         
         feed.appendChild(section);
+        // Verifica setas inicialmente para cada categoria
+        setTimeout(() => gerenciarSetas(cat.id), 100);
     });
 }
 
@@ -152,7 +151,7 @@ function criarCardHTML(p) {
     return divCard;
 }
 
-// --- FUNÇÕES DE NAVEGAÇÃO E BUSCA ---
+// --- FUNÇÕES DE INTERFACE E SUPORTE ---
 function normalizarTexto(texto) {
     return texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
@@ -160,32 +159,22 @@ function normalizarTexto(texto) {
 function configurarBusca() {
     const inputBusca = document.getElementById("input-busca");
     if (!inputBusca) return;
-    
     inputBusca.addEventListener("input", (e) => {
         const termo = normalizarTexto(e.target.value);
         const feed = document.getElementById("feed-infinito");
         const hero = document.querySelector(".flash-deals-hero");
-        const homeCats = document.querySelector(".home-categories");
-
         if (termo === "") {
             if(hero) hero.style.display = "block";
-            if(homeCats) homeCats.style.display = "block";
             renderizarExpirando();
             renderizarFeedCompleto();
             return;
         }
-
         if(hero) hero.style.display = "none";
-        if(homeCats) homeCats.style.display = "none";
-        
-        feed.innerHTML = `<h2 class="section-title">Resultados da busca</h2><div class="flash-grid" id="search-grid"></div>`;
+        feed.innerHTML = `<div class="flash-grid" id="search-grid"></div>`;
         const grid = document.getElementById("search-grid");
-
         categoriasData.forEach(cat => {
             cat.produtos.forEach(p => {
-                if (normalizarTexto(p.nome).includes(termo)) {
-                    grid.appendChild(criarCardHTML(p));
-                }
+                if (normalizarTexto(p.nome).includes(termo)) grid.appendChild(criarCardHTML(p));
             });
         });
     });
@@ -200,7 +189,7 @@ function renderizarIconesHome() {
         const card = document.createElement("a");
         card.className = "cat-icon-card";
         card.href = `#cat-${c.id}`;
-        card.innerHTML = `<img src="${c.icone || ''}" alt="${c.nome}"><span>${c.nome}</span>`;
+        card.innerHTML = `<img src="${c.icone || ''}"><span>${c.nome}</span>`;
         grid.appendChild(card);
     });
 }
@@ -209,7 +198,7 @@ function toggleHomeCategorias() {
     expandidoHome = !expandidoHome;
     renderizarIconesHome();
     const btn = document.getElementById("btn-expandir-home");
-    if (btn) btn.innerText = expandidoHome ? "Ver menos categorias" : "Ver mais categorias";
+    if (btn) btn.innerText = expandidoHome ? "Ver menos" : "Ver mais";
 }
 
 function renderizarMenus() {
