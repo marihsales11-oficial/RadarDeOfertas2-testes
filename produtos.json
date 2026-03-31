@@ -1,6 +1,6 @@
 {
   "categorias": [
-    { "id": "expirando", "nome": "⚡ Ofertas Expirando", "icone": "fa-solid fa-bolt", "produtos": [
+    { "id": "expirando", "nome": "⚡ Ofertas Expirando", "icone": "assets/icons/bolt-yellow.png", "produtos": [
       {"nome": "Smart TV 50 polegadas 4K Ultra HD", "preco": "2.199,00", "imagem": "https://picsum.photos/400?random=1"},
       {"nome": "Fritadeira Sem Óleo Air Fryer 4L", "preco": "389,90", "imagem": "https://picsum.photos/400?random=2"},
       {"nome": "Smartphone 128GB 5G Câmera Tripla", "preco": "1.450,00", "imagem": "https://picsum.photos/400?random=3"},
