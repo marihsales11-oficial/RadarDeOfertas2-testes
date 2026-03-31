@@ -1,6 +1,6 @@
 let categoriasData = [];
 let expandidoHome = false;
-let limiteExpirando = 8; // Controle exclusivo para a categoria Expirando
+let limiteExpirando = 8; // Controle de paginação apenas para a primeira categoria
 
 async function init() {
     try {
@@ -10,12 +10,12 @@ async function init() {
         
         renderizarMenus();
         renderizarIconesHome();
-        renderizarExpirando(); // Esta função agora terá o botão "Ver mais"
-        renderizarFeedCompleto(); // Restaura os carrosséis originais para o resto do site
+        renderizarExpirando();
+        renderizarFeedCompleto(); // Restaura todos os carrosséis de todas as categorias
         iniciarTimer();
         configurarBusca();
         
-        // Ouvinte global para os botões de compra
+        // Ouvinte global para os botões de compra (Redirecionamento Mobile Fix)
         document.body.addEventListener('click', function(e) {
             const btn = e.target.closest('.btn-comprar');
             if (btn) {
@@ -27,7 +27,7 @@ async function init() {
             }
         });
 
-        // Inicializa as setas após um pequeno delay para o DOM carregar
+        // Inicializa o estado das setas após a renderização
         setTimeout(() => {
             categoriasData.forEach(cat => gerenciarSetas(cat.id));
         }, 1000);
@@ -37,7 +37,7 @@ async function init() {
     }
 }
 
-// --- LÓGICA DAS SETAS (IMAGEM 1) ---
+// --- LÓGICA DAS SETAS INTELIGENTES (IMAGEM 1) ---
 function gerenciarSetas(trackId) {
     const track = document.getElementById(`track-${trackId}`);
     if (!track) return;
@@ -47,9 +47,11 @@ function gerenciarSetas(trackId) {
     const btnRight = container.querySelector('.arrow-right');
 
     if (btnLeft) {
+        // Some se estiver no início (margem de 5px para erro de renderização)
         btnLeft.style.display = track.scrollLeft <= 5 ? 'none' : 'flex';
     }
     if (btnRight) {
+        // Some se o scroll chegar ao fim do conteúdo
         const fimDoScroll = track.scrollLeft + track.clientWidth >= track.scrollWidth - 10;
         btnRight.style.display = fimDoScroll ? 'none' : 'flex';
     }
@@ -61,11 +63,11 @@ function scrollManual(id, direction) {
     const amount = track.clientWidth * 0.8;
     track.scrollBy({ left: amount * direction, behavior: 'smooth' });
     
-    // Atualiza as setas após o scroll
+    // Atualiza as setas logo após o comando de scroll
     setTimeout(() => gerenciarSetas(id), 500);
 }
 
-// --- CATEGORIA EXPIRANDO COM BOTÃO "VER MAIS" (IMAGEM 2) ---
+// --- CATEGORIA EXPIRANDO COM PAGINAÇÃO (IMAGEM 2) ---
 function renderizarExpirando() {
     const grid = document.getElementById("grid-expirando");
     if (!grid || !categoriasData[0]) return;
@@ -73,12 +75,13 @@ function renderizarExpirando() {
     const produtos = categoriasData[0].produtos;
     grid.innerHTML = "";
 
-    // Renderiza apenas até o limite definido
+    // Exibe apenas a quantidade definida pelo limite
     const exibidos = produtos.slice(0, limiteExpirando);
     exibidos.forEach(p => grid.appendChild(criarCardHTML(p)));
 
-    // Gerencia o botão "Ver mais Ofertas" apenas nesta seção
+    // Gerencia o botão "Ver mais Ofertas" abaixo da grade vermelha
     let btnVerMais = document.getElementById("btn-mais-expirando");
+    
     if (limiteExpirando < produtos.length) {
         if (!btnVerMais) {
             btnVerMais = document.createElement("button");
@@ -89,21 +92,22 @@ function renderizarExpirando() {
                 limiteExpirando += 8;
                 renderizarExpirando();
             };
-            grid.parentElement.appendChild(btnVerMais);
+            // Insere o botão logo após o grid dentro da seção hero
+            grid.after(btnVerMais);
         }
     } else if (btnVerMais) {
         btnVerMais.remove();
     }
 }
 
-// --- RESTAURAÇÃO DO FEED DE CARROSSÉIS ORIGINAIS ---
+// --- RENDERIZAÇÃO DO FEED POR CATEGORIAS (MANTENDO MASSA DE DADOS) ---
 function renderizarFeedCompleto() {
     const feed = document.getElementById("feed-infinito");
     if (!feed) return;
     feed.innerHTML = '<h2 class="section-title">Mais ofertas para você</h2>';
     
     categoriasData.forEach((cat, index) => {
-        if (index === 0) return; // Pula a categoria expirando
+        if (index === 0) return; // A primeira categoria já é exibida na seção Hero (Expirando)
         
         const section = document.createElement("section");
         section.id = `cat-${cat.id}`;
@@ -117,8 +121,9 @@ function renderizarFeedCompleto() {
         `;
         
         const track = section.querySelector(".category-carousel-track");
-        // Adiciona evento de scroll para as setas sumirem/aparecerem
-        track.addEventListener('scroll', () => gerenciarSetas(cat.id));
+        
+        // Listener de scroll para as setas inteligentes
+        track.addEventListener('scroll', () => gerenciarSetas(cat.id), { passive: true });
         
         cat.produtos.forEach(p => {
             const wrapper = document.createElement("div");
@@ -126,6 +131,7 @@ function renderizarFeedCompleto() {
             wrapper.appendChild(criarCardHTML(p));
             track.appendChild(wrapper);
         });
+        
         feed.appendChild(section);
     });
 }
@@ -146,7 +152,45 @@ function criarCardHTML(p) {
     return divCard;
 }
 
-// --- DEMAIS FUNÇÕES ORIGINAIS ---
+// --- FUNÇÕES DE NAVEGAÇÃO E BUSCA ---
+function normalizarTexto(texto) {
+    return texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+function configurarBusca() {
+    const inputBusca = document.getElementById("input-busca");
+    if (!inputBusca) return;
+    
+    inputBusca.addEventListener("input", (e) => {
+        const termo = normalizarTexto(e.target.value);
+        const feed = document.getElementById("feed-infinito");
+        const hero = document.querySelector(".flash-deals-hero");
+        const homeCats = document.querySelector(".home-categories");
+
+        if (termo === "") {
+            if(hero) hero.style.display = "block";
+            if(homeCats) homeCats.style.display = "block";
+            renderizarExpirando();
+            renderizarFeedCompleto();
+            return;
+        }
+
+        if(hero) hero.style.display = "none";
+        if(homeCats) homeCats.style.display = "none";
+        
+        feed.innerHTML = `<h2 class="section-title">Resultados da busca</h2><div class="flash-grid" id="search-grid"></div>`;
+        const grid = document.getElementById("search-grid");
+
+        categoriasData.forEach(cat => {
+            cat.produtos.forEach(p => {
+                if (normalizarTexto(p.nome).includes(termo)) {
+                    grid.appendChild(criarCardHTML(p));
+                }
+            });
+        });
+    });
+}
+
 function renderizarIconesHome() {
     const grid = document.getElementById("grid-icones-home");
     if (!grid) return;
@@ -156,7 +200,7 @@ function renderizarIconesHome() {
         const card = document.createElement("a");
         card.className = "cat-icon-card";
         card.href = `#cat-${c.id}`;
-        card.innerHTML = `<img src="${c.icone || ''}"><span>${c.nome}</span>`;
+        card.innerHTML = `<img src="${c.icone || ''}" alt="${c.nome}"><span>${c.nome}</span>`;
         grid.appendChild(card);
     });
 }
@@ -166,6 +210,18 @@ function toggleHomeCategorias() {
     renderizarIconesHome();
     const btn = document.getElementById("btn-expandir-home");
     if (btn) btn.innerText = expandidoHome ? "Ver menos categorias" : "Ver mais categorias";
+}
+
+function renderizarMenus() {
+    const nav = document.getElementById("menu-categorias-dt");
+    if(!nav) return;
+    nav.innerHTML = "";
+    categoriasData.forEach(c => {
+        const a = document.createElement("a");
+        a.href = `#cat-${c.id}`;
+        a.innerText = c.nome;
+        nav.appendChild(a);
+    });
 }
 
 function iniciarTimer() {
@@ -178,12 +234,14 @@ function iniciarTimer() {
         const h = Math.floor(diff/3600000).toString().padStart(2,'0');
         const m = Math.floor((diff%3600000)/60000).toString().padStart(2,'0');
         const s = Math.floor((diff%60000)/1000).toString().padStart(2,'0');
-        document.getElementById("timer").innerText = `${h}:${m}:${s}`;
+        const el = document.getElementById("timer");
+        if(el) el.innerText = `${h}:${m}:${s}`;
     }, 1000);
 }
 
 function mostrarModalRedirecionamento(url) {
     const modal = document.getElementById('redirectModal');
+    if (!modal) return;
     modal.classList.add('visible');
     document.body.style.overflow = 'hidden';
     setTimeout(() => {
@@ -193,25 +251,6 @@ function mostrarModalRedirecionamento(url) {
             document.body.style.overflow = '';
         }, 500);
     }, 2500); 
-}
-
-function configurarBusca() {
-    const inputBusca = document.getElementById("input-busca");
-    inputBusca.addEventListener("input", (e) => {
-        const termo = e.target.value.toLowerCase();
-        if (termo === "") { renderizarExpirando(); renderizarFeedCompleto(); return; }
-        // Lógica de busca simples nos produtos
-    });
-}
-
-function renderizarMenus() {
-    const nav = document.getElementById("menu-categorias-dt");
-    categoriasData.forEach(c => {
-        const a = document.createElement("a");
-        a.href = `#cat-${c.id}`;
-        a.innerText = c.nome;
-        nav.appendChild(a);
-    });
 }
 
 init();
