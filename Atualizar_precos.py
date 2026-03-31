@@ -5,7 +5,7 @@ import os
 import time
 import urllib3
 
-# Desabilita avisos de certificados SSL para evitar erros no macOS
+# Desabilita avisos de certificados SSL (essencial para ambientes de servidor)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def extrair_id_ml(url):
@@ -16,65 +16,52 @@ def extrair_id_ml(url):
     return None
 
 def obter_preco_atualizado(ml_id):
-    """Captura o menor preço real disponível na página (Pix, Promoção ou Normal)"""
+    """Captura o menor preço (Pix/Oferta) usando o link de produto direto"""
     try:
-        url_produto = f"https://www.mercadolivre.com.br/p/{ml_id}"
+        # Formato de link mais "leve" para o servidor do GitHub processar
+        ml_id_formatado = ml_id.replace('MLB', 'MLB-')
+        url_produto = f"https://produto.mercadolivre.com.br/{ml_id_formatado}"
         
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
             'Accept-Language': 'pt-BR,pt;q=0.9',
-            'Referer': 'https://www.google.com/'
         }
         
-        response = requests.get(url_produto, headers=headers, timeout=15, verify=False)
+        response = requests.get(url_produto, headers=headers, timeout=20, verify=False)
         
         if response.status_code == 200:
             html = response.text
             
-            # Buscamos todos os valores que seguem o padrão de 'amount': 000.00 ou 'price': 000.00
-            # Isso captura promotion_price, sale_price, regular_price, etc.
-            padroes = [
-                r'\"amount\":(\d+\.\d+)',
-                r'\"price\":(\d+\.\d+)',
-                r'\"price\":(\d+)',
-                r'property=\"product:price:amount\" content=\"(\d+\.?\d*)\"'
-            ]
+            # Procura por todos os padrões de preço no HTML (Promotion, Sale ou Price)
+            # Pegamos o menor valor positivo encontrado na página
+            precos = re.findall(r'\"amount\":(\d+\.\d+)', html)
+            precos += re.findall(r'\"price\":(\d+\.\d+)', html)
             
-            valores_encontrados = []
-            for padrao in padroes:
-                encontrados = re.findall(padrao, html)
-                for val in encontrados:
-                    try:
-                        num = float(val)
-                        if num > 5: # Filtro para evitar pegar centavos de parcelas ou IDs
-                            valores_encontrados.append(num)
-                    except:
-                        continue
-            
-            if valores_encontrados:
-                # O menor valor encontrado será sempre o preço final com o maior desconto aplicado
-                menor_preco = min(valores_encontrados)
-                return f"{menor_preco:,.2f}".replace('.', 'X').replace(',', '.').replace('X', ',')
-
-        print(f"   ❌ Erro de Acesso: Status {response.status_code}")
+            if precos:
+                lista_numerica = [float(p) for p in precos if float(p) > 5]
+                if lista_numerica:
+                    menor_preco = min(lista_numerica)
+                    return f"{menor_preco:,.2f}".replace('.', 'X').replace(',', '.').replace('X', ',')
+        
+        print(f"   ❌ Erro de Acesso ao ID {ml_id}: Status {response.status_code}")
     except Exception as e:
         print(f"   ❌ Erro de Conexão: {e}")
     return None
 
 def processar_json():
-    diretorio = os.path.dirname(os.path.abspath(__file__))
-    caminho_json = os.path.join(diretorio, 'produtos.json')
+    # Caminho do arquivo no repositório
+    caminho_json = 'produtos.json'
     
     if not os.path.exists(caminho_json):
-        print(f"❌ ERRO: Arquivo {caminho_json} não encontrado.")
+        print(f"❌ ERRO: Arquivo {caminho_json} não encontrado no repositório.")
         return
 
     with open(caminho_json, 'r', encoding='utf-8') as f:
         data = json.load(f)
 
-    print("\n" + "="*65)
-    print("🚀 RADAR DE OFERTAS: ATUALIZAÇÃO MULTI-INFORMAÇÕES ATIVADA")
-    print("="*65)
+    print("\n" + "="*60)
+    print("🚀 EXECUTANDO ATUALIZAÇÃO NO GITHUB ACTIONS")
+    print("="*60)
     
     houve_alteracao = False
 
@@ -89,27 +76,25 @@ def processar_json():
                 novo_preco = obter_preco_atualizado(ml_id)
                 
                 if novo_preco:
+                    # Se o preço for diferente dos R$ 7000 (ou qualquer valor atual), atualiza
                     if produto['preco'] != novo_preco:
-                        print(f"   ✅ PREÇO ATUALIZADO: R$ {produto['preco']} -> R$ {novo_preco}")
+                        print(f"   ✅ SUCESSO: R$ {produto['preco']} -> R$ {novo_preco}")
                         produto['preco'] = novo_preco
                         houve_alteracao = True
                     else:
-                        print(f"   ✨ Preço já é o menor disponível (R$ {novo_preco})")
+                        print(f"   ✨ Preço já atualizado (R$ {novo_preco})")
                 
-                time.sleep(1.2) # Pausa técnica para evitar bloqueios
+                time.sleep(2) # Pausa maior para evitar bloqueios no IP do GitHub
             else:
-                print(f"   ⚠️ Pulo: {produto['nome']} (Link sem MLB)")
+                print(f"   ⚠️ Pulo: {produto['nome']} (Link s/ MLB)")
 
+    # Salva o arquivo apenas se houve mudança real nos valores
     if houve_alteracao:
         with open(caminho_json, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
-        print("\n" + "="*65)
-        print("✅ SUCESSO! O produtos.json foi sincronizado com os menores valores.")
-        print("="*65)
+        print("\n✅ ALTERAÇÕES SALVAS NO ARQUIVO.")
     else:
-        print("\n" + "="*65)
-        print("ℹ️ TUDO EM DIA: Não houve alterações de preços nos links.")
-        print("="*65)
+        print("\nℹ️ NENHUMA ALTERAÇÃO NECESSÁRIA.")
 
 if __name__ == "__main__":
     processar_json()
