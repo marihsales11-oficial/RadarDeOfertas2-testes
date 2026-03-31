@@ -1,8 +1,6 @@
 let categoriasData = [];
 let expandidoHome = false;
 
-const termosProcurados = ["apple watch", "ar condicionado", "bicicletas", "iphone 16", "ps5", "notebook dell", "jbl", "tv 50 4k", "tenis masculino", "xiaomi"];
-
 async function init() {
     try {
         const res = await fetch('produtos.json');
@@ -13,64 +11,118 @@ async function init() {
         renderizarIconesHome();
         renderizarExpirando();
         renderizarFeedCompleto();
-        gerarTagsFooter();
         iniciarTimer();
+        
         configurarBusca();
     } catch (e) { console.error("Erro ao carregar dados:", e); }
 }
 
-function normalizarTexto(t) { return t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); }
+function normalizarTexto(texto) {
+    return texto
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+}
 
 function configurarBusca() {
-    document.getElementById("input-busca").addEventListener("input", (e) => {
-        filtrarConteudo(normalizarTexto(e.target.value));
+    const inputBusca = document.getElementById("input-busca");
+    inputBusca.addEventListener("input", (e) => {
+        const termo = normalizarTexto(e.target.value);
+        filtrarConteudo(termo);
     });
 }
 
 function filtrarConteudo(termo) {
     const feed = document.getElementById("feed-infinito");
-    if (!termo) { renderizarFeedCompleto(); return; }
-    feed.innerHTML = `<h2 class="section-title">Resultados</h2><div class="flash-grid" id="search-grid"></div>`;
-    const grid = document.getElementById("search-grid");
-    categoriasData.forEach(c => c.produtos.forEach(p => {
-        if (normalizarTexto(p.nome).includes(termo)) grid.appendChild(criarCardHTML(p));
-    }));
-}
+    const heroSection = document.querySelector(".flash-deals-hero");
+    const categoriasPopulares = document.querySelector(".home-categories");
 
-function mostrarModalGame() {
-    const modal = document.getElementById('game-loading-modal');
-    modal.classList.add('active');
-    setTimeout(() => modal.classList.remove('active'), 3000);
-}
+    if (termo === "") {
+        heroSection.style.display = "block";
+        categoriasPopulares.style.display = "block";
+        renderizarExpirando();
+        renderizarFeedCompleto();
+        return;
+    }
 
-function criarCardHTML(p) {
-    const div = document.createElement("div");
-    div.className = "card";
-    div.innerHTML = `
-        <img src="${p.imagem}" loading="lazy">
-        <div class="card-info">
-            <h4>${p.nome}</h4>
-            <div class="preco">R$ ${p.preco}</div>
-            <div class="btn-comprar" onclick="mostrarModalGame()">Comprar agora</div>
-        </div>`;
-    return div;
+    heroSection.style.display = "none";
+    categoriasPopulares.style.display = "none";
+
+    feed.innerHTML = `<h2 class="section-title">Resultados da busca</h2><div class="flash-grid" id="search-results-grid"></div>`;
+    const resultsGrid = document.getElementById("search-results-grid");
+
+    let encontrouAlgo = false;
+
+    categoriasData.forEach(cat => {
+        cat.produtos.forEach(p => {
+            const nomeProdutoNormalizado = normalizarTexto(p.nome);
+            if (nomeProdutoNormalizado.includes(termo)) {
+                resultsGrid.appendChild(criarCardHTML(p));
+                encontrouAlgo = true;
+            }
+        });
+    });
+
+    if (!encontrouAlgo) {
+        resultsGrid.innerHTML = "<p style='grid-column: 1/-1; padding: 20px; color: #666;'>Nenhum produto encontrado para sua busca.</p>";
+    }
 }
 
 function renderizarFeedCompleto() {
     const feed = document.getElementById("feed-infinito");
     feed.innerHTML = "";
+    
     categoriasData.forEach((cat, index) => {
         if (index === 0) return;
+        
         const section = document.createElement("section");
+        section.id = `cat-${cat.id}`;
         section.innerHTML = `
-            <h2 class="section-title">${cat.nome}</h2>
+            <h3 style="margin:40px 0 15px; font-weight:300; color:#666">${cat.nome}</h3>
             <div class="category-carousel-container">
-                <div class="category-carousel-track">
-                    ${cat.produtos.map(p => `<div class="card-wrapper">${criarCardHTML(p).outerHTML}</div>`).join('')}
-                </div>
-            </div>`;
+                <button class="carousel-arrow arrow-left" onclick="scrollManual('${cat.id}', -1)"><i class="fas fa-chevron-left"></i></button>
+                <div class="category-carousel-track" id="track-${cat.id}"></div>
+                <button class="carousel-arrow arrow-right" onclick="scrollManual('${cat.id}', 1)"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        `;
+        
+        const track = section.querySelector(".category-carousel-track");
+        cat.produtos.forEach(p => {
+            const wrapper = document.createElement("div");
+            wrapper.className = "card-wrapper";
+            wrapper.appendChild(criarCardHTML(p));
+            track.appendChild(wrapper);
+        });
         feed.appendChild(section);
     });
+}
+
+function criarCardHTML(p) {
+    const a = document.createElement("a");
+    a.className = "card";
+    a.href = "#";
+    
+    a.onclick = (e) => {
+        e.preventDefault();
+        alert("Direcionando para a página do ML para que você realize sua compra com total segurança.");
+    };
+
+    a.innerHTML = `
+        <img src="${p.imagem}" loading="lazy">
+        <div class="card-info">
+            <h4>${p.nome}</h4>
+            <div class="preco">R$ ${p.preco}</div>
+            <div style="color:#00a650; font-size:12px; font-weight:bold; margin-bottom:15px">Frete grátis</div>
+            <div class="btn-comprar">Comprar agora</div>
+        </div>
+    `;
+    return a;
+}
+
+function scrollManual(id, direction) {
+    const track = document.getElementById(`track-${id}`);
+    const amount = window.innerWidth < 768 ? track.clientWidth : track.clientWidth / 2;
+    track.scrollBy({ left: amount * direction, behavior: 'smooth' });
 }
 
 function renderizarIconesHome() {
@@ -78,53 +130,79 @@ function renderizarIconesHome() {
     grid.innerHTML = "";
     const lista = expandidoHome ? categoriasData : categoriasData.slice(0, 8);
     lista.forEach(c => {
-        grid.innerHTML += `<a href="#cat-${c.id}" class="cat-icon-card"><img src="${c.icone}"><span>${c.nome}</span></a>`;
+        const card = document.createElement("a");
+        card.className = "cat-icon-card";
+        card.href = `#cat-${c.id}`;
+        const iconUrl = c.icone || 'https://http2.mlstatic.com/storage/homes-node/navigation/desktop/deals.svg';
+        card.innerHTML = `<img src="${iconUrl}"><span>${c.nome}</span>`;
+        grid.appendChild(card);
     });
+}
+
+function renderizarExpirando() {
+    const grid = document.getElementById("grid-expirando");
+    grid.innerHTML = "";
+    if(categoriasData[0]) {
+        categoriasData[0].produtos.forEach(p => {
+            const wrapper = document.createElement("div");
+            wrapper.style.padding = "5px";
+            wrapper.appendChild(criarCardHTML(p));
+            grid.appendChild(wrapper);
+        });
+    }
 }
 
 function toggleHomeCategorias() {
     expandidoHome = !expandidoHome;
     renderizarIconesHome();
-    document.getElementById("btn-expandir-home").innerText = expandidoHome ? "Ver menos" : "Ver mais categorias";
-}
-
-function gerarTagsFooter() {
-    const container = document.querySelector(".tags-container-inline");
-    container.innerHTML = termosProcurados.map(t => `<span class="footer-tag-link" onclick="dispararBusca('${t}')">${t}</span>`).join(' • ');
-}
-
-function dispararBusca(t) {
-    document.getElementById("input-busca").value = t;
-    window.scrollTo({top: 0, behavior: 'smooth'});
-    filtrarConteudo(normalizarTexto(t));
+    document.getElementById("btn-expandir-home").innerText = expandidoHome ? "Ver menos categorias" : "Ver mais categorias";
 }
 
 function renderizarMenus() {
     const nav = document.getElementById("menu-categorias-dt");
-    categoriasData.forEach(c => {
-        nav.innerHTML += `<a href="#cat-${c.id}" onclick="this.parentElement.classList.remove('show')">${c.nome}</a>`;
-    });
-    document.querySelector(".dropbtn").onclick = (e) => {
-        e.stopPropagation();
-        nav.classList.toggle("show");
-    };
-}
+    const dropBtn = document.querySelector(".dropbtn");
+    
+    if(!nav || !dropBtn) return;
 
-function renderizarExpirando() {
-    const grid = document.getElementById("grid-expirando");
-    if(categoriasData[0]) {
-        categoriasData[0].produtos.forEach(p => grid.appendChild(criarCardHTML(p)));
-    }
+    categoriasData.forEach(c => {
+        const a = document.createElement("a");
+        a.href = `#cat-${c.id}`;
+        a.innerText = c.nome;
+        // Fecha o menu ao selecionar no mobile
+        a.addEventListener("click", () => {
+            const content = document.querySelector(".dropdown-content");
+            if(content) content.style.display = "none";
+        });
+        nav.appendChild(a);
+    });
+
+    // Toggle para mobile
+    dropBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const content = document.querySelector(".dropdown-content");
+        if(content) {
+            const isVisible = content.style.display === "block";
+            content.style.display = isVisible ? "none" : "block";
+        }
+    });
+
+    // Fecha ao clicar fora
+    document.addEventListener("click", () => {
+        const content = document.querySelector(".dropdown-content");
+        if(content) content.style.display = "none";
+    });
 }
 
 function iniciarTimer() {
     setInterval(() => {
-        const end = new Date().setHours(23, 59, 59);
-        const diff = end - new Date();
+        const now = new Date();
+        const end = new Date(); end.setHours(23, 59, 59);
+        const diff = end - now;
         const h = Math.floor(diff/3600000).toString().padStart(2,'0');
         const m = Math.floor((diff%3600000)/60000).toString().padStart(2,'0');
         const s = Math.floor((diff%60000)/1000).toString().padStart(2,'0');
-        document.getElementById("timer").innerText = `${h}:${m}:${s}`;
+        const timerEl = document.getElementById("timer");
+        if(timerEl) timerEl.innerText = `${h}:${m}:${s}`;
     }, 1000);
 }
 
