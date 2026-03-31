@@ -1,13 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radar de Ofertas - Mercado Livre</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Proxima+Nova:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Radar de Ofertas | Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -16,101 +13,116 @@
         <div class="header-container-ml">
             <div class="logo-row">
                 <a href="#" class="logo">
-                    <div class="logo-circle"><i class="fas fa-bolt"></i></div>
-                    <span>Radar de Ofertas</span>
+                    <div class="logo-circle"><i class="fas fa-satellite-dish"></i></div>
+                    <div class="logo-text">RADAR<span>DEOFERTAS</span></div>
                 </a>
             </div>
-            <div class="search-box">
-                <input type="text" id="input-busca" placeholder="Buscar produtos, marcas e muito mais...">
+            <div class="search-row">
+                <div class="search-box">
+                    <input type="text" id="input-busca" placeholder="Buscar produtos, marcas e muito mais..." autocomplete="off">
+                    <button id="btn-busca"><i class="fas fa-search"></i></button>
+                </div>
             </div>
-            <div class="category-dropdown">
-                <button class="dropbtn">Categorias <i class="fas fa-chevron-down"></i></button>
-                <div class="dropdown-content" id="menu-categorias-dt"></div>
-            </div>
+            <nav class="nav-bar">
+                <div class="category-dropdown">
+                    <button class="dropbtn">Categorias <i class="fas fa-chevron-down"></i></button>
+                    <div class="dropdown-content" id="menu-categorias-dt"></div>
+                </div>
+            </nav>
         </div>
     </header>
 
-    <main class="header-container-ml">
-        <section class="home-categories">
-            <h2 class="section-title">Categorias populares</h2>
-            <div class="categories-icon-grid" id="grid-icones-home"></div>
-            <button class="btn-ver-mais" id="btn-expandir-home" onclick="toggleHomeCategorias()">Ver mais categorias</button>
-        </section>
-
+    <main>
         <section class="flash-deals-hero">
             <div class="header-container-ml">
-                <div class="timer-wrapper">
-                    <span class="lightning-icon"><i class="fas fa-bolt"></i></span>
-                    <span class="timer-text">Ofertas que expiram em:</span>
-                    <div class="timer-box" id="timer">00:00:00</div>
+                <div class="flash-header">
+                    <div class="flash-title"><i class="fas fa-bolt"></i> <h2>OFERTAS EXPIRANDO</h2></div>
+                    <div class="flash-timer"><div id="timer" class="digital-clock">00:00:00</div></div>
                 </div>
                 <div class="flash-grid" id="grid-expirando"></div>
             </div>
         </section>
 
-        <section class="infinite-feed" id="feed-infinito">
-            <h2 class="section-title">Mais ofertas para você</h2>
-        </section>
+        <div class="header-container-ml">
+            <section class="home-categories">
+                <h2 class="section-title">Categorias populares</h2>
+                <div class="categories-icon-grid" id="grid-icones-home"></div>
+                <div class="show-more-center">
+                    <button id="btn-expandir-home" onclick="toggleHomeCategorias()">Ver mais categorias</button>
+                </div>
+            </section>
+            
+            <div id="feed-infinito"></div>
+        </div>
     </main>
 
     <footer class="footer-ml">
         <div class="header-container-ml">
-            <div class="footer-info-cards">
+            <section class="footer-info-cards">
                 <div class="info-card">
-                    <div class="footer-icon"><i class="fas fa-credit-card"></i></div>
-                    <h3>Pague com Pix</h3>
-                    <p>Ou cartões de crédito. Rápido e seguro.</p>
+                    <i class="fas fa-credit-card footer-icon"></i>
+                    <h3>Escolha como pagar</h3>
+                    <p>Com cartão, boleto ou Pix. Parcele suas compras.</p>
                 </div>
                 <div class="info-card">
-                    <div class="footer-icon"><i class="fas fa-shipping-fast"></i></div>
+                    <i class="fas fa-truck footer-icon"></i>
                     <h3>Frete grátis</h3>
-                    <p>Em milhares de produtos a partir de R$ 79.</p>
+                    <p>Benefício para milhares de produtos.</p>
                 </div>
                 <div class="info-card">
-                    <div class="footer-icon"><i class="fas fa-shield-alt"></i></div>
-                    <h3>Compra Garantida</h3>
-                    <p>Receba o produto ou devolvemos o dinheiro.</p>
+                    <i class="fas fa-shield-alt footer-icon"></i>
+                    <h3>Segurança absoluta</h3>
+                    <p>Você está sempre protegido.</p>
                 </div>
-            </div>
+            </section>
 
-            <div class="footer-seo">
+            <section class="footer-seo">
                 <h4>Termos mais procurados</h4>
-                <div class="tags-container-inline" id="container-tags-dinamicas"></div>
-                <div class="alphabet-search">
-                    <div>Pesquise produto por letra inicial</div>
-                    <div class="letters-inline" id="alfabeto-container"></div>
+                <div class="tags-container-inline">
+                    Carregando termos...
                 </div>
-            </div>
 
-            <div class="footer-links">
+                <div class="alphabet-search">
+                    <p>Pesquise produto por letra inicial</p>
+                    <div class="letters-inline"></div>
+                </div>
+            </section>
+
+            <section class="footer-links">
                 <div class="links-row">
-                    <a href="#">Acessibilidade</a>
                     <a href="#">Trabalhe conosco</a>
                     <a href="#">Termos e condições</a>
+                    <a href="#">Promoções</a>
                     <a href="#">Como cuidamos da sua privacidade</a>
+                    <a href="#">Acessibilidade</a>
                     <a href="#">Contato</a>
                     <a href="#">Informações sobre seguros</a>
+                    <a href="#">Programa de Afiliados</a>
                 </div>
-            </div>
+            </section>
 
             <div class="footer-bottom">
-                <div class="safe-buy-text">
-                    <i class="fas fa-shield-alt"></i> Ao clicar no link de compra, você será redirecionado para o Mercado Livre para concluir o pagamento com total segurança.
-                </div>
-                <div class="company-address">
-                    CNPJ n.º 03.007.331/0001-41 / Av. das Nações Unidas, nº 3.003, Bonfim, Osasco/SP - CEP 06233-903 <br>
-                    Radar de Ofertas - Programa de Afiliados Mercado Livre.
-                </div>
+                <p>Copyright © 1999-2026 O Maior site Oficial de Vendas da América Latina.</p>
+                <p class="safe-buy-text">
+                    <i class="fas fa-shield-alt"></i> Ao clicar no link 'Comprar Agora' a sua compra é segura.
+                </p>
+                <p class="company-address">
+                    CNPJ n.º 03.007.331/0001-41 / Av. das Nações Unidas, nº 3.003, Bonfim, Osasco/SP - CEP 06233-903 - empresa do grupo ML
+                </p>
             </div>
         </div>
     </footer>
 
-    <div id="redirectModal" class="game-modal-overlay">
-        <div class="game-modal-content">
-            <div class="logo-circle modal-logo"><i class="fas fa-bolt"></i></div>
-            <div class="game-loader-spinner"></div>
-            <p class="modal-message">Redirecionando para que você aproveite a oferta do Afiliado do ML, obrigado! :😁</p>
+    <div id="game-loading-modal">
+        <div class="logo-circle" style="width:70px; height:70px; font-size:35px; margin-bottom:20px; background-color: #ff4500; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-satellite-dish"></i>
         </div>
+        
+        <div class="spinner"></div>
+        
+        <p style="font-size:18px; font-weight:bold; text-align:center; padding: 0 20px; line-height: 1.5; max-width: 400px;">
+            Redirecionando para que você aproveite a oferta do Afiliado do ML, obrigado! :😁
+        </p>
     </div>
 
     <script src="script.js"></script>
