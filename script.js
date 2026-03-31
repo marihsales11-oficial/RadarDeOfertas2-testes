@@ -102,7 +102,6 @@ function criarCardHTML(p) {
     a.className = "card";
     a.href = "#";
     
-    // Adicionado o redirecionamento com mensagem de segurança solicitado
     a.onclick = (e) => {
         e.preventDefault();
         alert("Direcionando para a página do ML para que você realize sua compra com total segurança.");
@@ -161,11 +160,30 @@ function toggleHomeCategorias() {
 
 function renderizarMenus() {
     const nav = document.getElementById("menu-categorias-dt");
+    const dropBtn = document.querySelector(".dropbtn");
+
     categoriasData.forEach(c => {
         const a = document.createElement("a");
         a.href = `#cat-${c.id}`;
         a.innerText = c.nome;
+        // Fecha o menu ao selecionar no mobile
+        a.addEventListener("click", () => {
+            nav.classList.remove("show");
+        });
         nav.appendChild(a);
+    });
+
+    // Toggle manual para mobile/clique
+    dropBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        nav.classList.toggle("show");
+    });
+
+    // Fecha ao clicar fora
+    document.addEventListener("click", (e) => {
+        if (!e.target.closest('.category-dropdown')) {
+            nav.classList.remove("show");
+        }
     });
 }
 
