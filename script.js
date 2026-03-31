@@ -15,17 +15,26 @@ async function init() {
         
         configurarBusca();
         
-        // Adiciona ouvinte global para capturar cliques nos botões 'Comprar agora'
+        // Ouvinte global para capturar cliques nos botões 'Comprar agora'
         document.body.addEventListener('click', function(e) {
-            if (e.target && e.target.classList.contains('btn-comprar')) {
-                // Previne o comportamento padrão (link âncora '#')
+            // Verifica se o clique foi no botão ou em algum ícone dentro dele
+            const btn = e.target.closest('.btn-comprar');
+            
+            if (btn) {
                 e.preventDefault();
-                // Exibe o modal de carregamento estilo game
-                mostrarModalRedirecionamento();
+                const urlAfiliado = btn.getAttribute('data-url');
+                
+                if (urlAfiliado && urlAfiliado !== "#") {
+                    mostrarModalRedirecionamento(urlAfiliado);
+                } else {
+                    console.warn("Link de afiliado não configurado para este produto.");
+                }
             }
         });
 
-    } catch (e) { console.error("Erro ao carregar dados:", e); }
+    } catch (e) { 
+        console.error("Erro ao carregar dados:", e); 
+    }
 }
 
 function normalizarTexto(texto) {
@@ -34,6 +43,8 @@ function normalizarTexto(texto) {
 
 function configurarBusca() {
     const inputBusca = document.getElementById("input-busca");
+    if (!inputBusca) return;
+    
     inputBusca.addEventListener("input", (e) => {
         const termo = normalizarTexto(e.target.value);
         filtrarConteudo(termo);
@@ -46,15 +57,16 @@ function filtrarConteudo(termo) {
     const categoriasPopulares = document.querySelector(".home-categories");
 
     if (termo === "") {
-        heroSection.style.display = "block";
-        categoriasPopulares.style.display = "block";
+        if (heroSection) heroSection.style.display = "block";
+        if (categoriasPopulares) categoriasPopulares.style.display = "block";
         renderizarExpirando();
         renderizarFeedCompleto();
         return;
     }
 
-    heroSection.style.display = "none";
-    categoriasPopulares.style.display = "none";
+    if (heroSection) heroSection.style.display = "none";
+    if (categoriasPopulares) categoriasPopulares.style.display = "none";
+    
     feed.innerHTML = `<h2 class="section-title">Resultados da busca</h2><div class="flash-grid" id="search-results-grid"></div>`;
     
     const resultsGrid = document.getElementById("search-results-grid");
@@ -76,6 +88,7 @@ function filtrarConteudo(termo) {
 
 function renderizarFeedCompleto() {
     const feed = document.getElementById("feed-infinito");
+    if (!feed) return;
     feed.innerHTML = "";
     
     categoriasData.forEach((cat, index) => {
@@ -103,17 +116,23 @@ function renderizarFeedCompleto() {
     });
 }
 
+/**
+ * Cria o HTML do Card injetando o link de afiliado no data-url
+ */
 function criarCardHTML(p) {
-    const divCard = document.createElement("div"); // Mudado de 'a' para 'div' para gerenciar clique melhor
+    const divCard = document.createElement("div");
     divCard.className = "card";
-    // Mantenha o href simulado se preferir, mas div é mais seguro para prevenir pulos de página
+    
+    // Define o link vindo do JSON ou um padrão caso esteja vazio
+    const linkDestino = p.link || "https://www.mercadolivre.com.br";
+
     divCard.innerHTML = `
-        <img src="${p.imagem}" loading="lazy">
+        <img src="${p.imagem}" loading="lazy" alt="${p.nome}">
         <div class="card-info">
             <h4>${p.nome}</h4>
             <div class="preco">R$ ${p.preco}</div>
             <div style="color:#00a650; font-size:12px; font-weight:bold; margin-bottom:15px">Frete grátis</div>
-            <div class="btn-comprar">Comprar agora</div>
+            <button class="btn-comprar" data-url="${linkDestino}">Comprar agora</button>
         </div>
     `;
     return divCard;
@@ -121,12 +140,14 @@ function criarCardHTML(p) {
 
 function scrollManual(id, direction) {
     const track = document.getElementById(`track-${id}`);
+    if (!track) return;
     const amount = window.innerWidth < 768 ? track.clientWidth : track.clientWidth / 2;
     track.scrollBy({ left: amount * direction, behavior: 'smooth' });
 }
 
 function renderizarIconesHome() {
     const grid = document.getElementById("grid-icones-home");
+    if (!grid) return;
     grid.innerHTML = "";
     const lista = expandidoHome ? categoriasData : categoriasData.slice(0, 8);
     lista.forEach(c => {
@@ -134,13 +155,14 @@ function renderizarIconesHome() {
         card.className = "cat-icon-card";
         card.href = `#cat-${c.id}`;
         const iconUrl = c.icone || 'https://http2.mlstatic.com/storage/homes-node/navigation/desktop/deals.svg';
-        card.innerHTML = `<img src="${iconUrl}"><span>${c.nome}</span>`;
+        card.innerHTML = `<img src="${iconUrl}" alt="${c.nome}"><span>${c.nome}</span>`;
         grid.appendChild(card);
     });
 }
 
 function renderizarExpirando() {
     const grid = document.getElementById("grid-expirando");
+    if (!grid) return;
     grid.innerHTML = "";
     if(categoriasData[0]) {
         categoriasData[0].produtos.forEach(p => {
@@ -155,7 +177,8 @@ function renderizarExpirando() {
 function toggleHomeCategorias() {
     expandidoHome = !expandidoHome;
     renderizarIconesHome();
-    document.getElementById("btn-expandir-home").innerText = expandidoHome ? "Ver menos categorias" : "Ver mais categorias";
+    const btn = document.getElementById("btn-expandir-home");
+    if (btn) btn.innerText = expandidoHome ? "Ver menos categorias" : "Ver mais categorias";
 }
 
 function renderizarMenus() {
@@ -163,6 +186,7 @@ function renderizarMenus() {
     const dropBtn = document.querySelector(".dropbtn");
     if(!nav || !dropBtn) return;
 
+    nav.innerHTML = ""; // Limpa antes de renderizar
     categoriasData.forEach(c => {
         const a = document.createElement("a");
         a.href = `#cat-${c.id}`;
@@ -186,44 +210,44 @@ function renderizarMenus() {
 function iniciarTimer() {
     setInterval(() => {
         const now = new Date();
-        const end = new Date(); end.setHours(23, 59, 59);
+        const end = new Date(); 
+        end.setHours(23, 59, 59);
         const diff = end - now;
+        
+        if (diff <= 0) return;
+
         const h = Math.floor(diff/3600000).toString().padStart(2,'0');
         const m = Math.floor((diff%3600000)/60000).toString().padStart(2,'0');
         const s = Math.floor((diff%60000)/1000).toString().padStart(2,'0');
+        
         const timerEl = document.getElementById("timer");
         if(timerEl) timerEl.innerText = `${h}:${m}:${s}`;
     }, 1000);
 }
 
 // =========================================
-// LÓGICA DO MODAL DE REDIRECIONAMENTO (NOVA)
+// LÓGICA DO MODAL DE REDIRECIONAMENTO
 // =========================================
-const modal = document.getElementById('redirectModal');
-
-function mostrarModalRedirecionamento() {
+function mostrarModalRedirecionamento(url) {
+    const modal = document.getElementById('redirectModal');
     if (!modal) return;
     
-    // Adiciona classe de visibilidade
     modal.classList.add('visible');
-    
-    // Bloqueia o scroll do body enquanto o modal estiver aberto
     document.body.style.overflow = 'hidden';
 
-    // Simula o tempo de redirecionamento (3 segundos)
+    // Simula o tempo de carregamento (2.5 segundos) e então abre o link
     setTimeout(() => {
         esconderModalRedirecionamento();
-        // Aqui você faria o redirecionamento real para o link de afiliado do ML
-        // window.location.href = p.link_afiliado; 
-    }, 3000); 
+        // Abre o link de afiliado em nova aba
+        window.open(url, '_blank');
+    }, 2500); 
 }
 
 function esconderModalRedirecionamento() {
+    const modal = document.getElementById('redirectModal');
     if (!modal) return;
     
     modal.classList.remove('visible');
-    
-    // Restaura o scroll do body
     document.body.style.overflow = '';
 }
 
