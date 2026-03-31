@@ -18,7 +18,10 @@ async function init() {
 }
 
 function normalizarTexto(texto) {
-    return texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    return texto
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
 }
 
 function configurarBusca() {
@@ -44,14 +47,16 @@ function filtrarConteudo(termo) {
 
     heroSection.style.display = "none";
     categoriasPopulares.style.display = "none";
+
     feed.innerHTML = `<h2 class="section-title">Resultados da busca</h2><div class="flash-grid" id="search-results-grid"></div>`;
-    
     const resultsGrid = document.getElementById("search-results-grid");
+
     let encontrouAlgo = false;
 
     categoriasData.forEach(cat => {
         cat.produtos.forEach(p => {
-            if (normalizarTexto(p.nome).includes(termo)) {
+            const nomeProdutoNormalizado = normalizarTexto(p.nome);
+            if (nomeProdutoNormalizado.includes(termo)) {
                 resultsGrid.appendChild(criarCardHTML(p));
                 encontrouAlgo = true;
             }
@@ -59,7 +64,7 @@ function filtrarConteudo(termo) {
     });
 
     if (!encontrouAlgo) {
-        resultsGrid.innerHTML = "<p style='grid-column: 1/-1; padding: 20px; color: #666;'>Nenhum produto encontrado.</p>";
+        resultsGrid.innerHTML = "<p style='grid-column: 1/-1; padding: 20px; color: #666;'>Nenhum produto encontrado para sua busca.</p>";
     }
 }
 
@@ -96,10 +101,13 @@ function criarCardHTML(p) {
     const a = document.createElement("a");
     a.className = "card";
     a.href = "#";
+    
+    // Adicionado o redirecionamento com mensagem de segurança solicitado
     a.onclick = (e) => {
         e.preventDefault();
         alert("Direcionando para a página do ML para que você realize sua compra com total segurança.");
     };
+
     a.innerHTML = `
         <img src="${p.imagem}" loading="lazy">
         <div class="card-info">
@@ -153,26 +161,11 @@ function toggleHomeCategorias() {
 
 function renderizarMenus() {
     const nav = document.getElementById("menu-categorias-dt");
-    const dropBtn = document.querySelector(".dropbtn");
-    if(!nav || !dropBtn) return;
-
     categoriasData.forEach(c => {
         const a = document.createElement("a");
         a.href = `#cat-${c.id}`;
         a.innerText = c.nome;
-        a.addEventListener("click", () => nav.classList.remove("show"));
         nav.appendChild(a);
-    });
-
-    dropBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        nav.classList.toggle("show");
-    });
-
-    document.addEventListener("click", (e) => {
-        if (!e.target.closest('.category-dropdown')) {
-            nav.classList.remove("show");
-        }
     });
 }
 
