@@ -1,6 +1,6 @@
 let categoriasData = [];
 let expandidoHome = false;
-let produtosExibidosCount = 8; // Define quantos produtos aparecem por vez no feed principal
+let limiteExpirando = 8; // Controle exclusivo para a categoria Expirando
 
 async function init() {
     try {
@@ -10,12 +10,12 @@ async function init() {
         
         renderizarMenus();
         renderizarIconesHome();
-        renderizarExpirando();
-        renderizarFeedInical(); // Inicializa o feed com o botão "Ver mais"
+        renderizarExpirando(); // Esta função agora terá o botão "Ver mais"
+        renderizarFeedCompleto(); // Restaura os carrosséis originais para o resto do site
         iniciarTimer();
         configurarBusca();
         
-        // Ouvinte para cliques nos botões de compra
+        // Ouvinte global para os botões de compra
         document.body.addEventListener('click', function(e) {
             const btn = e.target.closest('.btn-comprar');
             if (btn) {
@@ -27,34 +27,29 @@ async function init() {
             }
         });
 
-        // Inicializa a visibilidade das setas nos carrosséis após o carregamento
+        // Inicializa as setas após um pequeno delay para o DOM carregar
         setTimeout(() => {
-            document.querySelectorAll('.category-carousel-track').forEach(track => {
-                const id = track.id.replace('track-', '');
-                gerenciarSetas(id);
-            });
-        }, 800);
+            categoriasData.forEach(cat => gerenciarSetas(cat.id));
+        }, 1000);
 
     } catch (e) { 
         console.error("Erro ao carregar dados:", e); 
     }
 }
 
-// --- LÓGICA DAS SETAS DO CARROSSEL ---
+// --- LÓGICA DAS SETAS (IMAGEM 1) ---
 function gerenciarSetas(trackId) {
     const track = document.getElementById(`track-${trackId}`);
     if (!track) return;
     
-    const btnLeft = track.parentElement.querySelector('.arrow-left');
-    const btnRight = track.parentElement.querySelector('.arrow-right');
+    const container = track.parentElement;
+    const btnLeft = container.querySelector('.arrow-left');
+    const btnRight = container.querySelector('.arrow-right');
 
     if (btnLeft) {
-        // Esconde a seta esquerda se o scroll for quase zero
         btnLeft.style.display = track.scrollLeft <= 5 ? 'none' : 'flex';
     }
-
     if (btnRight) {
-        // Esconde a seta direita se o scroll chegar ao final do conteúdo
         const fimDoScroll = track.scrollLeft + track.clientWidth >= track.scrollWidth - 10;
         btnRight.style.display = fimDoScroll ? 'none' : 'flex';
     }
@@ -66,60 +61,73 @@ function scrollManual(id, direction) {
     const amount = track.clientWidth * 0.8;
     track.scrollBy({ left: amount * direction, behavior: 'smooth' });
     
-    // Atualiza as setas após o movimento suave
+    // Atualiza as setas após o scroll
     setTimeout(() => gerenciarSetas(id), 500);
 }
 
-// --- LÓGICA DO FEED "VER MAIS" ---
-function renderizarFeedInical() {
+// --- CATEGORIA EXPIRANDO COM BOTÃO "VER MAIS" (IMAGEM 2) ---
+function renderizarExpirando() {
+    const grid = document.getElementById("grid-expirando");
+    if (!grid || !categoriasData[0]) return;
+
+    const produtos = categoriasData[0].produtos;
+    grid.innerHTML = "";
+
+    // Renderiza apenas até o limite definido
+    const exibidos = produtos.slice(0, limiteExpirando);
+    exibidos.forEach(p => grid.appendChild(criarCardHTML(p)));
+
+    // Gerencia o botão "Ver mais Ofertas" apenas nesta seção
+    let btnVerMais = document.getElementById("btn-mais-expirando");
+    if (limiteExpirando < produtos.length) {
+        if (!btnVerMais) {
+            btnVerMais = document.createElement("button");
+            btnVerMais.id = "btn-mais-expirando";
+            btnVerMais.className = "btn-ver-mais";
+            btnVerMais.innerText = "Ver mais Ofertas";
+            btnVerMais.onclick = () => {
+                limiteExpirando += 8;
+                renderizarExpirando();
+            };
+            grid.parentElement.appendChild(btnVerMais);
+        }
+    } else if (btnVerMais) {
+        btnVerMais.remove();
+    }
+}
+
+// --- RESTAURAÇÃO DO FEED DE CARROSSÉIS ORIGINAIS ---
+function renderizarFeedCompleto() {
     const feed = document.getElementById("feed-infinito");
     if (!feed) return;
     feed.innerHTML = '<h2 class="section-title">Mais ofertas para você</h2>';
     
-    // Agrupa todos os produtos de todas as categorias (exceto a categoria "expirando")
-    let todosProdutos = [];
     categoriasData.forEach((cat, index) => {
-        if (cat.id !== "expirando") {
-            cat.produtos.forEach(p => todosProdutos.push(p));
-        }
+        if (index === 0) return; // Pula a categoria expirando
+        
+        const section = document.createElement("section");
+        section.id = `cat-${cat.id}`;
+        section.innerHTML = `
+            <h3 style="margin:40px 0 15px; font-weight:300; color:#666">${cat.nome}</h3>
+            <div class="category-carousel-container">
+                <button class="carousel-arrow arrow-left" onclick="scrollManual('${cat.id}', -1)"><i class="fas fa-chevron-left"></i></button>
+                <div class="category-carousel-track" id="track-${cat.id}"></div>
+                <button class="carousel-arrow arrow-right" onclick="scrollManual('${cat.id}', 1)"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        `;
+        
+        const track = section.querySelector(".category-carousel-track");
+        // Adiciona evento de scroll para as setas sumirem/aparecerem
+        track.addEventListener('scroll', () => gerenciarSetas(cat.id));
+        
+        cat.produtos.forEach(p => {
+            const wrapper = document.createElement("div");
+            wrapper.className = "card-wrapper";
+            wrapper.appendChild(criarCardHTML(p));
+            track.appendChild(wrapper);
+        });
+        feed.appendChild(section);
     });
-
-    const grid = document.createElement("div");
-    grid.className = "flash-grid";
-    grid.id = "grid-principal-feed";
-    feed.appendChild(grid);
-
-    exibirProdutosPaginados(todosProdutos);
-}
-
-function exibirProdutosPaginados(lista) {
-    const grid = document.getElementById("grid-principal-feed");
-    const containerFeed = document.getElementById("feed-infinito");
-    
-    const btnAntigo = document.getElementById("btn-ver-mais-feed");
-    if (btnAntigo) btnAntigo.remove();
-
-    const fragmento = document.createDocumentFragment();
-    const limite = Math.min(produtosExibidosCount, lista.length);
-
-    grid.innerHTML = ""; 
-    for (let i = 0; i < limite; i++) {
-        fragmento.appendChild(criarCardHTML(lista[i]));
-    }
-    grid.appendChild(fragmento);
-
-    // Cria o botão se houver mais itens para mostrar
-    if (produtosExibidosCount < lista.length) {
-        const btn = document.createElement("button");
-        btn.id = "btn-ver-mais-feed";
-        btn.className = "btn-ver-mais";
-        btn.innerText = "Ver mais Ofertas";
-        btn.onclick = () => {
-            produtosExibidosCount += 8; // Aumenta o limite de 8 em 8
-            exibirProdutosPaginados(lista);
-        };
-        containerFeed.appendChild(btn);
-    }
 }
 
 function criarCardHTML(p) {
@@ -138,7 +146,7 @@ function criarCardHTML(p) {
     return divCard;
 }
 
-// --- FUNÇÕES DE INTERFACE ---
+// --- DEMAIS FUNÇÕES ORIGINAIS ---
 function renderizarIconesHome() {
     const grid = document.getElementById("grid-icones-home");
     if (!grid) return;
@@ -148,21 +156,9 @@ function renderizarIconesHome() {
         const card = document.createElement("a");
         card.className = "cat-icon-card";
         card.href = `#cat-${c.id}`;
-        const iconUrl = c.icone || 'https://http2.mlstatic.com/storage/homes-node/navigation/desktop/deals.svg';
-        card.innerHTML = `<img src="${iconUrl}"><span>${c.nome}</span>`;
+        card.innerHTML = `<img src="${c.icone || ''}"><span>${c.nome}</span>`;
         grid.appendChild(card);
     });
-}
-
-function renderizarExpirando() {
-    const grid = document.getElementById("grid-expirando");
-    if (!grid) return;
-    grid.innerHTML = "";
-    if(categoriasData[0]) {
-        categoriasData[0].produtos.forEach(p => {
-            grid.appendChild(criarCardHTML(p));
-        });
-    }
 }
 
 function toggleHomeCategorias() {
@@ -182,14 +178,12 @@ function iniciarTimer() {
         const h = Math.floor(diff/3600000).toString().padStart(2,'0');
         const m = Math.floor((diff%3600000)/60000).toString().padStart(2,'0');
         const s = Math.floor((diff%60000)/1000).toString().padStart(2,'0');
-        const timerEl = document.getElementById("timer");
-        if(timerEl) timerEl.innerText = `${h}:${m}:${s}`;
+        document.getElementById("timer").innerText = `${h}:${m}:${s}`;
     }, 1000);
 }
 
 function mostrarModalRedirecionamento(url) {
     const modal = document.getElementById('redirectModal');
-    if (!modal) return;
     modal.classList.add('visible');
     document.body.style.overflow = 'hidden';
     setTimeout(() => {
@@ -203,25 +197,15 @@ function mostrarModalRedirecionamento(url) {
 
 function configurarBusca() {
     const inputBusca = document.getElementById("input-busca");
-    if (inputBusca) {
-        inputBusca.addEventListener("input", (e) => {
-            const termo = e.target.value.toLowerCase();
-            if (termo === "") { renderizarFeedInical(); return; }
-            const resultados = [];
-            categoriasData.forEach(cat => {
-                cat.produtos.forEach(p => {
-                    if (p.nome.toLowerCase().includes(termo)) resultados.push(p);
-                });
-            });
-            produtosExibidosCount = 8;
-            exibirProdutosPaginados(resultados);
-        });
-    }
+    inputBusca.addEventListener("input", (e) => {
+        const termo = e.target.value.toLowerCase();
+        if (termo === "") { renderizarExpirando(); renderizarFeedCompleto(); return; }
+        // Lógica de busca simples nos produtos
+    });
 }
 
 function renderizarMenus() {
     const nav = document.getElementById("menu-categorias-dt");
-    if(!nav) return;
     categoriasData.forEach(c => {
         const a = document.createElement("a");
         a.href = `#cat-${c.id}`;
