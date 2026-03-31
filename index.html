@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radar de Ofertas | Marketplace</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Radar de Ofertas - Mercado Livre</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Proxima+Nova:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,106 +18,122 @@
         <div class="header-container-ml">
             <div class="logo-row">
                 <a href="#" class="logo">
-                    <div class="logo-circle"><i class="fas fa-satellite-dish"></i></div>
-                    <div class="logo-text">RADAR<span>DEOFERTAS</span></div>
+                    <div class="logo-circle">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <span>Radar de Ofertas</span>
                 </a>
             </div>
-            <div class="search-row">
-                <div class="search-box">
-                    <input type="text" id="input-busca" placeholder="Buscar produtos, marcas e muito mais..." autocomplete="off">
-                    <button id="btn-busca"><i class="fas fa-search"></i></button>
-                </div>
+            
+            <div class="search-box">
+                <input type="text" id="input-busca" placeholder="Buscar produtos, marcas e muito mais...">
             </div>
-            <nav class="nav-bar">
-                <div class="category-dropdown">
-                    <button class="dropbtn">Categorias <i class="fas fa-chevron-down"></i></button>
-                    <div class="dropdown-content" id="menu-categorias-dt"></div>
-                </div>
-            </nav>
+
+            <div class="category-dropdown">
+                <button class="dropbtn">Categorias <i class="fas fa-chevron-down"></i></button>
+                <div class="dropdown-content" id="menu-categorias-dt">
+                    </div>
+            </div>
         </div>
     </header>
 
-    <main>
+    <main class="header-container-ml">
+
+        <section class="home-categories">
+            <h2 class="section-title">Categorias populares</h2>
+            <div class="categories-icon-grid" id="grid-icones-home">
+                </div>
+            <button class="btn-ver-mais" id="btn-expandir-home" onclick="toggleHomeCategorias()">Ver mais categorias</button>
+        </section>
+
         <section class="flash-deals-hero">
             <div class="header-container-ml">
-                <div class="flash-header">
-                    <div class="flash-title"><i class="fas fa-bolt"></i> <h2>OFERTAS EXPIRANDO</h2></div>
-                    <div class="flash-timer"><div id="timer" class="digital-clock">00:00:00</div></div>
+                <div class="timer-wrapper">
+                    <span class="lightning-icon"><i class="fas fa-bolt"></i></span>
+                    <span class="timer-text">Ofertas que expiram em:</span>
+                    <div class="timer-box" id="timer">00:00:00</div>
                 </div>
-                <div class="flash-grid" id="grid-expirando"></div>
+                <div class="flash-grid" id="grid-expirando">
+                    </div>
             </div>
         </section>
 
-        <div class="header-container-ml">
-            <section class="home-categories">
-                <h2 class="section-title">Categorias populares</h2>
-                <div class="categories-icon-grid" id="grid-icones-home"></div>
-                <div class="show-more-center">
-                    <button id="btn-expandir-home" onclick="toggleHomeCategorias()">Ver mais categorias</button>
-                </div>
+        <section class="infinite-feed" id="feed-infinito">
+            <h2 class="section-title">Mais ofertas para você</h2>
             </section>
-            <div id="feed-infinito"></div>
-        </div>
+
     </main>
 
     <footer class="footer-ml">
         <div class="header-container-ml">
-            <section class="footer-info-cards">
+            
+            <div class="footer-info-cards">
                 <div class="info-card">
-                    <i class="fas fa-credit-card footer-icon"></i>
-                    <h3>Escolha como pagar</h3>
-                    <p>Com cartão, boleto ou Pix. Parcele suas compras.</p>
+                    <div class="footer-icon"><i class="fas fa-credit-card"></i></div>
+                    <h3>Pague com Pix</h3>
+                    <p>Ou cartões de crédito. Rápido e seguro.</p>
                 </div>
                 <div class="info-card">
-                    <i class="fas fa-truck footer-icon"></i>
+                    <div class="footer-icon"><i class="fas fa-shipping-fast"></i></div>
                     <h3>Frete grátis</h3>
-                    <p>Benefício para milhares de produtos.</p>
+                    <p>Em milhares de produtos a partir de R$ 79.</p>
                 </div>
                 <div class="info-card">
-                    <i class="fas fa-shield-alt footer-icon"></i>
-                    <h3>Segurança absoluta</h3>
-                    <p>Você está sempre protegido.</p>
+                    <div class="footer-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Compra Garantida</h3>
+                    <p>Receba o produto ou devolvemos o dinheiro.</p>
                 </div>
-            </section>
+            </div>
 
-            <section class="footer-seo">
-                <h4>Termos mais procurados</h4>
+            <div class="footer-seo">
+                <h4>Mais procurados</h4>
                 <div class="tags-container-inline">
-                    apple watch, ar condicionado, ar condicionado inverter, bicicletas, cafeteira, carros novos, computador, fogao 4 boca, fone de ouvido bluetooth, freezer vertical, geladeira frost free, guarda roupa casal, guarda roupa solteiro, ipad, iphone, iphone 8 plus, iphone 11, iphone 13, iphone 13 pro max, iphone 14, iphone 14 pro, iphone 14 pro max, iphone 15, iphone 16, iphone 16 plus, iphone 16 pro, iphone 16 pro max, jbl, microondas, monitor, motorola, nintendo switch, notebook, notebook dell, painel para tv, penteadeira, poco x5 pro, ps4, ps5, redmi note 12, s22 ultra, samsung a54, samsung s23, smartwatch, tablets samsung, tenis masculino, tennis feminino, tv 32 polegadas, tv 50 4k, tv 50 polegadas, ventilador, xbox, xbox series x, xdj, xiaomi, comparador de celulares.
+                    <span>Celular</span> • <span>Notebook</span> • <span>Tênis Masculino</span> • <span>Smart TV</span> • <span>Geladeira</span> • <span>Ar Condicionado</span> • <span>iPhone</span> • <span>Cadeira Gamer</span> • <span>Fone Bluetooth</span> • <span>Monitor</span> • <span>Drone</span> • <span>Placa de Vídeo</span> • <span>Lavadora</span> • <span>Fogão</span> • <span>Micro-ondas</span> • <span>Guarda-roupa</span> • <span>Sofá 3 lugares</span> • <span>Pneu Aro 14</span>
                 </div>
-
+                
                 <div class="alphabet-search">
-                    <p>Pesquise produto por letra inicial</p>
+                    <div>Busca alfabética:</div>
                     <div class="letters-inline">
-                        A - B - C - D - E - F - G - H - I - J - K - L - M - N - O - P - Q - R - S - T - U - V - W - X - Y - Z
+                        A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 0-9
                     </div>
                 </div>
-            </section>
+            </div>
 
-            <section class="footer-links">
+            <div class="footer-links">
                 <div class="links-row">
+                    <a href="#">Acessibilidade</a>
                     <a href="#">Trabalhe conosco</a>
                     <a href="#">Termos e condições</a>
-                    <a href="#">Promoções</a>
                     <a href="#">Como cuidamos da sua privacidade</a>
-                    <a href="#">Acessibilidade</a>
                     <a href="#">Contato</a>
                     <a href="#">Informações sobre seguros</a>
-                    <a href="#">Programa de Afiliados</a>
+                    <a href="#">Blog</a>
                 </div>
-            </section>
+            </div>
 
             <div class="footer-bottom">
-                <p>Copyright © 1999-2026 O Maior site Oficial de Vendas da América Latina.</p>
-                <p class="safe-buy-text">
-                    <i class="fas fa-shield-alt"></i> Ao clicar no link 'Comprar Agora' a sua compra é segura.
-                </p>
-                <p class="company-address">
-                    CNPJ n.º 03.007.331/0001-41 / Av. das Nações Unidas, nº 3.003, Bonfim, Osasco/SP - CEP 06233-903 - empresa do grupo ML
-                </p>
+                <div class="safe-buy-text">
+                    <i class="fas fa-shield-alt"></i> Ao clicar no link de compra, você será redirecionado para o Mercado Livre para concluir o pagamento com total segurança.
+                </div>
+                <div class="company-address">
+                    CNPJ n.º 03.007.331/0001-41 / Av. das Nações Unidas, nº 3.003, Bonfim, Osasco/SP - CEP 06233-903 <br>
+                    Radar de Ofertas - Programa de Afiliados Mercado Livre. Todos os direitos reservados.
+                </div>
             </div>
         </div>
     </footer>
+
+    <div id="redirectModal" class="game-modal-overlay">
+        <div class="game-modal-content">
+            <div class="logo-circle modal-logo">
+                <i class="fas fa-bolt"></i>
+            </div>
+            
+            <div class="game-loader-spinner"></div>
+            
+            <p class="modal-message">Redirecionando para que você aproveite a oferta do Afiliado do ML, obrigado! :😁</p>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
