@@ -1,29 +1,44 @@
 {
   "categorias": [
-    { "id": "expirando", "nome": "⚡ Ofertas Expirando", "icone": "assets/icons/bolt-yellow.png", "produtos": [
-      {"nome": "Smart TV 50 polegadas 4K Ultra HD", "preco": "2.199,00", "imagem": "https://picsum.photos/400?random=1"},
-      {"nome": "Fritadeira Sem Óleo Air Fryer 4L", "preco": "389,90", "imagem": "https://picsum.photos/400?random=2"},
-      {"nome": "Smartphone 128GB 5G Câmera Tripla", "preco": "1.450,00", "imagem": "https://picsum.photos/400?random=3"},
-      {"nome": "Cadeira Gamer Reclinável Ergonômica", "preco": "890,00", "imagem": "https://picsum.photos/400?random=4"},
-      {"nome": "Fone de Ouvido Bluetooth Noise Cancelling", "preco": "199,00", "imagem": "https://picsum.photos/400?random=5"},
-      {"nome": "Relógio Inteligente Smartwatch Sport", "preco": "245,00", "imagem": "https://picsum.photos/400?random=6"}
-    ]},
-    { "id": "casa", "nome": "Casa, Móveis e Decoração", "icone": "https://http2.mlstatic.com/storage/homes-node/navigation/desktop/home-furniture.svg", "produtos": [
-       {"nome": "Sofá 3 Lugares Retrátil Veludo", "preco": "1.200,00", "imagem": "https://picsum.photos/400?random=7"},
-       {"nome": "Mesa de Jantar 4 Cadeiras Madeira", "preco": "850,00", "imagem": "https://picsum.photos/400?random=8"},
-       {"nome": "Guarda Roupa Casal 6 Portas", "preco": "1.100,00", "imagem": "https://picsum.photos/400?random=9"},
-       {"nome": "Conjunto de Panelas Cerâmica 5pçs", "preco": "299,00", "imagem": "https://picsum.photos/400?random=10"},
-       {"nome": "Luminária de Chão Moderna Black", "preco": "180,00", "imagem": "https://picsum.photos/400?random=11"},
-       {"nome": "Tapete Sala Geométrico 2.0x1.5", "preco": "220,00", "imagem": "https://picsum.photos/400?random=12"}
-    ]},
-    { "id": "esportes", "nome": "Esportes e Fitness", "icone": "https://http2.mlstatic.com/storage/homes-node/navigation/desktop/sports.svg", "produtos": [
-       {"nome": "Bicicleta Aro 29 Alumínio 21v", "preco": "1.390,00", "imagem": "https://picsum.photos/400?random=13"},
-       {"nome": "Esteira Ergométrica Dobrável", "preco": "2.400,00", "imagem": "https://picsum.photos/400?random=14"},
-       {"nome": "Kit Halteres 10kg Revestido", "preco": "150,00", "imagem": "https://picsum.photos/400?random=15"},
-       {"nome": "Tênis Running Amortecedor Pro", "preco": "280,00", "imagem": "https://picsum.photos/400?random=16"},
-       {"nome": "Bola de Futebol Campo Oficial", "preco": "89,00", "imagem": "https://picsum.photos/400?random=17"},
-       {"nome": "Bolsa Térmica Marmita Fitness", "preco": "45,00", "imagem": "https://picsum.photos/400?random=18"}
-    ]},
+    { 
+      "id": "expirando", 
+      "nome": "⚡ Ofertas Expirando", 
+      "icone": "https://cdn-icons-png.flaticon.com/512/744/744922.png", 
+      "produtos": [
+        {"nome": "Smart TV 50 polegadas 4K Ultra HD", "preco": "2.199,00", "imagem": "https://picsum.photos/400?random=1"},
+        {"nome": "Fritadeira Sem Óleo Air Fryer 4L", "preco": "389,90", "imagem": "https://picsum.photos/400?random=2"},
+        {"nome": "Smartphone 128GB 5G Câmera Tripla", "preco": "1.450,00", "imagem": "https://picsum.photos/400?random=3"},
+        {"nome": "Cadeira Gamer Reclinável Ergonômica", "preco": "890,00", "imagem": "https://picsum.photos/400?random=4"},
+        {"nome": "Fone de Ouvido Bluetooth Noise Cancelling", "preco": "199,00", "imagem": "https://picsum.photos/400?random=5"},
+        {"nome": "Relógio Inteligente Smartwatch Sport", "preco": "245,00", "imagem": "https://picsum.photos/400?random=6"}
+      ]
+    },
+    { 
+      "id": "casa", 
+      "nome": "Casa, Móveis e Decoração", 
+      "icone": "https://cdn-icons-png.flaticon.com/512/2667/2667104.png", 
+      "produtos": [
+         {"nome": "Sofá 3 Lugares Retrátil Veludo", "preco": "1.200,00", "imagem": "https://picsum.photos/400?random=7"},
+         {"nome": "Mesa de Jantar 4 Cadeiras Madeira", "preco": "850,00", "imagem": "https://picsum.photos/400?random=8"},
+         {"nome": "Guarda Roupa Casal 6 Portas", "preco": "1.100,00", "imagem": "https://picsum.photos/400?random=9"},
+         {"nome": "Conjunto de Panelas Cerâmica 5pçs", "preco": "299,00", "imagem": "https://picsum.photos/400?random=10"},
+         {"nome": "Luminária de Chão Moderna Black", "preco": "180,00", "imagem": "https://picsum.photos/400?random=11"},
+         {"nome": "Tapete Sala Geométrico 2.0x1.5", "preco": "220,00", "imagem": "https://picsum.photos/400?random=12"}
+      ]
+    },
+    { 
+      "id": "esportes", 
+      "nome": "Esportes e Fitness", 
+      "icone": "https://cdn-icons-png.flaticon.com/512/857/857455.png", 
+      "produtos": [
+         {"nome": "Bicicleta Aro 29 Alumínio 21v", "preco": "1.390,00", "imagem": "https://picsum.photos/400?random=13"},
+         {"nome": "Esteira Ergométrica Dobrável", "preco": "2.400,00", "imagem": "https://picsum.photos/400?random=14"},
+         {"nome": "Kit Halteres 10kg Revestido", "preco": "150,00", "imagem": "https://picsum.photos/400?random=15"},
+         {"nome": "Tênis Running Amortecedor Pro", "preco": "280,00", "imagem": "https://picsum.photos/400?random=16"},
+         {"nome": "Bola de Futebol Campo Oficial", "preco": "89,00", "imagem": "https://picsum.photos/400?random=17"},
+         {"nome": "Bolsa Térmica Marmita Fitness", "preco": "45,00", "imagem": "https://picsum.photos/400?random=18"}
+      ]
+    },
 
     { "id": "eletro", "nome": "Eletrodomésticos", "icone": "https://cdn-icons-png.flaticon.com/512/2850/2850931.png", "produtos": [
       {"nome": "Geladeira Frost Free Duplex", "preco": "2.800,00", "imagem": "https://picsum.photos/400?random=19"},
