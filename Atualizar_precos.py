@@ -43,8 +43,8 @@ def processar_json():
         print(f"❌ Erro: {caminho_json} não encontrado.")
         return
 
-    with open(caminho_json, 'r', encoding='utf-8') as f:
-        data = json.load(f)
+   with open('produtos.json', 'w', encoding='utf-8') as f:
+    json.dump(data, f, ensure_ascii=False, indent=2)
 
     print("\n" + "="*60)
     print("🚀 ATUALIZAÇÃO VIA API (PRECISÃO DE CENTAVOS ATIVADA)")
