@@ -35,14 +35,12 @@ jobs:
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        
         git add produtos.json
-        
-        # Verifica se houve mudança real. Se não houve, ele apenas avisa e não dá erro.
         if git diff --staged --quiet; then
-          echo "Nenhuma alteração de preço encontrada hoje."
+          echo "Sem alteracoes para salvar"
         else
           git commit -m "Auto: Atualizacao de precos"
-          # Usa o token para garantir permissão de escrita no push
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          # O comando abaixo sincroniza (pull) e depois envia (push)
+          git pull --rebase origin main
+          git push origin main
         fi
