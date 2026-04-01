@@ -34,54 +34,38 @@ def obter_preco_api(ml_id):
     except Exception as e:
         print(f"   ❌ Erro na API: {e}")
     return None
-
 def processar_json():
-    # No GitHub, o arquivo está na raiz
     caminho_json = 'produtos.json'
     
+    # FORÇA O ERRO SE NÃO ACHAR O ARQUIVO
     if not os.path.exists(caminho_json):
-        print(f"❌ Erro: {caminho_json} não encontrado.")
-        return
+        raise FileNotFoundError(f"O ARQUIVO {caminho_json} NÃO EXISTE NA RAIZ DO GITHUB!")
 
-   with open('produtos.json', 'w', encoding='utf-8') as f:
-    json.dump(data, f, ensure_ascii=False, indent=2)
+    with open(caminho_json, 'r', encoding='utf-8') as f:
+        data = json.load(f)
 
-    print("\n" + "="*60)
-    print("🚀 ATUALIZAÇÃO VIA API (PRECISÃO DE CENTAVOS ATIVADA)")
-    print("="*60)
-    
     houve_alteracao = False
+    print(f"DEBUG: Iniciando busca para {len(data['categorias'])} categorias")
 
     for categoria in data.get('categorias', []):
-        print(f"\n📂 Categoria: {categoria['nome']}")
         for produto in categoria.get('produtos', []):
-            url = produto.get('link', '')
-            ml_id = extrair_id_ml(url)
-            
+            ml_id = extrair_id_ml(produto.get('link', ''))
             if ml_id:
-                print(f"🔎 Consultando: {produto['nome']}...")
                 novo_preco = obter_preco_api(ml_id)
-                
                 if novo_preco:
-                    # Se o preço for diferente do atual (ex: os R$ 7.000 de teste)
+                    print(f"DEBUG: Preço API para {ml_id} é {novo_preco}")
                     if produto['preco'] != novo_preco:
-                        print(f"   ✅ SUCESSO: R$ {produto['preco']} -> R$ {novo_preco}")
                         produto['preco'] = novo_preco
                         houve_alteracao = True
-                    else:
-                        print(f"   ✨ Preço já está atualizado (R$ {novo_preco})")
-                
-                time.sleep(1) # Pausa curta entre requisições
-            else:
-                if "mercadolivre" in str(url):
-                    print(f"   ⚠️ Link inválido ou sem MLB: {produto['nome']}")
+                else:
+                    print(f"DEBUG: API FALHOU PARA {ml_id}")
 
     if houve_alteracao:
         with open(caminho_json, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
-        print("\n✅ O arquivo produtos.json foi atualizado com os novos preços!")
+        print("✅ MUDANÇAS APLICADAS NO ARQUIVO LOCAL DA ACTION")
     else:
-        print("\nℹ️ Nenhuma mudança de preço detectada.")
+        print("⚠️ NADA FOI ALTERADO NO SCRIPT")
 
 if __name__ == "__main__":
     processar_json()
