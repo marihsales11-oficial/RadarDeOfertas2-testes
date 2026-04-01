@@ -2,101 +2,147 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Gerenciador Master - Radar de Ofertas</title>
+    <title>Painel Master - Radar de Ofertas</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
-        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        h1 { color: #1c1e21; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        .categoria-box { border: 1px solid #ddd; margin-bottom: 20px; border-radius: 8px; overflow: hidden; }
-        .categoria-header { background: #f8f9fa; padding: 10px 15px; font-weight: bold; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #ddd; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
+        .container { max-width: 1300px; margin: 0 auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        h1 { color: #1c1e21; border-bottom: 2px solid #eee; padding-bottom: 10px; text-align: center; }
+        .categoria-box { border: 1px solid #ddd; margin-bottom: 25px; border-radius: 8px; overflow: hidden; background: #fff; }
+        .categoria-header { background: #f8f9fa; padding: 12px 15px; font-weight: bold; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #ddd; font-size: 18px; }
         .categoria-header img { width: 24px; height: 24px; }
-        table { width: 100%; border-collapse: collapse; background: white; }
-        th, td { padding: 10px; border-bottom: 1px solid #eee; text-align: left; font-size: 13px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; border-bottom: 1px solid #eee; text-align: left; font-size: 12px; }
         th { background: #fafafa; color: #666; text-transform: uppercase; font-size: 11px; }
-        input { width: 95%; padding: 6px; border: 1px solid #ccc; border-radius: 4px; }
+        input { width: 95%; padding: 7px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
         .btn { padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        .btn-gen { background: #007bff; color: white; width: 100%; font-size: 16px; margin-top: 20px; }
-        .btn-gen:hover { background: #0056b3; }
-        .btn-copy { background: #28a745; color: white; margin-top: 10px; }
-        textarea { width: 100%; height: 200px; margin-top: 15px; border-radius: 6px; border: 1px solid #ddd; font-family: monospace; background: #272822; color: white; padding: 15px; display: none; }
-        .csv-import { background: #e9ecef; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 2px dashed #adb5bd; text-align: center; }
+        .btn-gen { background: #007bff; color: white; width: 100%; font-size: 18px; margin-top: 30px; padding: 15px; }
+        .btn-copy { background: #28a745; color: white; margin-top: 10px; padding: 12px; width: 100%; }
+        textarea { width: 100%; height: 250px; margin-top: 15px; border-radius: 6px; border: 1px solid #ddd; font-family: monospace; background: #272822; color: #f8f8f2; padding: 15px; display: none; box-sizing: border-box; }
+        .import-area { background: #e9ecef; padding: 20px; border-radius: 8px; margin-bottom: 25px; border: 2px dashed #adb5bd; text-align: center; }
+        .btn-add-row { margin: 10px; background: #6c757d; color: white; padding: 5px 12px; font-size: 12px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>🚀 Radar de Ofertas - Painel de Controle</h1>
+    <h1>🚀 Radar de Ofertas - Painel Administrativo</h1>
 
-    <div class="csv-import">
-        <strong>Importação Rápida:</strong> Cole linhas do Excel aqui (Nome [TAB] Preço [TAB] Link) para preencher a primeira categoria: <br><br>
-        <input type="text" id="quick-import" placeholder="Cole aqui os dados copiados do Excel..." style="width: 80%; height: 30px;">
-        <button class="btn" onclick="processarImportacao()" style="background: #6c757d; color: white;">Importar</button>
+    <div class="import-area">
+        <strong>Importação Rápida (Excel):</strong> Cole aqui: Nome [TAB] Preço [TAB] Link Imagem [TAB] Link Produto <br><br>
+        <input type="text" id="quick-import" placeholder="Cole aqui os dados copiados do Excel..." style="width: 70%; margin-bottom: 10px;">
+        <select id="import-target">
+            </select>
+        <button class="btn" onclick="processarImportacao()" style="background: #17a2b8; color: white;">Importar para Categoria</button>
     </div>
 
     <div id="categorias-container">
         </div>
 
-    <button class="btn btn-gen" onclick="gerarJSON()">GERAR ARQUIVO PRODUTOS.JSON PARA GITHUB</button>
+    <button class="btn btn-gen" onclick="gerarJSON()">GERAR produtos.json COMPLETO</button>
 
-    <div id="resultado-area" style="display:none; text-align: center;">
-        <textarea id="json-output"></textarea>
-        <button class="btn btn-copy" onclick="copiarJSON()">Copiar JSON Pronto</button>
-        <p style="color: #666; font-size: 12px;">Agora é só ir no GitHub e colar por cima de tudo no arquivo produtos.json</p>
+    <div id="resultado-area" style="display:none;">
+        <h3 style="text-align: center; color: #28a745;">✅ JSON Gerado com Sucesso!</h3>
+        <textarea id="json-output" readonly></textarea>
+        <button class="btn btn-copy" onclick="copiarJSON()">Copiar Código e ir para o GitHub</button>
     </div>
 </div>
 
 <script>
-    // Estrutura base das suas categorias
+    // LISTA COMPLETA DAS 23 CATEGORIAS DO SEU ARQUIVO ORIGINAL
     const configCategorias = [
         { id: "expirando", nome: "⚡ Ofertas Expirando", icone: "https://cdn-icons-png.flaticon.com/512/744/744922.png" },
         { id: "casa", nome: "Casa, Móveis e Decoração", icone: "https://img.icons8.com/fluency/96/home.png" },
-        { id: "informatica", nome: "Informática", icone: "https://cdn-icons-png.flaticon.com/512/2777/2777142.png" },
+        { id: "esportes", nome: "Esportes e Fitness", icone: "https://cdn-icons-png.flaticon.com/512/857/857455.png" },
         { id: "eletro", nome: "Eletrodomésticos", icone: "https://cdn-icons-png.flaticon.com/512/2850/2850931.png" },
-        { id: "celulares", nome: "Celulares e Telefones", icone: "https://cdn-icons-png.flaticon.com/512/2586/2586488.png" }
+        { id: "moda", nome: "Calçados, Roupas e Bolsas", icone: "https://cdn-icons-png.flaticon.com/512/3159/3159620.png" },
+        { id: "beleza", nome: "Beleza e Cuidado Pessoal", icone: "https://cdn-icons-png.flaticon.com/512/194/194931.png" },
+        { id: "informatica", nome: "Informática", icone: "https://cdn-icons-png.flaticon.com/512/2777/2777142.png" },
+        { id: "saude", nome: "Saúde", icone: "https://cdn-icons-png.flaticon.com/512/2966/2966327.png" },
+        { id: "veiculos", nome: "Acessórios para Veículos", icone: "https://cdn-icons-png.flaticon.com/512/741/741407.png" },
+        { id: "ferramentas", nome: "Ferramentas", icone: "https://cdn-icons-png.flaticon.com/512/2972/2972185.png" },
+        { id: "construcao", nome: "Construção", icone: "https://cdn-icons-png.flaticon.com/512/4333/4333639.png" },
+        { id: "industria", nome: "Indústria e Comércio", icone: "https://cdn-icons-png.flaticon.com/512/2897/2897850.png" },
+        { id: "celulares", nome: "Celulares e Telefones", icone: "https://cdn-icons-png.flaticon.com/512/2586/2586488.png" },
+        { id: "eletronicos_av", nome: "Eletrônicos, Áudio e Vídeo", icone: "https://cdn-icons-png.flaticon.com/512/3221/3221845.png" },
+        { id: "pet", nome: "Pet Shop", icone: "https://cdn-icons-png.flaticon.com/512/616/616408.png" },
+        { id: "bebes", nome: "Bebês", icone: "https://cdn-icons-png.flaticon.com/512/1043/1043231.png" },
+        { id: "brinquedos", nome: "Brinquedos e Hobbies", icone: "https://cdn-icons-png.flaticon.com/512/3082/3082060.png" },
+        { id: "joias", nome: "Joias e Relógios", icone: "https://cdn-icons-png.flaticon.com/512/2210/2210606.png" },
+        { id: "musica", nome: "Instrumentos Musicais", icone: "https://cdn-icons-png.flaticon.com/512/3221/3221845.png" },
+        { id: "arte", nome: "Arte, Papelaria e Armarinho", icone: "https://cdn-icons-png.flaticon.com/512/2232/2232688.png" },
+        { id: "games", nome: "Games", icone: "https://cdn-icons-png.flaticon.com/512/686/686589.png" },
+        { id: "livros", nome: "Livros, Revista e Comics", icone: "https://cdn-icons-png.flaticon.com/512/3389/3389081.png" },
+        { id: "cameras", nome: "Câmeras e Acessórios", icone: "https://cdn-icons-png.flaticon.com/512/685/685655.png" }
     ];
 
     function inicializar() {
         const container = document.getElementById('categorias-container');
+        const select = document.getElementById('import-target');
+
         configCategorias.forEach(cat => {
+            // Criar a caixa visual da categoria
             const div = document.createElement('div');
             div.className = 'categoria-box';
             div.innerHTML = `
-                <div class="categoria-header" id="header-${cat.id}">
+                <div class="categoria-header">
                     <img src="${cat.icone}"> ${cat.nome}
                 </div>
                 <table id="tabela-${cat.id}">
                     <thead>
-                        <tr><th>Nome do Produto</th><th>Preço</th><th>Link Mercado Livre</th><th style="width:50px">Ação</th></tr>
+                        <tr>
+                            <th style="width: 25%;">Nome do Produto</th>
+                            <th style="width: 10%;">Preço</th>
+                            <th style="width: 30%;">Link Imagem</th>
+                            <th style="width: 30%;">Link Mercado Livre</th>
+                            <th style="width: 5%;">Ação</th>
+                        </tr>
                     </thead>
                     <tbody></tbody>
                 </table>
-                <button onclick="adicionarLinha('${cat.id}')" style="margin: 10px; cursor:pointer">+ Adicionar</button>
+                <button class="btn btn-add-row" onclick="adicionarLinha('${cat.id}')">+ Adicionar Produto</button>
             `;
             container.appendChild(div);
+
+            // Adicionar ao seletor de importação
+            const opt = document.createElement('option');
+            opt.value = cat.id;
+            opt.textContent = cat.nome;
+            select.appendChild(opt);
         });
     }
 
-    function adicionarLinha(catId, nome="", preco="0,00", link="") {
+    function adicionarLinha(catId, nome="", preco="0,00", imagem="", link="") {
         const tbody = document.querySelector(`#tabela-${catId} tbody`);
         const row = tbody.insertRow();
         row.innerHTML = `
-            <td><input type="text" class="p-nome" value="${nome}"></td>
-            <td><input type="text" class="p-preco" value="${preco}"></td>
-            <td><input type="text" class="p-link" value="${link}"></td>
-            <td><button onclick="this.parentElement.parentElement.remove()" style="color:red">X</button></td>
+            <td><input type="text" class="p-nome" value="${nome}" placeholder="Ex: iPhone 15"></td>
+            <td><input type="text" class="p-preco" value="${preco}" placeholder="0,00"></td>
+            <td><input type="text" class="p-img" value="${imagem}" placeholder="Link .webp ou .jpg"></td>
+            <td><input type="text" class="p-link" value="${link}" placeholder="Link MLB"></td>
+            <td><button class="btn" style="background:none; color:red; cursor:pointer;" onclick="this.parentElement.parentElement.remove()">X</button></td>
         `;
     }
 
     function processarImportacao() {
         const input = document.getElementById('quick-import');
+        const target = document.getElementById('import-target').value;
         const linhas = input.value.split('\n');
+        
+        let contador = 0;
         linhas.forEach(linha => {
-            const cols = linha.split('\t');
+            const cols = linha.split('\t'); // Tabulação do Excel
             if(cols.length >= 2) {
-                adicionarLinha('expirando', cols[0], cols[1] || "0,00", cols[2] || "");
+                adicionarLinha(target, cols[0] || "", cols[1] || "0,00", cols[2] || "", cols[3] || "");
+                contador++;
             }
         });
-        input.value = "";
+        
+        if(contador > 0) {
+            alert(contador + " produtos importados para " + target);
+            input.value = "";
+        } else {
+            alert("Nada encontrado. Certifique-se de copiar as células do Excel.");
+        }
     }
 
     function gerarJSON() {
@@ -107,12 +153,15 @@
             let produtos = [];
 
             rows.forEach(row => {
-                produtos.push({
-                    "nome": row.querySelector(".p-nome").value,
-                    "preco": row.querySelector(".p-preco").value,
-                    "imagem": "https://http2.mlstatic.com/D_NQ_NP_2X_716412-MLA99524473372_122025-F.webp",
-                    "link": row.querySelector(".p-link").value
-                });
+                const nome = row.querySelector(".p-nome").value;
+                if(nome.trim() !== "") {
+                    produtos.push({
+                        "nome": nome,
+                        "preco": row.querySelector(".p-preco").value,
+                        "imagem": row.querySelector(".p-img").value || "https://picsum.photos/400",
+                        "link": row.querySelector(".p-link").value
+                    });
+                }
             });
 
             jsonFinal.categorias.push({
@@ -134,7 +183,7 @@
         const copyText = document.getElementById("json-output");
         copyText.select();
         document.execCommand("copy");
-        alert("JSON copiado com sucesso!");
+        alert("Código copiado! Agora vá no arquivo produtos.json do GitHub, apague tudo e cole este novo.");
     }
 
     window.onload = inicializar;
