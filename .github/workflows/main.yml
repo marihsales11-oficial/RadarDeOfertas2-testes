@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write # Garante explicitamente permissão de escrita
+  contents: write
 
 jobs:
   build:
@@ -16,7 +16,7 @@ jobs:
     - name: Checkout do código
       uses: actions/checkout@v4
       with:
-        fetch-depth: 0 # Pega o histórico completo para evitar erros de push
+        fetch-depth: 0
 
     - name: Configurar Python
       uses: actions/setup-python@v4
@@ -30,9 +30,19 @@ jobs:
       run: python Atualizar_precos.py
 
     - name: Salvar alteracoes no JSON
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        
         git add produtos.json
-        # Só faz o commit se houver mudanças reais
-        git diff --quiet && git diff --staged --quiet || (git commit -m "Auto: Atualizacao de precos" && git push)
+        
+        # Verifica se houve mudança real. Se não houve, ele apenas avisa e não dá erro.
+        if git diff --staged --quiet; then
+          echo "Nenhuma alteração de preço encontrada hoje."
+        else
+          git commit -m "Auto: Atualizacao de precos"
+          # Usa o token para garantir permissão de escrita no push
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+        fi
