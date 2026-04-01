@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciador Master - Radar de Ofertas</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        h1 { color: #1c1e21; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .categoria-box { border: 1px solid #ddd; margin-bottom: 20px; border-radius: 8px; overflow: hidden; }
+        .categoria-header { background: #f8f9fa; padding: 10px 15px; font-weight: bold; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #ddd; }
+        .categoria-header img { width: 24px; height: 24px; }
+        table { width: 100%; border-collapse: collapse; background: white; }
+        th, td { padding: 10px; border-bottom: 1px solid #eee; text-align: left; font-size: 13px; }
+        th { background: #fafafa; color: #666; text-transform: uppercase; font-size: 11px; }
+        input { width: 95%; padding: 6px; border: 1px solid #ccc; border-radius: 4px; }
+        .btn { padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .btn-gen { background: #007bff; color: white; width: 100%; font-size: 16px; margin-top: 20px; }
+        .btn-gen:hover { background: #0056b3; }
+        .btn-copy { background: #28a745; color: white; margin-top: 10px; }
+        textarea { width: 100%; height: 200px; margin-top: 15px; border-radius: 6px; border: 1px solid #ddd; font-family: monospace; background: #272822; color: white; padding: 15px; display: none; }
+        .csv-import { background: #e9ecef; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 2px dashed #adb5bd; text-align: center; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🚀 Radar de Ofertas - Painel de Controle</h1>
+
+    <div class="csv-import">
+        <strong>Importação Rápida:</strong> Cole linhas do Excel aqui (Nome [TAB] Preço [TAB] Link) para preencher a primeira categoria: <br><br>
+        <input type="text" id="quick-import" placeholder="Cole aqui os dados copiados do Excel..." style="width: 80%; height: 30px;">
+        <button class="btn" onclick="processarImportacao()" style="background: #6c757d; color: white;">Importar</button>
+    </div>
+
+    <div id="categorias-container">
+        </div>
+
+    <button class="btn btn-gen" onclick="gerarJSON()">GERAR ARQUIVO PRODUTOS.JSON PARA GITHUB</button>
+
+    <div id="resultado-area" style="display:none; text-align: center;">
+        <textarea id="json-output"></textarea>
+        <button class="btn btn-copy" onclick="copiarJSON()">Copiar JSON Pronto</button>
+        <p style="color: #666; font-size: 12px;">Agora é só ir no GitHub e colar por cima de tudo no arquivo produtos.json</p>
+    </div>
+</div>
+
+<script>
+    // Estrutura base das suas categorias
+    const configCategorias = [
+        { id: "expirando", nome: "⚡ Ofertas Expirando", icone: "https://cdn-icons-png.flaticon.com/512/744/744922.png" },
+        { id: "casa", nome: "Casa, Móveis e Decoração", icone: "https://img.icons8.com/fluency/96/home.png" },
+        { id: "informatica", nome: "Informática", icone: "https://cdn-icons-png.flaticon.com/512/2777/2777142.png" },
+        { id: "eletro", nome: "Eletrodomésticos", icone: "https://cdn-icons-png.flaticon.com/512/2850/2850931.png" },
+        { id: "celulares", nome: "Celulares e Telefones", icone: "https://cdn-icons-png.flaticon.com/512/2586/2586488.png" }
+    ];
+
+    function inicializar() {
+        const container = document.getElementById('categorias-container');
+        configCategorias.forEach(cat => {
+            const div = document.createElement('div');
+            div.className = 'categoria-box';
+            div.innerHTML = `
+                <div class="categoria-header" id="header-${cat.id}">
+                    <img src="${cat.icone}"> ${cat.nome}
+                </div>
+                <table id="tabela-${cat.id}">
+                    <thead>
+                        <tr><th>Nome do Produto</th><th>Preço</th><th>Link Mercado Livre</th><th style="width:50px">Ação</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <button onclick="adicionarLinha('${cat.id}')" style="margin: 10px; cursor:pointer">+ Adicionar</button>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function adicionarLinha(catId, nome="", preco="0,00", link="") {
+        const tbody = document.querySelector(`#tabela-${catId} tbody`);
+        const row = tbody.insertRow();
+        row.innerHTML = `
+            <td><input type="text" class="p-nome" value="${nome}"></td>
+            <td><input type="text" class="p-preco" value="${preco}"></td>
+            <td><input type="text" class="p-link" value="${link}"></td>
+            <td><button onclick="this.parentElement.parentElement.remove()" style="color:red">X</button></td>
+        `;
+    }
+
+    function processarImportacao() {
+        const input = document.getElementById('quick-import');
+        const linhas = input.value.split('\n');
+        linhas.forEach(linha => {
+            const cols = linha.split('\t');
+            if(cols.length >= 2) {
+                adicionarLinha('expirando', cols[0], cols[1] || "0,00", cols[2] || "");
+            }
+        });
+        input.value = "";
+    }
+
+    function gerarJSON() {
+        let jsonFinal = { "categorias": [] };
+
+        configCategorias.forEach(cat => {
+            const rows = document.querySelectorAll(`#tabela-${cat.id} tbody tr`);
+            let produtos = [];
+
+            rows.forEach(row => {
+                produtos.push({
+                    "nome": row.querySelector(".p-nome").value,
+                    "preco": row.querySelector(".p-preco").value,
+                    "imagem": "https://http2.mlstatic.com/D_NQ_NP_2X_716412-MLA99524473372_122025-F.webp",
+                    "link": row.querySelector(".p-link").value
+                });
+            });
+
+            jsonFinal.categorias.push({
+                "id": cat.id,
+                "nome": cat.nome,
+                "icone": cat.icone,
+                "produtos": produtos
+            });
+        });
+
+        const output = document.getElementById('json-output');
+        output.value = JSON.stringify(jsonFinal, null, 2);
+        output.style.display = 'block';
+        document.getElementById('resultado-area').style.display = 'block';
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function copiarJSON() {
+        const copyText = document.getElementById("json-output");
+        copyText.select();
+        document.execCommand("copy");
+        alert("JSON copiado com sucesso!");
+    }
+
+    window.onload = inicializar;
+</script>
+
+</body>
+</html>
