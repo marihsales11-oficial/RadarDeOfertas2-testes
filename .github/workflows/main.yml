@@ -36,11 +36,10 @@ jobs:
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
         git add produtos.json
-        if git diff --staged --quiet; then
-          echo "Sem alteracoes para salvar"
-        else
+        # Se houver mudanças, ele faz o commit e usa o "force" para não dar erro de histórico
+        if ! git diff --staged --quiet; then
           git commit -m "Auto: Atualizacao de precos"
-          # O comando abaixo sincroniza (pull) e depois envia (push)
-          git pull --rebase origin main
-          git push origin main
+          git push --force origin main
+        else
+          echo "Nenhuma mudanca detectada pelo Python"
         fi
