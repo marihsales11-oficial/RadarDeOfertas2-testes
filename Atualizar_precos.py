@@ -10,64 +10,65 @@ def extrair_id_ml(url):
         return f"MLB{match.group(1)}"
     return None
 
-def obter_preco_api(ml_id):
-    """Consulta a API simulando um navegador real para evitar o Erro 403"""
+def obter_preco_via_busca(ml_id):
+    """Busca o preço usando a API de pesquisa (mais difícil de bloquear)"""
     try:
-        url_api = f"https://api.mercadolibre.com/items/{ml_id}"
+        # Usamos a API de busca pelo ID do item, que é mais aberta
+        url_busca = f"https://api.mercadolibre.com/sites/MLB/search?q={ml_id}"
         
-        # Cabeçalhos mágicos para convencer o ML que somos um humano
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
-            'Accept': 'application/json',
-            'Accept-Language': 'pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7',
-            'Referer': 'https://www.mercadolivre.com.br/',
-            'Origin': 'https://www.mercadolivre.com.br'
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/123.0.0.0 Safari/537.36'
         }
         
-        response = requests.get(url_api, headers=headers, timeout=20)
+        response = requests.get(url_busca, headers=headers, timeout=20)
         
         if response.status_code == 200:
             dados = response.json()
-            preco = dados.get('price')
-            if preco is not None:
-                return f"{float(preco):,.2f}".replace('.', 'X').replace(',', '.').replace('X', ',')
+            # A API de busca retorna uma lista de resultados
+            if dados.get('results'):
+                item = dados['results'][0]
+                preco = item.get('price')
+                if preco:
+                    # Formata para o padrão 650,32
+                    return f"{float(preco):,.2f}".replace('.', 'X').replace(',', '.').replace('X', ',')
         
-        print(f"   ⚠️ API negou acesso (Status {response.status_code}) para {ml_id}")
+        print(f"   ⚠️ Falha na busca para {ml_id}. Status: {response.status_code}")
     except Exception as e:
-        print(f"   ❌ Erro na conexão: {e}")
+        print(f"   ❌ Erro técnico: {e}")
     return None
 
 def processar_json():
     caminho_json = 'produtos.json'
-    if not os.path.exists(caminho_json):
-        print("❌ Arquivo não encontrado!")
-        return
+    if not os.path.exists(caminho_json): return
 
     with open(caminho_json, 'r', encoding='utf-8') as f:
         data = json.load(f)
 
     houve_alteracao = False
-    print(f"🚀 Iniciando Radar para {len(data['categorias'])} categorias")
+    print(f"🚀 RADAR: Tentando contornar bloqueio 403...")
 
     for categoria in data.get('categorias', []):
         for produto in categoria.get('produtos', []):
             ml_id = extrair_id_ml(produto.get('link', ''))
             if ml_id:
-                print(f"🔎 Analisando {ml_id}...")
-                novo_preco = obter_preco_api(ml_id)
+                print(f"🔎 Buscando item {ml_id}...")
+                novo_preco = obter_preco_via_busca(ml_id)
+                
                 if novo_preco:
                     if produto['preco'] != novo_preco:
-                        print(f"   ✅ Novo preço encontrado: {novo_preco}")
+                        print(f"   ✅ PREÇO ENCONTRADO: {novo_preco}")
                         produto['preco'] = novo_preco
                         houve_alteracao = True
-                time.sleep(2) # Pausa maior para não parecer robô
+                    else:
+                        print(f"   ✨ Preço já atualizado.")
+                time.sleep(3) # Pausa maior para segurança
 
     if houve_alteracao:
         with open(caminho_json, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
-        print("💾 MUDANÇAS SALVAS!")
+        print("💾 ARQUIVO ATUALIZADO!")
     else:
-        print("ℹ️ NADA MUDOU")
+        print("ℹ️ NADA FOI ALTERADO.")
 
 if __name__ == "__main__":
     processar_json()
