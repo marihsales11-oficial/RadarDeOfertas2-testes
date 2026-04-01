@@ -2,9 +2,11 @@ name: Atualizar Precos Diariamente
 
 on:
   schedule:
-    # Roda todos os dias às 09:00 UTC (06:00 no horário de Brasília)
     - cron: '0 9 * * *'
-  workflow_dispatch: # Permite que você clique no botão "Run workflow" para testar
+  workflow_dispatch:
+
+permissions:
+  contents: write # Garante explicitamente permissão de escrita
 
 jobs:
   build:
@@ -12,9 +14,9 @@ jobs:
 
     steps:
     - name: Checkout do código
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
-        persist-credentials: true # Mantém as credenciais para o Push
+        fetch-depth: 0 # Pega o histórico completo para evitar erros de push
 
     - name: Configurar Python
       uses: actions/setup-python@v4
@@ -28,19 +30,9 @@ jobs:
       run: python Atualizar_precos.py
 
     - name: Salvar alteracoes no JSON
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        # Configura a identidade do robô que fará o commit
-        git config --global user.name 'GitHub Action'
-        git config --global user.email 'action@github.com'
-        
-        # Adiciona o arquivo modificado
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
         git add produtos.json
-        
-        # Tenta fazer o commit, mas não trava se não houver mudanças
-        git commit -m "Auto: Atualizacao de precos (com centavos)" || echo "Sem alteracoes para salvar"
-        
-        # Usa o Token de segurança para autorizar o envio (Push) de volta ao repositório
-        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-        git push
+        # Só faz o commit se houver mudanças reais
+        git diff --quiet && git diff --staged --quiet || (git commit -m "Auto: Atualizacao de precos" && git push origin main)
