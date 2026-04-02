@@ -2,10 +2,10 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Painel Master - Radar de Ofertas</title>
+    <title>Painel Admin - Radar de Ofertas</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
-        .container { max-width: 1300px; margin: 0 auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .container { max-width: 1400px; margin: 0 auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         h1 { color: #1c1e21; border-bottom: 2px solid #eee; padding-bottom: 10px; text-align: center; }
         .categoria-box { border: 1px solid #ddd; margin-bottom: 25px; border-radius: 8px; overflow: hidden; background: #fff; }
         .categoria-header { background: #f8f9fa; padding: 12px 15px; font-weight: bold; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #ddd; font-size: 18px; }
@@ -25,30 +25,28 @@
 <body>
 
 <div class="container">
-    <h1>🚀 Radar de Ofertas - Painel Administrativo</h1>
+    <h1>🚀 Radar de Ofertas - Gerenciador de Produtos</h1>
 
     <div class="import-area">
-        <strong>Importação Rápida (Excel):</strong> Cole aqui: Nome [TAB] Preço [TAB] Link Imagem [TAB] Link Produto <br><br>
-        <input type="text" id="quick-import" placeholder="Cole aqui os dados copiados do Excel..." style="width: 70%; margin-bottom: 10px;">
+        <strong>Importação Rápida (Excel):</strong> Nome [TAB] Descrição [TAB] Link Imagem [TAB] Link MLB <br><br>
+        <input type="text" id="quick-import" placeholder="Cole aqui as colunas copiadas do Excel..." style="width: 70%; margin-bottom: 10px;">
         <select id="import-target">
             </select>
-        <button class="btn" onclick="processarImportacao()" style="background: #17a2b8; color: white;">Importar para Categoria</button>
+        <button class="btn" onclick="processarImportacao()" style="background: #17a2b8; color: white;">Importar</button>
     </div>
 
-    <div id="categorias-container">
-        </div>
+    <div id="categorias-container"></div>
 
-    <button class="btn btn-gen" onclick="gerarJSON()">GERAR produtos.json COMPLETO</button>
+    <button class="btn btn-gen" onclick="gerarJSON()">GERAR produtos.json FINAL</button>
 
     <div id="resultado-area" style="display:none;">
-        <h3 style="text-align: center; color: #28a745;">✅ JSON Gerado com Sucesso!</h3>
+        <h3 style="text-align: center; color: #28a745;">✅ JSON Criado! Copie e cole no GitHub.</h3>
         <textarea id="json-output" readonly></textarea>
-        <button class="btn btn-copy" onclick="copiarJSON()">Copiar Código e ir para o GitHub</button>
+        <button class="btn btn-copy" onclick="copiarJSON()">Copiar e Abrir GitHub</button>
     </div>
 </div>
 
 <script>
-    // LISTA COMPLETA DAS 23 CATEGORIAS DO SEU ARQUIVO ORIGINAL
     const configCategorias = [
         { id: "expirando", nome: "⚡ Ofertas Expirando", icone: "https://cdn-icons-png.flaticon.com/512/744/744922.png" },
         { id: "casa", nome: "Casa, Móveis e Decoração", icone: "https://img.icons8.com/fluency/96/home.png" },
@@ -78,116 +76,74 @@
     function inicializar() {
         const container = document.getElementById('categorias-container');
         const select = document.getElementById('import-target');
-
         configCategorias.forEach(cat => {
-            // Criar a caixa visual da categoria
             const div = document.createElement('div');
             div.className = 'categoria-box';
-            div.innerHTML = `
-                <div class="categoria-header">
-                    <img src="${cat.icone}"> ${cat.nome}
-                </div>
+            div.innerHTML = `<div class="categoria-header"><img src="${cat.icone}"> ${cat.nome}</div>
                 <table id="tabela-${cat.id}">
-                    <thead>
-                        <tr>
-                            <th style="width: 25%;">Nome do Produto</th>
-                            <th style="width: 10%;">Preço</th>
-                            <th style="width: 30%;">Link Imagem</th>
-                            <th style="width: 30%;">Link Mercado Livre</th>
-                            <th style="width: 5%;">Ação</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th style="width:25%">Nome</th><th style="width:25%">Descrição</th><th style="width:20%">Link Imagem</th><th style="width:25%">Link MLB</th><th style="width:5%">Ação</th></tr></thead>
                     <tbody></tbody>
                 </table>
-                <button class="btn btn-add-row" onclick="adicionarLinha('${cat.id}')">+ Adicionar Produto</button>
-            `;
+                <button class="btn btn-add-row" onclick="adicionarLinha('${cat.id}')">+ Produto</button>`;
             container.appendChild(div);
-
-            // Adicionar ao seletor de importação
             const opt = document.createElement('option');
-            opt.value = cat.id;
-            opt.textContent = cat.nome;
-            select.appendChild(opt);
+            opt.value = cat.id; opt.textContent = cat.nome; select.appendChild(opt);
         });
     }
 
-    function adicionarLinha(catId, nome="", preco="0,00", imagem="", link="") {
+    function adicionarLinha(catId, nome="", desc="", img="", link="") {
         const tbody = document.querySelector(`#tabela-${catId} tbody`);
         const row = tbody.insertRow();
-        row.innerHTML = `
-            <td><input type="text" class="p-nome" value="${nome}" placeholder="Ex: iPhone 15"></td>
-            <td><input type="text" class="p-preco" value="${preco}" placeholder="0,00"></td>
-            <td><input type="text" class="p-img" value="${imagem}" placeholder="Link .webp ou .jpg"></td>
-            <td><input type="text" class="p-link" value="${link}" placeholder="Link MLB"></td>
-            <td><button class="btn" style="background:none; color:red; cursor:pointer;" onclick="this.parentElement.parentElement.remove()">X</button></td>
-        `;
+        row.innerHTML = `<td><input type="text" class="p-nome" value="${nome}"></td>
+            <td><input type="text" class="p-desc" value="${desc}"></td>
+            <td><input type="text" class="p-img" value="${img}"></td>
+            <td><input type="text" class="p-link" value="${link}"></td>
+            <td><button class="btn" style="background:none;color:red" onclick="this.parentElement.parentElement.remove()">X</button></td>`;
     }
 
     function processarImportacao() {
         const input = document.getElementById('quick-import');
         const target = document.getElementById('import-target').value;
         const linhas = input.value.split('\n');
-        
-        let contador = 0;
         linhas.forEach(linha => {
-            const cols = linha.split('\t'); // Tabulação do Excel
-            if(cols.length >= 2) {
-                adicionarLinha(target, cols[0] || "", cols[1] || "0,00", cols[2] || "", cols[3] || "");
-                contador++;
-            }
+            const cols = linha.split('\t');
+            if(cols.length >= 2) adicionarLinha(target, cols[0]||"", cols[1]||"", cols[2]||"", cols[3]||"");
         });
-        
-        if(contador > 0) {
-            alert(contador + " produtos importados para " + target);
-            input.value = "";
-        } else {
-            alert("Nada encontrado. Certifique-se de copiar as células do Excel.");
-        }
+        input.value = "";
     }
 
     function gerarJSON() {
         let jsonFinal = { "categorias": [] };
-
         configCategorias.forEach(cat => {
             const rows = document.querySelectorAll(`#tabela-${cat.id} tbody tr`);
             let produtos = [];
-
             rows.forEach(row => {
                 const nome = row.querySelector(".p-nome").value;
                 if(nome.trim() !== "") {
                     produtos.push({
                         "nome": nome,
-                        "preco": row.querySelector(".p-preco").value,
+                        "descricao": row.querySelector(".p-desc").value,
+                        "preco": "0,00", // O Python atualizará isso depois
                         "imagem": row.querySelector(".p-img").value || "https://picsum.photos/400",
                         "link": row.querySelector(".p-link").value
                     });
                 }
             });
-
-            jsonFinal.categorias.push({
-                "id": cat.id,
-                "nome": cat.nome,
-                "icone": cat.icone,
-                "produtos": produtos
-            });
+            jsonFinal.categorias.push({ "id": cat.id, "nome": cat.nome, "icone": cat.icone, "produtos": produtos });
         });
-
-        const output = document.getElementById('json-output');
-        output.value = JSON.stringify(jsonFinal, null, 2);
-        output.style.display = 'block';
+        const out = document.getElementById('json-output');
+        out.value = JSON.stringify(jsonFinal, null, 2);
+        out.style.display = 'block';
         document.getElementById('resultado-area').style.display = 'block';
         window.scrollTo(0, document.body.scrollHeight);
     }
 
     function copiarJSON() {
-        const copyText = document.getElementById("json-output");
-        copyText.select();
+        document.getElementById("json-output").select();
         document.execCommand("copy");
-        alert("Código copiado! Agora vá no arquivo produtos.json do GitHub, apague tudo e cole este novo.");
+        alert("Copiado! Agora cole no GitHub.");
     }
-
     window.onload = inicializar;
 </script>
-
 </body>
 </html>
