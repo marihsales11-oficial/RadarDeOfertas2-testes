@@ -6,29 +6,41 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 20px; }
-        .container { max-width: 900px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .drop-zone { border: 3px dashed #007bff; padding: 40px; text-align: center; border-radius: 12px; cursor: pointer; background: #f8f9fa; margin-bottom: 20px; }
-        .btn-gen { background: #007bff; color: white; width: 100%; padding: 15px; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; font-weight: bold; }
-        textarea { width: 100%; height: 200px; margin-top: 20px; display: none; background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 8px; }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .drop-zone { border: 3px dashed #007bff; padding: 40px; text-align: center; border-radius: 12px; cursor: pointer; background: #f8f9fa; margin-bottom: 20px; transition: 0.3s; }
+        .drop-zone.active { background: #e7f3ff; border-color: #0056b3; }
+        #status-container { margin-bottom: 20px; padding: 15px; border-radius: 8px; background: #e9ecef; display: none; }
+        .aba-check { display: inline-block; background: #fff; padding: 5px 10px; margin: 5px; border-radius: 20px; font-size: 12px; border: 1px solid #ddd; }
+        .btn-gen { background: #007bff; color: white; width: 100%; padding: 15px; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; font-weight: bold; margin-bottom: 10px; }
+        .btn-copy { background: #28a745; color: white; width: 100%; padding: 12px; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: bold; display: none; }
+        textarea { width: 100%; height: 250px; margin-top: 15px; display: none; background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 8px; font-family: monospace; border: none; }
+        h3 { margin-bottom: 10px; font-size: 16px; color: #333; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h1>🚀 Radar de Ofertas - Importador de Links</h1>
-    <p>Arraste seu Excel (coluna A com links) para criar o arquivo base.</p>
+    <p>Arraste seu Excel (.xlsx) para ler todas as categorias automaticamente.</p>
 
     <div class="drop-zone" id="drop-zone">
-        <strong>Arraste seu arquivo .xlsx aqui</strong>
+        <strong>Clique ou Arraste o arquivo do Excel aqui</strong>
         <input type="file" id="file-input" style="display: none;" accept=".xlsx">
     </div>
 
+    <div id="status-container">
+        <h3>📊 Resumo da Planilha:</h3>
+        <div id="abas-encontradas"></div>
+    </div>
+
     <button class="btn-gen" id="btn-processar" style="display: none;" onclick="gerarJSON()">1. GERAR JSON BASE</button>
-    <textarea id="json-output" readonly></textarea>
+    
+    <textarea id="json-output" readonly placeholder="O código JSON aparecerá aqui..."></textarea>
+    <button class="btn-copy" id="btn-copy" onclick="copiarJSON()">📋 COPIAR JSON PARA O GITHUB</button>
 </div>
 
 <script>
-    let workbook = null;
+    let workbookData = null;
     const categoriasBase = [
         { id: "expirando", nome: "⚡ Ofertas Expirando", icone: "https://cdn-icons-png.flaticon.com/512/744/744922.png" },
         { id: "casa", nome: "Casa, Móveis e Decoração", icone: "https://img.icons8.com/fluency/96/home.png" },
@@ -57,38 +69,78 @@
 
     const dropZone = document.getElementById('drop-zone');
     const fileInput = document.getElementById('file-input');
+    const statusContainer = document.getElementById('status-container');
+    const abasDiv = document.getElementById('abas-encontradas');
 
     dropZone.onclick = () => fileInput.click();
-    fileInput.onchange = (e) => {
+
+    fileInput.onchange = (e) => handleFile(e.target.files[0]);
+
+    function handleFile(file) {
+        if (!file) return;
         const reader = new FileReader();
         reader.onload = (ev) => {
             const data = new Uint8Array(ev.target.result);
-            workbook = XLSX.read(data, {type: 'array'});
+            workbookData = XLSX.read(data, {type: 'array'});
+            
+            // Exibir resumo das abas lidas
+            statusContainer.style.display = 'block';
+            abasDiv.innerHTML = "";
+            workbookData.SheetNames.forEach(name => {
+                const sheet = workbookData.Sheets[name];
+                const rows = XLSX.utils.sheet_to_json(sheet, {header: 1});
+                const count = rows.length > 0 ? rows.length - 1 : 0;
+                abasDiv.innerHTML += `<span class="aba-check">✅ ${name} (${count} links)</span>`;
+            });
+
             document.getElementById('btn-processar').style.display = 'block';
-            alert("Excel carregado!");
+            dropZone.classList.add('active');
+            dropZone.innerHTML = `<strong>🟢 Arquivo "${file.name}" carregado!</strong>`;
         };
-        reader.readAsArrayBuffer(e.target.files[0]);
-    };
+        reader.readAsArrayBuffer(file);
+    }
 
     function gerarJSON() {
-        let final = { "categorias": [] };
+        if (!workbookData) return;
+        let finalJson = { "categorias": [] };
+
         categoriasBase.forEach(cat => {
+            const sheet = workbookData.Sheets[cat.nome];
             let produtos = [];
-            const sheet = workbook.Sheets[cat.nome];
-            if(sheet) {
+            if (sheet) {
                 const rows = XLSX.utils.sheet_to_json(sheet, {header: 1});
                 rows.forEach((r, i) => {
-                    if(i > 0 && r[0]) { // Coluna A
-                        produtos.push({ "nome": "Carregando...", "preco": "0,00", "imagem": "", "link": r[0] });
+                    if (i > 0 && r[0]) { // Coluna A, ignora cabeçalho
+                        produtos.push({
+                            "nome": "Carregando...",
+                            "preco": "0,00",
+                            "imagem": "",
+                            "link": String(r[0]).trim()
+                        });
                     }
                 });
             }
-            final.categorias.push({ "id": cat.id, "nome": cat.nome, "icone": cat.icone, "produtos": produtos });
+            finalJson.categorias.push({
+                "id": cat.id,
+                "nome": cat.nome,
+                "icone": cat.icone,
+                "produtos": produtos
+            });
         });
-        const out = document.getElementById('json-output');
-        out.value = JSON.stringify(final, null, 2);
-        out.style.display = 'block';
-        alert("JSON Base gerado! Salve como produtos.json e rode o Python.");
+
+        const output = document.getElementById('json-output');
+        const btnCopy = document.getElementById('btn-copy');
+        output.value = JSON.stringify(finalJson, null, 2);
+        output.style.display = 'block';
+        btnCopy.style.display = 'block';
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function copiarJSON() {
+        const output = document.getElementById('json-output');
+        output.select();
+        document.execCommand('copy');
+        alert("JSON copiado! Agora salve no arquivo produtos.json e rode o Python.");
     }
 </script>
 </body>
