@@ -8,35 +8,53 @@
         body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 20px; }
         .container { max-width: 900px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .drop-zone { border: 3px dashed #007bff; padding: 40px; text-align: center; border-radius: 12px; cursor: pointer; background: #f8f9fa; margin-bottom: 20px; transition: 0.3s; }
-        .drop-zone.active { background: #e7f3ff; border-color: #0056b3; }
-        #status-container { margin-bottom: 20px; padding: 15px; border-radius: 8px; background: #e9ecef; display: none; }
-        .aba-check { display: inline-block; background: #fff; padding: 5px 10px; margin: 5px; border-radius: 20px; font-size: 12px; border: 1px solid #ddd; }
+        .drop-zone.active { background: #e7f3ff; border-color: #0056b3; border-style: solid; }
+        
+        /* Painel de Estatísticas */
+        .stats-panel { display: none; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .stat-card { background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 5px solid #007bff; }
+        .stat-card h4 { margin: 0; font-size: 12px; color: #666; text-transform: uppercase; }
+        .stat-card span { font-size: 24px; font-weight: bold; color: #333; }
+
+        #status-details { margin-bottom: 20px; padding: 15px; border-radius: 8px; background: #fff; border: 1px solid #eee; display: none; }
+        .aba-badge { display: inline-block; background: #e9ecef; padding: 6px 12px; margin: 4px; border-radius: 6px; font-size: 13px; color: #444; border: 1px solid #dee2e6; }
+        .aba-badge b { color: #007bff; }
+
         .btn-gen { background: #007bff; color: white; width: 100%; padding: 15px; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; font-weight: bold; margin-bottom: 10px; }
         .btn-copy { background: #28a745; color: white; width: 100%; padding: 12px; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: bold; display: none; }
-        textarea { width: 100%; height: 250px; margin-top: 15px; display: none; background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 8px; font-family: monospace; border: none; }
-        h3 { margin-bottom: 10px; font-size: 16px; color: #333; }
+        textarea { width: 100%; height: 250px; margin-top: 15px; display: none; background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 8px; font-family: monospace; border: none; box-sizing: border-box; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>🚀 Radar de Ofertas - Importador de Links</h1>
-    <p>Arraste seu Excel (.xlsx) para ler todas as categorias automaticamente.</p>
-
+    <h1>🚀 Radar de Ofertas - Importador Inteligente</h1>
+    
     <div class="drop-zone" id="drop-zone">
-        <strong>Clique ou Arraste o arquivo do Excel aqui</strong>
+        <strong>Clique ou Arraste seu arquivo .xlsx aqui</strong>
         <input type="file" id="file-input" style="display: none;" accept=".xlsx">
     </div>
 
-    <div id="status-container">
-        <h3>📊 Resumo da Planilha:</h3>
-        <div id="abas-encontradas"></div>
+    <div class="stats-panel" id="stats-panel">
+        <div class="stat-card">
+            <h4>Categorias Identificadas</h4>
+            <span id="stat-cat">0</span>
+        </div>
+        <div class="stat-card">
+            <h4>Total de Links (Produtos)</h4>
+            <span id="stat-links">0</span>
+        </div>
     </div>
 
-    <button class="btn-gen" id="btn-processar" style="display: none;" onclick="gerarJSON()">1. GERAR JSON BASE</button>
+    <div id="status-details">
+        <h3 style="margin: 0 0 10px 0; font-size: 14px;">📂 Detalhes por Aba:</h3>
+        <div id="abas-lista"></div>
+    </div>
+
+    <button class="btn-gen" id="btn-processar" style="display: none;" onclick="gerarJSON()">1. GERAR JSON PARA O PYTHON</button>
     
-    <textarea id="json-output" readonly placeholder="O código JSON aparecerá aqui..."></textarea>
-    <button class="btn-copy" id="btn-copy" onclick="copiarJSON()">📋 COPIAR JSON PARA O GITHUB</button>
+    <textarea id="json-output" readonly></textarea>
+    <button class="btn-copy" id="btn-copy" onclick="copiarJSON()">📋 COPIAR JSON PRONTO</button>
 </div>
 
 <script>
@@ -69,35 +87,50 @@
 
     const dropZone = document.getElementById('drop-zone');
     const fileInput = document.getElementById('file-input');
-    const statusContainer = document.getElementById('status-container');
-    const abasDiv = document.getElementById('abas-encontradas');
 
     dropZone.onclick = () => fileInput.click();
 
-    fileInput.onchange = (e) => handleFile(e.target.files[0]);
-
-    function handleFile(file) {
+    fileInput.onchange = (e) => {
+        const file = e.target.files[0];
         if (!file) return;
+        
         const reader = new FileReader();
         reader.onload = (ev) => {
             const data = new Uint8Array(ev.target.result);
             workbookData = XLSX.read(data, {type: 'array'});
             
-            // Exibir resumo das abas lidas
-            statusContainer.style.display = 'block';
-            abasDiv.innerHTML = "";
-            workbookData.SheetNames.forEach(name => {
-                const sheet = workbookData.Sheets[name];
-                const rows = XLSX.utils.sheet_to_json(sheet, {header: 1});
-                const count = rows.length > 0 ? rows.length - 1 : 0;
-                abasDiv.innerHTML += `<span class="aba-check">✅ ${name} (${count} links)</span>`;
-            });
-
+            processarEstatisticas();
+            
             document.getElementById('btn-processar').style.display = 'block';
             dropZone.classList.add('active');
-            dropZone.innerHTML = `<strong>🟢 Arquivo "${file.name}" carregado!</strong>`;
+            dropZone.innerHTML = `<strong>✅ Planilha "${file.name}" Carregada!</strong>`;
         };
         reader.readAsArrayBuffer(file);
+    };
+
+    function processarEstatisticas() {
+        let totalCategorias = 0;
+        let totalLinks = 0;
+        const listaDiv = document.getElementById('abas-lista');
+        listaDiv.innerHTML = "";
+
+        categoriasBase.forEach(cat => {
+            const sheet = workbookData.Sheets[cat.nome];
+            if (sheet) {
+                const rows = XLSX.utils.sheet_to_json(sheet, {header: 1});
+                const count = rows.length > 0 ? rows.length - 1 : 0;
+                if(count >= 0) {
+                    totalCategorias++;
+                    totalLinks += count;
+                    listaDiv.innerHTML += `<span class="aba-badge">${cat.nome}: <b>${count} itens</b></span>`;
+                }
+            }
+        });
+
+        document.getElementById('stat-cat').innerText = totalCategorias;
+        document.getElementById('stat-links').innerText = totalLinks;
+        document.getElementById('stats-panel').style.display = 'grid';
+        document.getElementById('status-details').style.display = 'block';
     }
 
     function gerarJSON() {
@@ -110,7 +143,7 @@
             if (sheet) {
                 const rows = XLSX.utils.sheet_to_json(sheet, {header: 1});
                 rows.forEach((r, i) => {
-                    if (i > 0 && r[0]) { // Coluna A, ignora cabeçalho
+                    if (i > 0 && r[0]) {
                         produtos.push({
                             "nome": "Carregando...",
                             "preco": "0,00",
@@ -129,18 +162,17 @@
         });
 
         const output = document.getElementById('json-output');
-        const btnCopy = document.getElementById('btn-copy');
         output.value = JSON.stringify(finalJson, null, 2);
         output.style.display = 'block';
-        btnCopy.style.display = 'block';
+        document.getElementById('btn-copy').style.display = 'block';
         window.scrollTo(0, document.body.scrollHeight);
     }
 
     function copiarJSON() {
-        const output = document.getElementById('json-output');
-        output.select();
+        const out = document.getElementById('json-output');
+        out.select();
         document.execCommand('copy');
-        alert("JSON copiado! Agora salve no arquivo produtos.json e rode o Python.");
+        alert("JSON copiado! Salve como produtos.json e execute o script Python para preencher os dados.");
     }
 </script>
 </body>
