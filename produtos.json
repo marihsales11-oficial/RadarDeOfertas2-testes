@@ -6,64 +6,46 @@
       "icone": "https://cdn-icons-png.flaticon.com/512/744/744922.png",
       "produtos": [
         {
-          "nome": "Samsung Galaxy A06 5g Dual Sim 128gb preto",
+          "nome": "Samsung Galaxy A06 5g Dual Sim 128gb preto - R$ 739",
           "preco": "650,32",
-          "imagem": "https://http2.mlstatic.com/D_NQ_NP_2X_716412-MLA99524473372_122025-F.webp",
+          "imagem": "https://http2.mlstatic.com/D_NQ_NP_716412-MLA99524473372_122025-O.jpg",
           "link": "https://www.mercadolivre.com.br/samsung-galaxy-a06-5g-dual-sim-128gb-preto/p/MLB48946861?matt_event_ts=1774990413319&matt_d2id=88608949-47f4-49ac-bb16-c4d2742efa77&matt_tracing_id=19b26564-b8fc-4473-b64f-13031622f376"
         },
         {
-          "nome": "Fritadeira Sem Óleo Air Fryer 4L",
-          "preco": "389,90",
-          "imagem": "https://picsum.photos/400?random=2",
-          "link": "https://www.mercadolivre.com.br"
+          "nome": "Cadeira Gamer Wells Preta Healer - R$ 491,44",
+          "preco": "417,72",
+          "imagem": "https://http2.mlstatic.com/D_NQ_NP_859282-MLA105409191484_012026-O.jpg",
+          "link": "https://www.mercadolivre.com.br/cadeira-gamer-wells-preta-healer/p/MLB36731815?pdp_filters=item_id%3AMLB5336467540#polycard_client=affiliates&wid=MLB5336467540&sid=affiliates"
         },
         {
-          "nome": "Smartphone 128GB 5G Câmera Tripla",
-          "preco": "1.450,00",
-          "imagem": "https://picsum.photos/400?random=3",
-          "link": "https://www.mercadolivre.com.br"
+          "nome": "Creatina Monohidratada Pura 600g Dark Lab Unidade - R$ 59,9",
+          "preco": "59,90",
+          "imagem": "https://http2.mlstatic.com/D_NQ_NP_985655-MLA99931910179_112025-O.jpg",
+          "link": "https://www.mercadolivre.com.br/creatina-monohidratada-pura-600g-dark-lab-unidade/p/MLB39089853?pdp_filters=item_id%3AMLB3807070759#polycard_client=affiliates&wid=MLB3807070759&sid=affiliates"
         },
         {
-          "nome": "Cadeira Gamer Reclinável Ergonômica",
-          "preco": "890,00",
-          "imagem": "https://picsum.photos/400?random=4",
-          "link": "https://www.mercadolivre.com.br"
+          "nome": "Monitor PC Gamer LG 27” IPS, Full HD, 100Hz, HDMI - 27MS500-B - R$ 715,95",
+          "preco": "644,35",
+          "imagem": "https://http2.mlstatic.com/D_NQ_NP_762062-MLA99992079481_112025-O.jpg",
+          "link": "https://www.mercadolivre.com.br/monitor-pc-gamer-lg-27-ips-full-hd-100hz-hdmi-27ms500-b/p/MLB41863403?pdp_filters=item_id%3AMLB3935468727#polycard_client=affiliates&wid=MLB3935468727&sid=affiliates"
         },
         {
-          "nome": "Fone de Ouvido Bluetooth Noise Cancelling",
-          "preco": "199,00",
-          "imagem": "https://picsum.photos/400?random=5",
-          "link": "https://www.mercadolivre.com.br"
+          "nome": "Mini Projetor Hy300 Android 4k Portátil Wi-fi Bluetooth Hdmi Usb Cinema Em Casa Compacto Alta Resolução Full Hd Smart Projetor Davely Celular Notebook Games Apresentação - R$ 179,9",
+          "preco": "179,90",
+          "imagem": "https://http2.mlstatic.com/D_NQ_NP_902043-MLA96988011016_112025-O.jpg",
+          "link": "https://www.mercadolivre.com.br/mini-projetor-hy300-android-4k-portatil-wi-fi-bluetooth-hdmi-usb-cinema-em-casa-compacto-alta-resoluco-full-hd-smart-projetor-davely-celular-notebook-games-apresentaco/p/MLB48955624?pdp_filters=item_id%3AMLB4275712681#polycard_client=affiliates&wid=MLB4275712681&sid=affiliates"
         },
         {
-          "nome": "Fone de Ouvido Bluetooth Noise Cancelling",
-          "preco": "199,00",
-          "imagem": "https://picsum.photos/400?random=5",
-          "link": "https://www.mercadolivre.com.br"
+          "nome": "Smart Tv Samsung U8100f Crystal Uhd 4k 2025 43 Preto - R$ 1.955,44",
+          "preco": "1955,44",
+          "imagem": "https://http2.mlstatic.com/D_NQ_NP_648933-MLA99498284868_112025-O.jpg",
+          "link": "https://www.mercadolivre.com.br/smart-tv-samsung-u8100f-crystal-uhd-4k-2025-43-preto/p/MLB49740322?pdp_filters=item_id%3AMLB4083301139#polycard_client=affiliates&wid=MLB4083301139&sid=affiliates"
         },
         {
-          "nome": "Fone de Ouvido Bluetooth Noise Cancelling",
-          "preco": "199,00",
-          "imagem": "https://picsum.photos/400?random=5",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Fone de Ouvido Bluetooth Noise Cancelling",
-          "preco": "199,00",
-          "imagem": "https://picsum.photos/400?random=5",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Fone de Ouvido Bluetooth Noise Cancelling",
-          "preco": "199,00",
-          "imagem": "https://picsum.photos/400?random=5",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Relógio Inteligente Smartwatch Sport",
-          "preco": "245,00",
-          "imagem": "https://picsum.photos/400?random=6",
-          "link": "https://www.mercadolivre.com.br"
+          "nome": "Smart Tv 50 Aoc 4k Dled 50u7045/78g Roku Tv Quad - R$ 1.999",
+          "preco": "1859,07",
+          "imagem": "https://http2.mlstatic.com/D_NQ_NP_648316-MLA99473453820_112025-O.jpg",
+          "link": "https://www.mercadolivre.com.br/smart-tv-50-aoc-4k-dled-50u704578g-roku-tv-quad/p/MLB51202548?pdp_filters=item_id%3AMLB5435958784#polycard_client=affiliates&wid=MLB5435958784&sid=affiliates"
         }
       ]
     },
@@ -71,474 +53,67 @@
       "id": "casa",
       "nome": "Casa, Móveis e Decoração",
       "icone": "https://img.icons8.com/fluency/96/home.png",
-      "produtos": [
-        {
-          "nome": "Sofá 3 Lugares Retrátil Veludo",
-          "preco": "1.200,00",
-          "imagem": "https://picsum.photos/400?random=7",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Mesa de Jantar 4 Cadeiras Madeira",
-          "preco": "850,00",
-          "imagem": "https://picsum.photos/400?random=8",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Guarda Roupa Casal 6 Portas",
-          "preco": "1.100,00",
-          "imagem": "https://picsum.photos/400?random=9",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Conjunto de Panelas Cerâmica 5pçs",
-          "preco": "299,00",
-          "imagem": "https://picsum.photos/400?random=10",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Luminária de Chão Moderna Black",
-          "preco": "180,00",
-          "imagem": "https://picsum.photos/400?random=11",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Tapete Sala Geométrico 2.0x1.5",
-          "preco": "220,00",
-          "imagem": "https://picsum.photos/400?random=12",
-          "link": "https://www.mercadolivre.com.br"
-        }
-      ]
+      "produtos": []
     },
     {
       "id": "esportes",
       "nome": "Esportes e Fitness",
       "icone": "https://cdn-icons-png.flaticon.com/512/857/857455.png",
-      "produtos": [
-        {
-          "nome": "Bicicleta Aro 29 Alumínio 21v",
-          "preco": "1.390,00",
-          "imagem": "https://picsum.photos/400?random=13",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Esteira Ergométrica Dobrável",
-          "preco": "2.400,00",
-          "imagem": "https://picsum.photos/400?random=14",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Kit Halteres 10kg Revestido",
-          "preco": "150,00",
-          "imagem": "https://picsum.photos/400?random=15",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Tênis Running Amortecedor Pro",
-          "preco": "280,00",
-          "imagem": "https://picsum.photos/400?random=16",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Bola de Futebol Campo Oficial",
-          "preco": "89,00",
-          "imagem": "https://picsum.photos/400?random=17",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Bolsa Térmica Marmita Fitness",
-          "preco": "45,00",
-          "imagem": "https://picsum.photos/400?random=18",
-          "link": "https://www.mercadolivre.com.br"
-        }
-      ]
+      "produtos": []
     },
     {
       "id": "eletro",
       "nome": "Eletrodomésticos",
       "icone": "https://cdn-icons-png.flaticon.com/512/2850/2850931.png",
-      "produtos": [
-        {
-          "nome": "Geladeira Frost Free Duplex",
-          "preco": "2.800,00",
-          "imagem": "https://picsum.photos/400?random=19",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Máquina de Lavar 12kg",
-          "preco": "1.750,00",
-          "imagem": "https://picsum.photos/400?random=20",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Micro-ondas 30L Digital",
-          "preco": "520,00",
-          "imagem": "https://picsum.photos/400?random=21",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Liquidificador Turbo 1200W",
-          "preco": "160,00",
-          "imagem": "https://picsum.photos/400?random=22",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Cooktop 5 Bocas Inox",
-          "preco": "690,00",
-          "imagem": "https://picsum.photos/400?random=23",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Aspirador de Pó Vertical",
-          "preco": "340,00",
-          "imagem": "https://picsum.photos/400?random=24",
-          "link": "https://www.mercadolivre.com.br"
-        }
-      ]
+      "produtos": []
     },
     {
       "id": "moda",
       "nome": "Calçados, Roupas e Bolsas",
       "icone": "https://cdn-icons-png.flaticon.com/512/3159/3159620.png",
-      "produtos": [
-        {
-          "nome": "Tênis Casual Street",
-          "preco": "180,00",
-          "imagem": "https://picsum.photos/400?random=25",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Jaqueta Jeans Masculina",
-          "preco": "220,00",
-          "imagem": "https://picsum.photos/400?random=26",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Bolsa Feminina Premium",
-          "preco": "140,00",
-          "imagem": "https://picsum.photos/400?random=27",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Camisa Polo Slim",
-          "preco": "95,00",
-          "imagem": "https://picsum.photos/400?random=28",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Sandália Confort Couro",
-          "preco": "120,00",
-          "imagem": "https://picsum.photos/400?random=29",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Mochila Urbana Resistente",
-          "preco": "160,00",
-          "imagem": "https://picsum.photos/400?random=30",
-          "link": "https://www.mercadolivre.com.br"
-        }
-      ]
+      "produtos": []
     },
     {
       "id": "beleza",
       "nome": "Beleza e Cuidado Pessoal",
       "icone": "https://cdn-icons-png.flaticon.com/512/194/194931.png",
-      "produtos": [
-        {
-          "nome": "Secador Profissional 2000W",
-          "preco": "190,00",
-          "imagem": "https://picsum.photos/400?random=31",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Kit Skincare Facial",
-          "preco": "120,00",
-          "imagem": "https://picsum.photos/400?random=32",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Aparador de Barba Elétrico",
-          "preco": "150,00",
-          "imagem": "https://picsum.photos/400?random=33",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Perfume Importado 100ml",
-          "preco": "320,00",
-          "imagem": "https://picsum.photos/400?random=34",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Escova Rotativa Modeladora",
-          "preco": "210,00",
-          "imagem": "https://picsum.photos/400?random=35",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Kit Manicure Completo",
-          "preco": "75,00",
-          "imagem": "https://picsum.photos/400?random=36",
-          "link": "https://www.mercadolivre.com.br"
-        }
-      ]
+      "produtos": []
     },
     {
       "id": "informatica",
       "nome": "Informática",
       "icone": "https://cdn-icons-png.flaticon.com/512/2777/2777142.png",
-      "produtos": [
-        {
-          "nome": "Notebook i5 8GB SSD",
-          "preco": "3.200,00",
-          "imagem": "https://picsum.photos/400?random=37",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Mouse Gamer RGB",
-          "preco": "95,00",
-          "imagem": "https://picsum.photos/400?random=38",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Teclado Mecânico Iluminado",
-          "preco": "210,00",
-          "imagem": "https://picsum.photos/400?random=39",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Monitor 24 Polegadas Full HD",
-          "preco": "780,00",
-          "imagem": "https://picsum.photos/400?random=40",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "HD Externo 1TB",
-          "preco": "340,00",
-          "imagem": "https://picsum.photos/400?random=41",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Webcam HD Streaming",
-          "preco": "120,00",
-          "imagem": "https://picsum.photos/400?random=42",
-          "link": "https://www.mercadolivre.com.br"
-        }
-      ]
+      "produtos": []
     },
     {
       "id": "saude",
       "nome": "Saúde",
       "icone": "https://cdn-icons-png.flaticon.com/512/2966/2966327.png",
-      "produtos": [
-        {
-          "nome": "Termômetro Digital Infravermelho",
-          "preco": "65,00",
-          "imagem": "https://picsum.photos/400?random=43",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Oxímetro Portátil",
-          "preco": "110,00",
-          "imagem": "https://picsum.photos/400?random=44",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Aparelho de Pressão Automático",
-          "preco": "190,00",
-          "imagem": "https://picsum.photos/400?random=45",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Massageador Corporal Elétrico",
-          "preco": "160,00",
-          "imagem": "https://picsum.photos/400?random=46",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Balança Digital Corporal",
-          "preco": "95,00",
-          "imagem": "https://picsum.photos/400?random=47",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Kit Primeiros Socorros",
-          "preco": "80,00",
-          "imagem": "https://picsum.photos/400?random=48",
-          "link": "https://www.mercadolivre.com.br"
-        }
-      ]
+      "produtos": []
     },
     {
       "id": "veiculos",
       "nome": "Acessórios para Veículos",
       "icone": "https://cdn-icons-png.flaticon.com/512/741/741407.png",
-      "produtos": [
-        {
-          "nome": "Central Multimídia Android",
-          "preco": "650,00",
-          "imagem": "https://picsum.photos/400?random=49",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Câmera de Ré HD",
-          "preco": "120,00",
-          "imagem": "https://picsum.photos/400?random=50",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Suporte Celular Veicular",
-          "preco": "45,00",
-          "imagem": "https://picsum.photos/400?random=51",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Tapete Automotivo Borracha",
-          "preco": "90,00",
-          "imagem": "https://picsum.photos/400?random=52",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Kit Som Automotivo",
-          "preco": "480,00",
-          "imagem": "https://picsum.photos/400?random=53",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Carregador Veicular Turbo",
-          "preco": "35,00",
-          "imagem": "https://picsum.photos/400?random=54",
-          "link": "https://www.mercadolivre.com.br"
-        }
-      ]
+      "produtos": []
     },
     {
       "id": "ferramentas",
       "nome": "Ferramentas",
       "icone": "https://cdn-icons-png.flaticon.com/512/2972/2972185.png",
-      "produtos": [
-        {
-          "nome": "Parafusadeira Elétrica",
-          "preco": "260,00",
-          "imagem": "https://picsum.photos/400?random=55",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Jogo de Chaves Completo",
-          "preco": "120,00",
-          "imagem": "https://picsum.photos/400?random=56",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Furadeira Impacto 750W",
-          "preco": "310,00",
-          "imagem": "https://picsum.photos/400?random=57",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Kit Ferramentas 129 Peças",
-          "preco": "420,00",
-          "imagem": "https://picsum.photos/400?random=58",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Trena Profissional 5m",
-          "preco": "25,00",
-          "imagem": "https://picsum.photos/400?random=59",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Serra Circular Portátil",
-          "preco": "380,00",
-          "imagem": "https://picsum.photos/400?random=60",
-          "link": "https://www.mercadolivre.com.br"
-        }
-      ]
+      "produtos": []
     },
     {
       "id": "construcao",
       "nome": "Construção",
       "icone": "https://cdn-icons-png.flaticon.com/512/4333/4333639.png",
-      "produtos": [
-        {
-          "nome": "Lustre Pendente Moderno",
-          "preco": "210,00",
-          "imagem": "https://picsum.photos/400?random=61",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Torneira Gourmet Cozinha",
-          "preco": "180,00",
-          "imagem": "https://picsum.photos/400?random=62",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Chuveiro Elétrico 7500W",
-          "preco": "130,00",
-          "imagem": "https://picsum.photos/400?random=63",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Kit Interruptor 3 Peças",
-          "preco": "60,00",
-          "imagem": "https://picsum.photos/400?random=64",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Argamassa AC3 20kg",
-          "preco": "55,00",
-          "imagem": "https://picsum.photos/400?random=65",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Lâmpada LED 12W",
-          "preco": "18,00",
-          "imagem": "https://picsum.photos/400?random=66",
-          "link": "https://www.mercadolivre.com.br"
-        }
-      ]
+      "produtos": []
     },
     {
       "id": "industria",
       "nome": "Indústria e Comércio",
       "icone": "https://cdn-icons-png.flaticon.com/512/2897/2897850.png",
-      "produtos": [
-        {
-          "nome": "Impressora Térmica Cupom",
-          "preco": "320,00",
-          "imagem": "https://picsum.photos/400?random=67",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Leitor Código de Barras",
-          "preco": "210,00",
-          "imagem": "https://picsum.photos/400?random=68",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Balança Comercial Digital",
-          "preco": "450,00",
-          "imagem": "https://picsum.photos/400?random=69",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Etiquetadora Manual",
-          "preco": "95,00",
-          "imagem": "https://picsum.photos/400?random=70",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Fragmentadora Papel",
-          "preco": "380,00",
-          "imagem": "https://picsum.photos/400?random=71",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Gaveta Caixa PDV",
-          "preco": "260,00",
-          "imagem": "https://picsum.photos/400?random=72",
-          "link": "https://www.mercadolivre.com.br"
-        }
-      ]
+      "produtos": []
     },
     {
       "id": "celulares",
@@ -546,40 +121,22 @@
       "icone": "https://cdn-icons-png.flaticon.com/512/2586/2586488.png",
       "produtos": [
         {
-          "nome": "Smartphone 256GB AMOLED",
-          "preco": "2.100,00",
-          "imagem": "https://picsum.photos/400?random=73",
-          "link": "https://www.mercadolivre.com.br"
+          "nome": "Celular Samsung Galaxy A17 Com Ia, 256gb, 8gb Ram, Câm De 50mp, Tela De 6.7 , Nfc, Ip54 - Azul - R$ 1.199",
+          "preco": "1079,10",
+          "imagem": "https://http2.mlstatic.com/D_NQ_NP_889169-MLA96868779849_102025-O.jpg",
+          "link": "https://www.mercadolivre.com.br/celular-samsung-galaxy-a17-com-ia-256gb-8gb-ram-cm-de-50mp-tela-de-67-nfc-ip54-azul/p/MLB54982411?pdp_filters=item_id%3AMLB4217058289#polycard_client=affiliates&wid=MLB4217058289&sid=affiliates"
         },
         {
-          "nome": "Celular 128GB Bateria Longa",
-          "preco": "1.450,00",
-          "imagem": "https://picsum.photos/400?random=74",
-          "link": "https://www.mercadolivre.com.br"
+          "nome": "Celular Samsung Galaxy A07 128gb, 4gb, Câmera 50mp, Tela 6.7 , Proteção Ip54, Processador 6nm - Preto - R$ 757,39",
+          "preco": "681,65",
+          "imagem": "https://http2.mlstatic.com/D_NQ_NP_678247-MLA99491753898_112025-O.jpg",
+          "link": "https://www.mercadolivre.com.br/celular-samsung-galaxy-a07-128gb-4gb-cmera-50mp-tela-67-proteco-ip54-processador-6nm-preto/p/MLB55034955?pdp_filters=item_id%3AMLB5859349564#polycard_client=affiliates&wid=MLB5859349564&sid=affiliates"
         },
         {
-          "nome": "Telefone Sem Fio Digital",
-          "preco": "120,00",
-          "imagem": "https://picsum.photos/400?random=75",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Capa Anti Impacto Premium",
-          "preco": "45,00",
-          "imagem": "https://picsum.photos/400?random=76",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Película Vidro Temperado",
-          "preco": "25,00",
-          "imagem": "https://picsum.photos/400?random=77",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Carregador Rápido USB-C",
-          "preco": "60,00",
-          "imagem": "https://picsum.photos/400?random=78",
-          "link": "https://www.mercadolivre.com.br"
+          "nome": "Celular Samsung Galaxy A17 Com Ia, 256gb, 8gb Ram, Câm De 50mp, Tela De 6.7 , Nfc, Ip54 - Preto - R$ 1.199",
+          "preco": "1079,10",
+          "imagem": "https://http2.mlstatic.com/D_NQ_NP_781103-MLA99983064831_112025-O.jpg",
+          "link": "https://www.mercadolivre.com.br/celular-samsung-galaxy-a17-com-ia-256gb-8gb-ram-cm-de-50mp-tela-de-67-nfc-ip54-preto/p/MLB55254425?pdp_filters=item_id%3AMLB5732599082#polycard_client=affiliates&wid=MLB5732599082&sid=affiliates"
         }
       ]
     },
@@ -587,431 +144,61 @@
       "id": "eletronicos_av",
       "nome": "Eletrônicos, Áudio e Vídeo",
       "icone": "https://cdn-icons-png.flaticon.com/512/3221/3221845.png",
-      "produtos": [
-        {
-          "nome": "Soundbar Bluetooth Potente",
-          "preco": "420,00",
-          "imagem": "https://picsum.photos/400?random=79",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Fone Wireless Pro",
-          "preco": "150,00",
-          "imagem": "https://picsum.photos/400?random=80",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Caixa de Som Portátil",
-          "preco": "230,00",
-          "imagem": "https://picsum.photos/400?random=81",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Projetor Full HD",
-          "preco": "980,00",
-          "imagem": "https://picsum.photos/400?random=82",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Controle Universal Smart",
-          "preco": "65,00",
-          "imagem": "https://picsum.photos/400?random=83",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Antena Digital Sinal 4k Smart Tv Interna Externa Amplificador Hdtv Uhf Com Cabo Longo E Base Magnética Bahrein",
-          "preco": "24,90",
-          "imagem": "https://http2.mlstatic.com/D_NQ_NP_2X_848621-MLA109772561097_032026-F.webp",
-          "link": "https://www.mercadolivre.com.br/antena-digital-sinal-4k-smart-tv-interna-externa-amplificador-hdtv-uhf-com-cabo-longo-e-base-magnetica-bahrein/p/MLB53042757?pdp_filters=item_id%3AMLB4131969427&matt_event_ts=1774960940646&matt_d2id=88608949-47f4-49ac-bb16-c4d2742efa77&matt_tracing_id=aa69a672-702b-4bd4-92ca-2b135185b51b#reco_backend=item_decorator&wid=MLB4131969427&reco_client=home_affiliate-profile&reco_item_pos=0&source=affiliate-profile&reco_backend_type=function&reco_id=3df49adb-03d0-4a6e-96fe-336f4a650edc&tracking_id=c4a86e27-4040-467e-a2a6-42fe7a329284&sid=recos&c_id=/home/card-featured/element&c_uid=e72b077c-677d-4e21-a2b5-e74edc2bc8fa"
-        }
-      ]
+      "produtos": []
     },
     {
       "id": "pet",
       "nome": "Pet Shop",
       "icone": "https://cdn-icons-png.flaticon.com/512/616/616408.png",
-      "produtos": [
-        {
-          "nome": "Fonte Água Automática Pet",
-          "preco": "120,00",
-          "imagem": "https://picsum.photos/400?random=85",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Cama Pet Confortável",
-          "preco": "95,00",
-          "imagem": "https://picsum.photos/400?random=86",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Arranhador para Gatos",
-          "preco": "140,00",
-          "imagem": "https://picsum.photos/400?random=87",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Coleira Ajustável",
-          "preco": "35,00",
-          "imagem": "https://picsum.photos/400?random=88",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Brinquedo Mordedor Pet",
-          "preco": "25,00",
-          "imagem": "https://picsum.photos/400?random=89",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Caixa Transporte Animal",
-          "preco": "210,00",
-          "imagem": "https://picsum.photos/400?random=90",
-          "link": "https://www.mercadolivre.com.br"
-        }
-      ]
+      "produtos": []
     },
     {
       "id": "bebes",
       "nome": "Bebês",
       "icone": "https://cdn-icons-png.flaticon.com/512/1043/1043231.png",
-      "produtos": [
-        {
-          "nome": "Berço Portátil Dobrável",
-          "preco": "450,00",
-          "imagem": "https://picsum.photos/400?random=91",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Carrinho Bebê Reclinável",
-          "preco": "890,00",
-          "imagem": "https://picsum.photos/400?random=92",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Babá Eletrônica Digital",
-          "preco": "320,00",
-          "imagem": "https://picsum.photos/400?random=93",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Kit Mamadeiras Anticólica",
-          "preco": "95,00",
-          "imagem": "https://picsum.photos/400?random=94",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Banheira Bebê Completa",
-          "preco": "160,00",
-          "imagem": "https://picsum.photos/400?random=95",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Cadeirinha Alimentação",
-          "preco": "280,00",
-          "imagem": "https://picsum.photos/400?random=96",
-          "link": "https://www.mercadolivre.com.br"
-        }
-      ]
+      "produtos": []
     },
     {
       "id": "brinquedos",
       "nome": "Brinquedos e Hobbies",
       "icone": "https://cdn-icons-png.flaticon.com/512/3082/3082060.png",
-      "produtos": [
-        {
-          "nome": "Carro Controle Remoto Turbo",
-          "preco": "130,00",
-          "imagem": "https://picsum.photos/400?random=97",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Drone Iniciante HD",
-          "preco": "420,00",
-          "imagem": "https://picsum.photos/400?random=98",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Lego Blocos Criativos",
-          "preco": "210,00",
-          "imagem": "https://picsum.photos/400?random=99",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Quebra Cabeça 1000 Peças",
-          "preco": "70,00",
-          "imagem": "https://picsum.photos/400?random=100",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Patinete Infantil",
-          "preco": "190,00",
-          "imagem": "https://picsum.photos/400?random=101",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Kit Pintura Infantil",
-          "preco": "55,00",
-          "imagem": "https://picsum.photos/400?random=102",
-          "link": "https://www.mercadolivre.com.br"
-        }
-      ]
+      "produtos": []
     },
     {
       "id": "joias",
       "nome": "Joias e Relógios",
       "icone": "https://cdn-icons-png.flaticon.com/512/2210/2210606.png",
-      "produtos": [
-        {
-          "nome": "Relógio Digital Sport",
-          "preco": "110,00",
-          "imagem": "https://picsum.photos/400?random=103",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Pulseira Aço Inoxidável",
-          "preco": "85,00",
-          "imagem": "https://picsum.photos/400?random=104",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Colar Feminino Elegante",
-          "preco": "95,00",
-          "imagem": "https://picsum.photos/400?random=105",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Relógio Analógico Clássico",
-          "preco": "240,00",
-          "imagem": "https://picsum.photos/400?random=106",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Anel Ajustável Premium",
-          "preco": "70,00",
-          "imagem": "https://picsum.photos/400?random=107",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Kit Brincos Luxo",
-          "preco": "65,00",
-          "imagem": "https://picsum.photos/400?random=108",
-          "link": "https://www.mercadolivre.com.br"
-        }
-      ]
+      "produtos": []
     },
     {
       "id": "musica",
       "nome": "Instrumentos Musicais",
       "icone": "https://cdn-icons-png.flaticon.com/512/3221/3221845.png",
-      "produtos": [
-        {
-          "nome": "Teclado Musical 61 Teclas",
-          "preco": "600,00",
-          "imagem": "https://picsum.photos/400?random=109",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Violão Acústico Clássico",
-          "preco": "420,00",
-          "imagem": "https://picsum.photos/400?random=110",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Microfone Condensador",
-          "preco": "210,00",
-          "imagem": "https://picsum.photos/400?random=111",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Interface Áudio USB",
-          "preco": "350,00",
-          "imagem": "https://picsum.photos/400?random=112",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Pedal Efeito Guitarra",
-          "preco": "290,00",
-          "imagem": "https://picsum.photos/400?random=113",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Suporte Partitura Ajustável",
-          "preco": "80,00",
-          "imagem": "https://picsum.photos/400?random=114",
-          "link": "https://www.mercadolivre.com.br"
-        }
-      ]
+      "produtos": []
     },
     {
       "id": "arte",
       "nome": "Arte, Papelaria e Armarinho",
       "icone": "https://cdn-icons-png.flaticon.com/512/2232/2232688.png",
-      "produtos": [
-        {
-          "nome": "Mochila Escolar Resistente",
-          "preco": "140,00",
-          "imagem": "https://picsum.photos/400?random=115",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Kit Canetas Profissionais",
-          "preco": "65,00",
-          "imagem": "https://picsum.photos/400?random=116",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Caderno Universitário",
-          "preco": "35,00",
-          "imagem": "https://picsum.photos/400?random=117",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Estojo Escolar Grande",
-          "preco": "40,00",
-          "imagem": "https://picsum.photos/400?random=118",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Kit Desenho Artístico",
-          "preco": "120,00",
-          "imagem": "https://picsum.photos/400?random=119",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Papel Fotográfico Premium",
-          "preco": "55,00",
-          "imagem": "https://picsum.photos/400?random=120",
-          "link": "https://www.mercadolivre.com.br"
-        }
-      ]
+      "produtos": []
     },
     {
       "id": "games",
       "nome": "Games",
       "icone": "https://cdn-icons-png.flaticon.com/512/686/686589.png",
-      "produtos": [
-        {
-          "nome": "Console Portátil Retro",
-          "preco": "250,00",
-          "imagem": "https://picsum.photos/400?random=121",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Controle Gamer Pro",
-          "preco": "180,00",
-          "imagem": "https://picsum.photos/400?random=122",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Headset Gamer Surround",
-          "preco": "230,00",
-          "imagem": "https://picsum.photos/400?random=123",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Mousepad RGB Grande",
-          "preco": "95,00",
-          "imagem": "https://picsum.photos/400?random=124",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Cadeira Gamer Comfort",
-          "preco": "890,00",
-          "imagem": "https://picsum.photos/400?random=125",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Teclado Gamer Iluminado",
-          "preco": "260,00",
-          "imagem": "https://picsum.photos/400?random=126",
-          "link": "https://www.mercadolivre.com.br"
-        }
-      ]
+      "produtos": []
     },
     {
       "id": "livros",
       "nome": "Livros, Revista e Comics",
       "icone": "https://cdn-icons-png.flaticon.com/512/3389/3389081.png",
-      "produtos": [
-        {
-          "nome": "HQ Colecionável Volume 1",
-          "preco": "60,00",
-          "imagem": "https://picsum.photos/400?random=127",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Livro Desenvolvimento Pessoal",
-          "preco": "75,00",
-          "imagem": "https://picsum.photos/400?random=128",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Revista Tecnologia Atual",
-          "preco": "25,00",
-          "imagem": "https://picsum.photos/400?random=129",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Mangá Edição Especial",
-          "preco": "35,00",
-          "imagem": "https://picsum.photos/400?random=130",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Livro Marketing Digital",
-          "preco": "85,00",
-          "imagem": "https://picsum.photos/400?random=131",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Coleção Clássicos Literatura",
-          "preco": "120,00",
-          "imagem": "https://picsum.photos/400?random=132",
-          "link": "https://www.mercadolivre.com.br"
-        }
-      ]
+      "produtos": []
     },
     {
       "id": "cameras",
       "nome": "Câmeras e Acessórios",
       "icone": "https://cdn-icons-png.flaticon.com/512/685/685655.png",
-      "produtos": [
-        {
-          "nome": "Câmera Segurança WiFi HD",
-          "preco": "190,00",
-          "imagem": "https://picsum.photos/400?random=133",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Tripé Ajustável Profissional",
-          "preco": "120,00",
-          "imagem": "https://picsum.photos/400?random=134",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Ring Light Iluminação",
-          "preco": "140,00",
-          "imagem": "https://picsum.photos/400?random=135",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Câmera Action 4K",
-          "preco": "420,00",
-          "imagem": "https://picsum.photos/400?random=136",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Cartão Memória 128GB",
-          "preco": "95,00",
-          "imagem": "https://picsum.photos/400?random=137",
-          "link": "https://www.mercadolivre.com.br"
-        },
-        {
-          "nome": "Mochila Fotográfica",
-          "preco": "210,00",
-          "imagem": "https://picsum.photos/400?random=138",
-          "link": "https://www.mercadolivre.com.br"
-        }
-      ]
+      "produtos": []
     }
   ]
 }
