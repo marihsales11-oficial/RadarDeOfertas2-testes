@@ -2,44 +2,35 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Gerenciador Excel - Radar de Ofertas</title>
+    <title>Gerenciador Pro - Radar de Ofertas</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
-        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .drop-zone { border: 3px dashed #007bff; padding: 40px; text-align: center; border-radius: 12px; cursor: pointer; background: #f8f9fa; transition: 0.3s; margin-bottom: 30px; }
-        .drop-zone:hover { background: #e9f2ff; border-color: #0056b3; }
-        .status { padding: 15px; border-radius: 8px; margin-bottom: 20px; display: none; font-weight: bold; }
-        .success { background: #d4edda; color: #155724; display: block; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .drop-zone { border: 3px dashed #007bff; padding: 40px; text-align: center; border-radius: 12px; cursor: pointer; background: #f8f9fa; margin-bottom: 20px; }
         .btn-gen { background: #007bff; color: white; width: 100%; padding: 15px; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; font-weight: bold; }
-        textarea { width: 100%; height: 300px; margin-top: 20px; display: none; background: #272822; color: #f8f8f2; padding: 15px; border-radius: 8px; font-family: monospace; }
+        textarea { width: 100%; height: 200px; margin-top: 20px; display: none; background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 8px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>🚀 Importador Automático de Planilha</h1>
-    <p>Arraste seu arquivo <strong>.xlsx</strong> com as 23 abas para gerar o JSON instantaneamente.</p>
+    <h1>🚀 Radar de Ofertas - Importador de Links</h1>
+    <p>Arraste seu Excel (coluna A com links) para criar o arquivo base.</p>
 
     <div class="drop-zone" id="drop-zone">
-        <strong>Clique ou Arraste o arquivo do Excel aqui</strong>
-        <input type="file" id="file-input" style="display: none;" accept=".xlsx, .xls">
+        <strong>Arraste seu arquivo .xlsx aqui</strong>
+        <input type="file" id="file-input" style="display: none;" accept=".xlsx">
     </div>
 
-    <div id="status-msg" class="status"></div>
-
-    <button class="btn-gen" id="btn-processar" style="display: none;" onclick="gerarJSON()">CONVERTER PLANILHA EM PRODUTOS.JSON</button>
-    
+    <button class="btn-gen" id="btn-processar" style="display: none;" onclick="gerarJSON()">1. GERAR JSON BASE</button>
     <textarea id="json-output" readonly></textarea>
-    <button id="btn-copy" class="btn-gen" style="background: #28a745; margin-top: 10px; display: none;" onclick="copiar()">Copiar JSON para o GitHub</button>
 </div>
 
 <script>
-    let dadosPlanilha = null;
-
-    // Configuração das categorias (precisam ser iguais aos nomes das abas no Excel)
+    let workbook = null;
     const categoriasBase = [
-        { id: "expirando", nome: "Ofertas Expirando", icone: "https://cdn-icons-png.flaticon.com/512/744/744922.png" },
+        { id: "expirando", nome: "⚡ Ofertas Expirando", icone: "https://cdn-icons-png.flaticon.com/512/744/744922.png" },
         { id: "casa", nome: "Casa, Móveis e Decoração", icone: "https://img.icons8.com/fluency/96/home.png" },
         { id: "esportes", nome: "Esportes e Fitness", icone: "https://cdn-icons-png.flaticon.com/512/857/857455.png" },
         { id: "eletro", nome: "Eletrodomésticos", icone: "https://cdn-icons-png.flaticon.com/512/2850/2850931.png" },
@@ -68,70 +59,37 @@
     const fileInput = document.getElementById('file-input');
 
     dropZone.onclick = () => fileInput.click();
-
-    fileInput.onchange = (e) => handleFile(e.target.files[0]);
-
-    function handleFile(file) {
+    fileInput.onchange = (e) => {
         const reader = new FileReader();
-        reader.onload = (e) => {
-            const data = new Uint8Array(e.target.result);
-            const workbook = XLSX.read(data, { type: 'array' });
-            dadosPlanilha = workbook;
-            
-            document.getElementById('status-msg').innerHTML = `✅ Arquivo "${file.name}" lido com sucesso! ${workbook.SheetNames.length} abas encontradas.`;
-            document.getElementById('status-msg').className = "status success";
-            document.getElementById('btn-processar').style.display = "block";
+        reader.onload = (ev) => {
+            const data = new Uint8Array(ev.target.result);
+            workbook = XLSX.read(data, {type: 'array'});
+            document.getElementById('btn-processar').style.display = 'block';
+            alert("Excel carregado!");
         };
-        reader.readAsArrayBuffer(file);
-    }
+        reader.readAsArrayBuffer(e.target.files[0]);
+    };
 
     function gerarJSON() {
-        if(!dadosPlanilha) return;
-
-        let jsonFinal = { "categorias": [] };
-
+        let final = { "categorias": [] };
         categoriasBase.forEach(cat => {
-            // Tenta achar a aba no Excel com o nome da categoria
-            const sheet = dadosPlanilha.Sheets[cat.nome];
             let produtos = [];
-
+            const sheet = workbook.Sheets[cat.nome];
             if(sheet) {
-                // Converte a aba em uma lista de objetos
-                const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-                // Pula a primeira linha (cabeçalho)
-                for(let i = 1; i < rows.length; i++) {
-                    const r = rows[i];
-                    if(r[0]) { // Se tiver descrição
-                        produtos.push({
-                            "nome": String(r[0]),
-                            "preco": "0,00",
-                            "imagem": r[1] || "https://picsum.photos/400",
-                            "link": r[2] || ""
-                        });
+                const rows = XLSX.utils.sheet_to_json(sheet, {header: 1});
+                rows.forEach((r, i) => {
+                    if(i > 0 && r[0]) { // Coluna A
+                        produtos.push({ "nome": "Carregando...", "preco": "0,00", "imagem": "", "link": r[0] });
                     }
-                }
+                });
             }
-
-            jsonFinal.categorias.push({
-                "id": cat.id,
-                "nome": (cat.id === "expirando") ? "⚡ Ofertas Expirando" : cat.nome,
-                "icone": cat.icone,
-                "produtos": produtos
-            });
+            final.categorias.push({ "id": cat.id, "nome": cat.nome, "icone": cat.icone, "produtos": produtos });
         });
-
         const out = document.getElementById('json-output');
-        out.value = JSON.stringify(jsonFinal, null, 2);
+        out.value = JSON.stringify(final, null, 2);
         out.style.display = 'block';
-        document.getElementById('btn-copy').style.display = 'block';
-    }
-
-    function copiar() {
-        document.getElementById('json-output').select();
-        document.execCommand('copy');
-        alert("JSON copiado! Agora cole no GitHub.");
+        alert("JSON Base gerado! Salve como produtos.json e rode o Python.");
     }
 </script>
-
 </body>
 </html>
