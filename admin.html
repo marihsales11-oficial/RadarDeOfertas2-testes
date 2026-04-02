@@ -25,24 +25,23 @@
 <body>
 
 <div class="container">
-    <h1>🚀 Radar de Ofertas - Gerenciador de Produtos</h1>
+    <h1>🚀 Radar de Ofertas - Gerenciador Simplificado</h1>
 
     <div class="import-area">
-        <strong>Importação Rápida (Excel):</strong> Nome [TAB] Descrição [TAB] Link Imagem [TAB] Link MLB <br><br>
-        <input type="text" id="quick-import" placeholder="Cole aqui as colunas copiadas do Excel..." style="width: 70%; margin-bottom: 10px;">
-        <select id="import-target">
-            </select>
+        <strong>Importação Rápida (Excel):</strong> Descrição Produto [TAB] Link Imagem [TAB] Link MLB <br><br>
+        <input type="text" id="quick-import" placeholder="Cole aqui as 3 colunas do Excel..." style="width: 70%; margin-bottom: 10px;">
+        <select id="import-target"></select>
         <button class="btn" onclick="processarImportacao()" style="background: #17a2b8; color: white;">Importar</button>
     </div>
 
     <div id="categorias-container"></div>
 
-    <button class="btn btn-gen" onclick="gerarJSON()">GERAR produtos.json FINAL</button>
+    <button class="btn btn-gen" onclick="gerarJSON()">GERAR produtos.json ATUALIZADO</button>
 
     <div id="resultado-area" style="display:none;">
-        <h3 style="text-align: center; color: #28a745;">✅ JSON Criado! Copie e cole no GitHub.</h3>
+        <h3 style="text-align: center; color: #28a745;">✅ Tudo pronto! Copie o código abaixo:</h3>
         <textarea id="json-output" readonly></textarea>
-        <button class="btn btn-copy" onclick="copiarJSON()">Copiar e Abrir GitHub</button>
+        <button class="btn btn-copy" onclick="copiarJSON()">Copiar JSON e Finalizar</button>
     </div>
 </div>
 
@@ -81,7 +80,7 @@
             div.className = 'categoria-box';
             div.innerHTML = `<div class="categoria-header"><img src="${cat.icone}"> ${cat.nome}</div>
                 <table id="tabela-${cat.id}">
-                    <thead><tr><th style="width:25%">Nome</th><th style="width:25%">Descrição</th><th style="width:20%">Link Imagem</th><th style="width:25%">Link MLB</th><th style="width:5%">Ação</th></tr></thead>
+                    <thead><tr><th style="width:40%">Descrição do Produto</th><th style="width:25%">Link Imagem</th><th style="width:30%">Link MLB</th><th style="width:5%">Ação</th></tr></thead>
                     <tbody></tbody>
                 </table>
                 <button class="btn btn-add-row" onclick="adicionarLinha('${cat.id}')">+ Produto</button>`;
@@ -91,13 +90,12 @@
         });
     }
 
-    function adicionarLinha(catId, nome="", desc="", img="", link="") {
+    function adicionarLinha(catId, desc="", img="", link="") {
         const tbody = document.querySelector(`#tabela-${catId} tbody`);
         const row = tbody.insertRow();
-        row.innerHTML = `<td><input type="text" class="p-nome" value="${nome}"></td>
-            <td><input type="text" class="p-desc" value="${desc}"></td>
-            <td><input type="text" class="p-img" value="${img}"></td>
-            <td><input type="text" class="p-link" value="${link}"></td>
+        row.innerHTML = `<td><input type="text" class="p-desc" value="${desc}" placeholder="Ex: Samsung Galaxy A06 128GB..."></td>
+            <td><input type="text" class="p-img" value="${img}" placeholder="Link da foto"></td>
+            <td><input type="text" class="p-link" value="${link}" placeholder="Link MLB"></td>
             <td><button class="btn" style="background:none;color:red" onclick="this.parentElement.parentElement.remove()">X</button></td>`;
     }
 
@@ -107,7 +105,7 @@
         const linhas = input.value.split('\n');
         linhas.forEach(linha => {
             const cols = linha.split('\t');
-            if(cols.length >= 2) adicionarLinha(target, cols[0]||"", cols[1]||"", cols[2]||"", cols[3]||"");
+            if(cols.length >= 1) adicionarLinha(target, cols[0]||"", cols[1]||"", cols[2]||"");
         });
         input.value = "";
     }
@@ -118,12 +116,11 @@
             const rows = document.querySelectorAll(`#tabela-${cat.id} tbody tr`);
             let produtos = [];
             rows.forEach(row => {
-                const nome = row.querySelector(".p-nome").value;
-                if(nome.trim() !== "") {
+                const desc = row.querySelector(".p-desc").value;
+                if(desc.trim() !== "") {
                     produtos.push({
-                        "nome": nome,
-                        "descricao": row.querySelector(".p-desc").value,
-                        "preco": "0,00", // O Python atualizará isso depois
+                        "nome": desc,
+                        "preco": "0,00",
                         "imagem": row.querySelector(".p-img").value || "https://picsum.photos/400",
                         "link": row.querySelector(".p-link").value
                     });
@@ -141,7 +138,7 @@
     function copiarJSON() {
         document.getElementById("json-output").select();
         document.execCommand("copy");
-        alert("Copiado! Agora cole no GitHub.");
+        alert("Copiado com sucesso! Agora é só colar no GitHub.");
     }
     window.onload = inicializar;
 </script>
