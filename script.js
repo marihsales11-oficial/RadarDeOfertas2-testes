@@ -4,7 +4,7 @@ let limiteExpirando = 8; // Controle de paginação para Ofertas Expirando
 
 async function init() {
     try {
-        const res = await fetch('produtos.json');
+        const res = await fetch('json/produtos.json');
         const data = await res.json();
         categoriasData = data.categorias;
         
