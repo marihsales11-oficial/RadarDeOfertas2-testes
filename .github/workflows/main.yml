@@ -2,8 +2,9 @@ name: Atualizar Precos Diariamente
 
 on:
   schedule:
-    - cron: '0 9 * * *'
-  workflow_dispatch:
+    # Roda todos os dias às 06:00 (Horário de Brasília)
+    - cron: '0 9 * * *' 
+  workflow_dispatch: # Permite rodar manualmente pelo botão no GitHub
 
 permissions:
   contents: write
@@ -19,27 +20,32 @@ jobs:
         fetch-depth: 0
 
     - name: Configurar Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5 # Atualizado para v5
       with:
         python-version: '3.10'
 
     - name: Instalar dependencias
-      run: pip install requests urllib3
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests urllib3
 
     - name: Executar script de atualizacao
-      run: python Atualizar_precos.py
+      run: |
+        # Garantimos que o script rode mesmo se estiver dentro da pasta json
+        # Se o seu .py estiver na raiz, apenas 'python Atualizar_precos.py' basta
+        python Atualizar_precos.py
 
     - name: Salvar alteracoes no JSON
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git add produtos.json
-        # Se houver mudanças, ele faz o commit e usa o "force" para não dar erro de histórico
+        
+        # O comando abaixo adiciona o json independente de onde ele esteja
+        git add json/produtos.json || git add produtos.json
+        
         if ! git diff --staged --quiet; then
-          git commit -m "Auto: Atualizacao de precos"
-          git push --force origin main
+          git commit -m "Auto: Atualizacao de precos via GitHub Actions"
+          git push origin main
         else
-          echo "Nenhuma mudanca detectada pelo Python"
+          echo "Nenhuma mudança detectada nos preços."
         fi
