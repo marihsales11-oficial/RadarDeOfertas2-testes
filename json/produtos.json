@@ -1,0 +1,235 @@
+{
+  "categorias": [
+    {
+      "id": "expirando",
+      "nome": "⚡ Ofertas Expirando",
+      "icone": "https://cdn-icons-png.flaticon.com/512/744/744922.png",
+      "produtos": [
+        {
+          "nome": "Samsung Galaxy A06 5g Dual Sim 128gb preto",
+          "preco": "Consultar",
+          "imagem": "https://http2.mlstatic.com/D_NQ_NP_716412-MLA99524473372_122025-OO.png",
+          "link": "https://www.mercadolivre.com.br/samsung-galaxy-a06-5g-dual-sim-128gb-preto/p/MLB48946861?matt_event_ts=1774990413319&matt_d2id=88608949-47f4-49ac-bb16-c4d2742efa77&matt_tracing_id=19b26564-b8fc-4473-b64f-13031622f376"
+        },
+        {
+          "nome": "Mercado Livre",
+          "preco": "Consultar",
+          "imagem": "https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.7.0/mercadolibre/pt_logo_large_plus@2x.webp",
+          "link": "https://www.mercadolivre.com.br/cadeira-gamer-wells-preta-healer/p/MLB36731815?pdp_filters=item_id%3AMLB5336467540#polycard_client=affiliates&wid=MLB5336467540&sid=affiliates"
+        },
+        {
+          "nome": "Creatina Monohidratada Pura 600g Dark Lab Unidade",
+          "preco": "Consultar",
+          "imagem": "https://http2.mlstatic.com/D_NQ_NP_985655-MLA99931910179_112025-OO.png",
+          "link": "https://www.mercadolivre.com.br/creatina-monohidratada-pura-600g-dark-lab-unidade/p/MLB39089853?pdp_filters=item_id%3AMLB3807070759#polycard_client=affiliates&wid=MLB3807070759&sid=affiliates"
+        },
+        {
+          "nome": "Monitor PC Gamer LG 27” IPS, Full HD, 100Hz, HDMI - 27MS500-B",
+          "preco": "Consultar",
+          "imagem": "https://http2.mlstatic.com/D_NQ_NP_762062-MLA99992079481_112025-OO.png",
+          "link": "https://www.mercadolivre.com.br/monitor-pc-gamer-lg-27-ips-full-hd-100hz-hdmi-27ms500-b/p/MLB41863403?pdp_filters=item_id%3AMLB3935468727#polycard_client=affiliates&wid=MLB3935468727&sid=affiliates"
+        },
+        {
+          "nome": "Mini Projetor Davely HY300 4K Android com Wi-Fi e Bluetooth",
+          "preco": "Consultar",
+          "imagem": "https://http2.mlstatic.com/D_NQ_NP_902043-MLA96988011016_112025-OO.png",
+          "link": "https://www.mercadolivre.com.br/mini-projetor-hy300-android-4k-portatil-wi-fi-bluetooth-hdmi-usb-cinema-em-casa-compacto-alta-resoluco-full-hd-smart-projetor-davely-celular-notebook-games-apresentaco/p/MLB48955624?pdp_filters=item_id%3AMLB4275712681#polycard_client=affiliates&wid=MLB4275712681&sid=affiliates"
+        },
+        {
+          "nome": "Mercado Livre",
+          "preco": "Consultar",
+          "imagem": "https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.7.0/mercadolibre/pt_logo_large_plus@2x.webp",
+          "link": "https://www.mercadolivre.com.br/smart-tv-samsung-u8100f-crystal-uhd-4k-2025-43-preto/p/MLB49740322?pdp_filters=item_id%3AMLB4083301139#polycard_client=affiliates&wid=MLB4083301139&sid=affiliates"
+        },
+        {
+          "nome": "Smart Tv 50 Aoc 4k Dled 50u7045/78g Roku Tv Quad",
+          "preco": "Consultar",
+          "imagem": "https://http2.mlstatic.com/D_NQ_NP_648316-MLA99473453820_112025-OO.png",
+          "link": "https://www.mercadolivre.com.br/smart-tv-50-aoc-4k-dled-50u704578g-roku-tv-quad/p/MLB51202548?pdp_filters=item_id%3AMLB5435958784#polycard_client=affiliates&wid=MLB5435958784&sid=affiliates"
+        }
+      ]
+    },
+    {
+      "id": "casa",
+      "nome": "Casa, Móveis e Decoração",
+      "icone": "https://img.icons8.com/fluency/96/home.png",
+      "produtos": [
+        {
+          "nome": "Kit 50 Cabide Adulto Preto Reforçado Organizador Combate",
+          "preco": "Consultar",
+          "imagem": "https://http2.mlstatic.com/D_NQ_NP_605517-MLA99579398050_122025-OO.png",
+          "link": "https://www.mercadolivre.com.br/kit-50-cabide-adulto-preto-reforcado-organizador-combate/p/MLB47770588?pdp_filters=item_id%3AMLB4025013215&matt_event_ts=1778775333259&matt_d2id=88608949-47f4-49ac-bb16-c4d2742efa77&matt_tracing_id=a5f0a289-46e2-4a2f-831f-ac8d5442df7f#reco_backend=item_decorator&wid=MLB4025013215&reco_client=home_affiliate-profile&reco_item_pos=0&source=affiliate-profile&reco_backend_type=function&reco_id=f9d62dfb-4054-4d2a-b1ec-d762f18a5bdf&tracking_id=bbd63cc3-846c-4701-824d-3e2e268f6ad4&sid=recos&c_id=/home/card-featured/element&c_uid=10883e4a-8df3-40b5-9935-3e5b9d65ff69"
+        },
+        {
+          "nome": "Kit C/ 4 Toalha De Banho Gigante 80 X 1,50 Atacado + Brinde",
+          "preco": "Consultar",
+          "imagem": "https://http2.mlstatic.com/D_NQ_NP_957812-MLB95817097996_102025-OO.png",
+          "link": "https://www.mercadolivre.com.br/kit-c-4-toalha-de-banho-gigante-80-x-150-atacado--brinde/up/MLBU1963995195?pdp_filters=item_id%3AMLB1944394378&matt_event_ts=1778775463525&matt_d2id=88608949-47f4-49ac-bb16-c4d2742efa77&matt_tracing_id=f49aab29-b56f-410d-b9d5-bb521327f71f#reco_backend=item_decorator&wid=MLB1944394378&reco_client=home_affiliate-profile&reco_item_pos=0&source=affiliate-profile&reco_backend_type=function&reco_id=d94c4f4f-2300-4b4a-bc76-0fd1dbbc0e02&tracking_id=ba5db872-f777-49f6-923f-9b3ee8da36bd&sid=recos&c_id=/home/card-featured/element&c_uid=5db2d723-65e0-4671-9c57-7c11efe2ffec"
+        },
+        {
+          "nome": "Papel Higiênico Supreme Folha Tripla 24 Rolos Neve",
+          "preco": "Consultar",
+          "imagem": "https://http2.mlstatic.com/D_NQ_NP_866261-MLA99361636628_112025-OO.png",
+          "link": "https://www.mercadolivre.com.br/papel-higinico-supreme-folha-tripla-24-rolos-neve/p/MLB16084358?pdp_filters=item_id%3AMLB5604648974&matt_event_ts=1778775519038&matt_d2id=88608949-47f4-49ac-bb16-c4d2742efa77&matt_tracing_id=9917bf73-32b5-4d8c-acb2-2e3841515d38#reco_backend=item_decorator&wid=MLB5604648974&reco_client=home_affiliate-profile&reco_item_pos=0&source=affiliate-profile&reco_backend_type=function&reco_id=94d98e97-1ed4-4d98-9785-6ae273926e60&tracking_id=e3a526f7-3063-4876-bf0c-47524850869f&sid=recos&c_id=/home/card-featured/element&c_uid=311a06bf-02ec-4c68-b7ce-511dc7027a04"
+        },
+        {
+          "nome": "Capa Protetora Colchão Box Casal Padrão Matelado Impermeável",
+          "preco": "Consultar",
+          "imagem": "https://http2.mlstatic.com/D_639258-MLB82839590542_032025-O.jpg",
+          "link": "https://produto.mercadolivre.com.br/MLB-4002919471-capa-protetora-colcho-box-casal-padro-matelado-impermeavel-_JM?searchVariation=183132347992&matt_event_ts=1778775558588&matt_d2id=88608949-47f4-49ac-bb16-c4d2742efa77&matt_tracing_id=237035b9-37dd-4b44-b4ff-cf7c41b75a20#reco_backend=item_decorator&reco_client=home_affiliate-profile&reco_item_pos=0&source=affiliate-profile&reco_backend_type=function&reco_id=f9785a66-d919-4dda-bcbf-60838331c1e8&tracking_id=d95ebcdc-197d-4e0a-9680-874027f4d1f3&c_id=/home/card-featured/element&c_uid=9f4c0481-dd9d-4bc3-9fdc-2d77a9b0cf83"
+        },
+        {
+          "nome": "Comoda 4 Gavetas 2 Portas Gisele Com Pés",
+          "preco": "Consultar",
+          "imagem": "https://http2.mlstatic.com/D_675567-MLB80418842291_112024-O.jpg",
+          "link": "https://produto.mercadolivre.com.br/MLB-2647289242-comoda-4-gavetas-2-portas-gisele-com-pes-_JM?searchVariation=174529849461&matt_event_ts=1778775632769&matt_d2id=88608949-47f4-49ac-bb16-c4d2742efa77&matt_tracing_id=34b6ede9-d837-4526-a105-87728cf61fef#reco_backend=item_decorator&reco_client=home_affiliate-profile&reco_item_pos=0&source=affiliate-profile&reco_backend_type=function&reco_id=123c03b6-585b-428a-a539-2e77d4660794&tracking_id=b5330188-a6ec-4023-a0c2-cf298c2583c6&c_id=/home/card-featured/element&c_uid=f40b49a9-1100-4d72-aad8-3105ad20a38f"
+        }
+      ]
+    },
+    {
+      "id": "esportes",
+      "nome": "Esportes e Fitness",
+      "icone": "https://cdn-icons-png.flaticon.com/512/857/857455.png",
+      "produtos": []
+    },
+    {
+      "id": "eletro",
+      "nome": "Eletrodomésticos",
+      "icone": "https://cdn-icons-png.flaticon.com/512/2850/2850931.png",
+      "produtos": []
+    },
+    {
+      "id": "moda",
+      "nome": "Calçados, Roupas e Bolsas",
+      "icone": "https://cdn-icons-png.flaticon.com/512/3159/3159620.png",
+      "produtos": []
+    },
+    {
+      "id": "beleza",
+      "nome": "Beleza e Cuidado Pessoal",
+      "icone": "https://cdn-icons-png.flaticon.com/512/194/194931.png",
+      "produtos": []
+    },
+    {
+      "id": "informatica",
+      "nome": "Informática",
+      "icone": "https://cdn-icons-png.flaticon.com/512/2777/2777142.png",
+      "produtos": []
+    },
+    {
+      "id": "saude",
+      "nome": "Saúde",
+      "icone": "https://cdn-icons-png.flaticon.com/512/2966/2966327.png",
+      "produtos": []
+    },
+    {
+      "id": "veiculos",
+      "nome": "Acessórios para Veículos",
+      "icone": "https://cdn-icons-png.flaticon.com/512/741/741407.png",
+      "produtos": []
+    },
+    {
+      "id": "ferramentas",
+      "nome": "Ferramentas",
+      "icone": "https://cdn-icons-png.flaticon.com/512/2972/2972185.png",
+      "produtos": []
+    },
+    {
+      "id": "construcao",
+      "nome": "Construção",
+      "icone": "https://cdn-icons-png.flaticon.com/512/4333/4333639.png",
+      "produtos": []
+    },
+    {
+      "id": "industria",
+      "nome": "Indústria e Comércio",
+      "icone": "https://cdn-icons-png.flaticon.com/512/2897/2897850.png",
+      "produtos": []
+    },
+    {
+      "id": "celulares",
+      "nome": "Celulares e Telefones",
+      "icone": "https://cdn-icons-png.flaticon.com/512/2586/2586488.png",
+      "produtos": [
+        {
+          "nome": "Celular Samsung Galaxy A17 Com Ia, 256gb, 8gb Ram, Câm De 50mp, Tela De 6.7 , Nfc, Ip54 - Azul",
+          "preco": "Consultar",
+          "imagem": "https://http2.mlstatic.com/D_NQ_NP_889169-MLA96868779849_102025-OO.png",
+          "link": "https://www.mercadolivre.com.br/celular-samsung-galaxy-a17-com-ia-256gb-8gb-ram-cm-de-50mp-tela-de-67-nfc-ip54-azul/p/MLB54982411?pdp_filters=item_id%3AMLB4217058289#polycard_client=affiliates&wid=MLB4217058289&sid=affiliates"
+        },
+        {
+          "nome": "Celular Samsung Galaxy A07 128gb, 4gb, Câmera 50mp, Tela 6.7 , Proteção Ip54, Processador 6nm - Preto",
+          "preco": "Consultar",
+          "imagem": "https://http2.mlstatic.com/D_NQ_NP_678247-MLA99491753898_112025-OO.png",
+          "link": "https://www.mercadolivre.com.br/celular-samsung-galaxy-a07-128gb-4gb-cmera-50mp-tela-67-proteco-ip54-processador-6nm-preto/p/MLB55034955?pdp_filters=item_id%3AMLB5859349564#polycard_client=affiliates&wid=MLB5859349564&sid=affiliates"
+        },
+        {
+          "nome": "Celular Samsung Galaxy A17 Com Ia, 256gb, 8gb Ram, Câm De 50mp, Tela De 6.7 , Nfc, Ip54 - Preto",
+          "preco": "Consultar",
+          "imagem": "https://http2.mlstatic.com/D_NQ_NP_781103-MLA99983064831_112025-OO.png",
+          "link": "https://www.mercadolivre.com.br/celular-samsung-galaxy-a17-com-ia-256gb-8gb-ram-cm-de-50mp-tela-de-67-nfc-ip54-preto/p/MLB55254425?pdp_filters=item_id%3AMLB5732599082#polycard_client=affiliates&wid=MLB5732599082&sid=affiliates"
+        }
+      ]
+    },
+    {
+      "id": "eletronicos_av",
+      "nome": "Eletrônicos, Áudio e Vídeo",
+      "icone": "https://cdn-icons-png.flaticon.com/512/3221/3221845.png",
+      "produtos": []
+    },
+    {
+      "id": "pet",
+      "nome": "Pet Shop",
+      "icone": "https://cdn-icons-png.flaticon.com/512/616/616408.png",
+      "produtos": []
+    },
+    {
+      "id": "bebes",
+      "nome": "Bebês",
+      "icone": "https://cdn-icons-png.flaticon.com/512/1043/1043231.png",
+      "produtos": []
+    },
+    {
+      "id": "brinquedos",
+      "nome": "Brinquedos e Hobbies",
+      "icone": "https://cdn-icons-png.flaticon.com/512/3082/3082060.png",
+      "produtos": []
+    },
+    {
+      "id": "joias",
+      "nome": "Joias e Relógios",
+      "icone": "https://cdn-icons-png.flaticon.com/512/2210/2210606.png",
+      "produtos": []
+    },
+    {
+      "id": "musica",
+      "nome": "Instrumentos Musicais",
+      "icone": "https://cdn-icons-png.flaticon.com/512/3221/3221845.png",
+      "produtos": []
+    },
+    {
+      "id": "arte",
+      "nome": "Arte, Papelaria e Armarinho",
+      "icone": "https://cdn-icons-png.flaticon.com/512/2232/2232688.png",
+      "produtos": []
+    },
+    {
+      "id": "games",
+      "nome": "Games",
+      "icone": "https://cdn-icons-png.flaticon.com/512/686/686589.png",
+      "produtos": []
+    },
+    {
+      "id": "livros",
+      "nome": "Livros, Revista e Comics",
+      "icone": "https://cdn-icons-png.flaticon.com/512/3389/3389081.png",
+      "produtos": []
+    },
+    {
+      "id": "cameras",
+      "nome": "Câmeras e Acessórios",
+      "icone": "https://cdn-icons-png.flaticon.com/512/685/685655.png",
+      "produtos": []
+    }
+  ]
+}
