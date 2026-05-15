@@ -40,12 +40,12 @@ jobs:
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
         
-        # O comando abaixo adiciona o json independente de onde ele esteja
-        git add json/produtos.json || git add produtos.json
+        # Adiciona o arquivo que está dentro da pasta json
+        git add json/produtos.json
         
         if ! git diff --staged --quiet; then
-          git commit -m "Auto: Atualizacao de precos via GitHub Actions"
+          git commit -m "Auto: Atualizacao de precos"
           git push origin main
         else
-          echo "Nenhuma mudança detectada nos preços."
+          echo "Nenhuma mudanca detectada."
         fi
