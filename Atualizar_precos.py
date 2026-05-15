@@ -71,10 +71,20 @@ def capturar_detalhes_mercadolivre(url):
         return None, None, "Consultar"
 
 def rodar_atualizacao():
+    def rodar_atualizacao():
+    diretorio_atual = os.path.dirname(os.path.abspath(__file__))
     
-        caminho_json = os.path.abspath(os.path.join(diretorio_atual, 'json', 'json/produtos.json'))
-        if not os.path.exists(caminho_json):
-        caminho_json = os.path.abspath(os.path.join(diretorio_atual, 'json/produtos.json'))
+    # Tenta encontrar dentro da pasta 'json' primeiro
+    caminho_json = os.path.join(diretorio_atual, 'json', 'produtos.json')
+    
+    # Se não existir na pasta 'json', tenta na raiz
+    if not os.path.exists(caminho_json):
+        caminho_json = os.path.join(diretorio_atual, 'produtos.json')
+
+    if not os.path.exists(caminho_json):
+        print(f"❌ Erro: Arquivo produtos.json não encontrado em {caminho_json}")
+        return
+        
     
     with open(caminho_json, 'r', encoding='utf-8') as f:
         dados = json.load(f)
