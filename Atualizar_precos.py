@@ -72,9 +72,9 @@ def capturar_detalhes_mercadolivre(url):
 
 def rodar_atualizacao():
     
-        caminho_json = os.path.abspath(os.path.join(diretorio_atual, 'json', 'produtos.json'))
+        caminho_json = os.path.abspath(os.path.join(diretorio_atual, 'json', 'json/produtos.json'))
         if not os.path.exists(caminho_json):
-        caminho_json = os.path.abspath(os.path.join(diretorio_atual, 'produtos.json'))
+        caminho_json = os.path.abspath(os.path.join(diretorio_atual, 'json/produtos.json'))
     
     with open(caminho_json, 'r', encoding='utf-8') as f:
         dados = json.load(f)
