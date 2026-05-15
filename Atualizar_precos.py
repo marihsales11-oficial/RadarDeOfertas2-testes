@@ -1,119 +1,97 @@
 import json
 import requests
-import re
-import time
 import os
-import random
-import urllib3
+import time
+import re
 
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+SERPER_API_KEY = "ab8c4a1c75f51f9a2109b0798c2134367bcae114"
 
-def obter_header_aleatorio():
-    # Lista de navegadores reais para enganar o sistema anti-bot
-    user_agents = [
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
-        'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-        'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1'
-    ]
-    return {
-        'User-Agent': random.choice(user_agents),
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-        'Accept-Language': 'pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7',
-        'Cache-Control': 'no-cache',
-        'Pragma': 'no-cache',
-        'Referer': 'https://www.google.com/',
-        'Sec-Fetch-Dest': 'document',
-        'Sec-Fetch-Mode': 'navigate',
-        'Sec-Fetch-Site': 'cross-site'
+def buscar_dados_completos_serper(nome_atual, url_produto):
+    url_serper = "https://google.serper.dev/search"
+    # Buscamos pelo link para pegar os dados daquela página específica
+    payload = json.dumps({
+        "q": url_produto,
+        "gl": "br",
+        "hl": "pt-br"
+    })
+    headers = {'X-API-KEY': SERPER_API_KEY, 'Content-Type': 'application/json'}
+
+    dados_capturados = {
+        "preco": "Consultar",
+        "nome": nome_atual,
+        "imagem": None
     }
 
-def capturar_detalhes_mercadolivre(url):
     try:
-        # Cada requisição agora usa uma identidade visual diferente
-        res = requests.get(url, headers=obter_header_aleatorio(), timeout=25, verify=False)
-        
-        if res.status_code != 200:
-            return None, None, "Consultar"
+        response = requests.post(url_serper, headers=headers, data=payload, timeout=15)
+        res_data = response.json()
 
-        html = res.text
-        
-        # 1. NOME
-        nome = None
-        match_og = re.search(r'property="og:title" content="(.*?)"', html)
-        if match_og:
-            nome = match_og.group(1).split('|')[0].strip()
+        if "organic" in res_data and len(res_data["organic"]) > 0:
+            resultado = res_data["organic"][0]
+            
+            # 1. Captura o Nome Real (se o atual for genérico ou curto)
+            if "Mercado Livre" in nome_atual or len(nome_atual) < 10:
+                dados_capturados["nome"] = resultado.get("title", nome_atual).split("|")[0].strip()
 
-        # 2. IMAGEM
-        imagem = None
-        match_img = re.search(r'property="og:image" content="(.*?)"', html)
-        if match_img:
-            imagem = match_img.group(1)
+            # 2. Captura a Imagem (Thumbnail que o Google já processou)
+            if "imageUrl" in resultado:
+                dados_capturados["imagem"] = resultado["imageUrl"]
 
-        # 3. PREÇO (Multi-captura)
-        preco_final = "Consultar"
-        
-        # Tentativa 1: Dados Estruturados JSON (Mais estável)
-        match_json = re.search(r'\"price\":\s*(\d+\.?\d*)', html)
-        # Tentativa 2: Meta tags
-        match_meta = re.search(r'property="product:price:amount" content="(.*?)"', html)
-        
-        val = None
-        if match_json: val = match_json.group(1)
-        elif match_meta: val = match_meta.group(1)
+            # 3. Captura o Preço (Lógica refinada)
+            if "attributes" in resultado:
+                for key, val in resultado["attributes"].items():
+                    if "Preço" in key or "Price" in key:
+                        dados_capturados["preco"] = val.replace("R$", "").strip()
+                        break
+            
+            # Fallback de preço no snippet se não achou nos atributos
+            if dados_capturados["preco"] == "Consultar":
+                snippet = resultado.get("snippet", "")
+                match = re.search(r"R\$\s?(\d{1,3}(\.\d{3})*,\d{2})", snippet)
+                if match:
+                    dados_capturados["preco"] = match.group(1)
 
-        if val:
-            preco_final = "{:,.2f}".format(float(val)).replace(',', 'X').replace('.', ',').replace('X', '.')
-        
-        return nome, imagem, preco_final
-
-    except Exception:
-        return None, None, "Consultar"
-
+        return dados_capturados
+    except Exception as e:
+        print(f"   ❌ Erro na API: {e}")
+        return dados_capturados
 
 def rodar_atualizacao():
-    # Pega o caminho de onde o script está rodando
     diretorio_atual = os.path.dirname(os.path.abspath(__file__))
-    
-    # Aponta para a pasta 'json' e depois para o arquivo
     caminho_json = os.path.join(diretorio_atual, 'json', 'produtos.json')
-
     if not os.path.exists(caminho_json):
-        print(f"❌ Arquivo não encontrado em: {caminho_json}")
-        return        
+        caminho_json = os.path.join(diretorio_atual, 'produtos.json')
 
+    print(f"🚀 Iniciando Super-Sincronização (Preço + Nome + Imagem)...")
 
-    
     with open(caminho_json, 'r', encoding='utf-8') as f:
         dados = json.load(f)
 
-    print(f"🚀 Iniciando Radar com Proteção Anti-Bloqueio...")
-
-    for categoria in dados['categorias']:
-        for produto in categoria['produtos']:
+    for categoria in dados.get('categorias', []):
+        print(f"\n📦 Categoria: {categoria.get('nome')}")
+        for produto in categoria.get('produtos', []):
             link = produto.get('link', '')
             if "mercadolivre.com.br" in link:
-                print(f"   🔎 Processando: {produto.get('nome', 'Produto')[:30]}...")
+                print(f"🔎 Processando: {produto['nome'][:30]}...")
                 
-                n, i, p = capturar_detalhes_mercadolivre(link)
+                info = buscar_dados_completos_serper(produto['nome'], link)
                 
-                if n and p != "Consultar":
-                    produto['nome'] = n
-                    produto['preco'] = p
-                    if i: produto['imagem'] = i
-                    print(f"      ✅ R$ {p}")
-                else:
-                    print(f"      ⚠️ Bloqueio detectado. Pulando para evitar ban...")
-                    # Se houver bloqueio, esperamos mais tempo
-                    time.sleep(10)
+                # Atualiza os campos apenas se encontrar dados válidos
+                produto['nome'] = info['nome']
+                if info['preco'] != "Consultar":
+                    produto['preco'] = info['preco']
+                if info['imagem']:
+                    produto['imagem'] = info['imagem']
                 
-                # O SEGREDO: Intervalo randômico para parecer humano
-                time.sleep(random.uniform(3.0, 7.0))
+                print(f"   ✅ Nome: {info['nome'][:40]}")
+                print(f"   ✅ Preço: R$ {produto['preco']}")
+                
+                time.sleep(1.2) # Evita estourar limite da API
 
     with open(caminho_json, 'w', encoding='utf-8') as f:
         json.dump(dados, f, indent=2, ensure_ascii=False)
     
-    print("\n✅ BASE DE DADOS ATUALIZADA!")
+    print("\n✅ RADAR TOTALMENTE SINCRONIZADO!")
 
 if __name__ == "__main__":
     rodar_atualizacao()
