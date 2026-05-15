@@ -35,17 +35,18 @@ jobs:
         # Se o seu .py estiver na raiz, apenas 'python Atualizar_precos.py' basta
         python Atualizar_precos.py
 
-    - name: Salvar alteracoes no JSON
+  - name: Salvar alteracoes no JSON
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
         
-        # Adiciona o arquivo que está dentro da pasta json
-        git add json/produtos.json
+        # Tenta adicionar o arquivo independente da pasta
+        git add json/produtos.json || git add produtos.json
         
-        if ! git diff --staged --quiet; then
-          git commit -m "Auto: Atualizacao de precos"
-          git push origin main
+        # Verifica se houve mudanças antes de tentar o commit
+        if git diff --staged --quiet; then
+          echo "Nenhuma mudança encontrada nos preços. Pulando commit."
         else
-          echo "Nenhuma mudanca detectada."
+          git commit -m "Auto: Atualização de preços"
+          git push origin main
         fi
